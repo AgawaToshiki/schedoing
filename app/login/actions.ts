@@ -35,11 +35,25 @@ export async function signup(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const userData = {
+    email: formData.get('email') as string,
+    role: 'user',
+  }
 
-  if (error) {
+  const { error: signUpError } = await supabase.auth.signUp(data)
+
+  if (signUpError) {
+    console.log(signUpError.message);
     redirect('/error')
   }
+  
+  const { error: insertError } = await supabase.from('users').insert({ email: userData.email, role: userData.role })
+
+  if (insertError) {
+    console.log(insertError.message);
+    redirect('/error')
+  }
+
 
   revalidatePath('/', 'layout')
   redirect('/')
