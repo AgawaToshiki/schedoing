@@ -1,15 +1,17 @@
 'use client'
 import React from 'react'
 import { createClient } from "@/utils/supabase/client";
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 
 
 const SignOut = () => {
-	const supabase = createClient()
+	const supabase = createClient();
+	const router = useRouter();
+
   const signOut = async() => {
     const { error } = await supabase.auth.signOut()
 		if (error) throw new Error(error.message)
-		redirect("/login")
+		router.push("/login")
   }
   return (
     <>

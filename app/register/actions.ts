@@ -17,11 +17,6 @@ export async function createUser(formData: FormData) {
 			persistSession: false,
 		}
 	})
-	const { data: currentUserData } = await supabaseAdmin.auth.getUser();
-	const { data: roleData } = await supabaseAdmin.from("users").select('role').eq('id', currentUserData.user?.id).single();
-	if(!roleData || roleData.role !== 'admin'){
-			throw Error('権限がありません')
-	}
 
   const registerData = {
     email: formData.get('email') as string,
@@ -30,23 +25,23 @@ export async function createUser(formData: FormData) {
   }
 
   const userData = {
-    email: formData.get('email') as string,
+		displayName: formData.get('displayName') as string,
     role: 'user',
   }
 
   const { data: { user }, error: signUpError } = await supabaseAdmin.auth.admin.createUser(registerData)
-  console.log(user)
 
   if (signUpError) {
     console.log(signUpError.message);
     redirect('/error')
   }
   
-  const { error: insertError } = await supabaseAdmin.from('users').insert({ id: user?.id, email: userData.email, role: userData.role })
+  const { error: insertError } = await supabaseAdmin.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role })
 
   if (insertError) {
     console.log(insertError.message);
     redirect('/error')
   }
+
 
 }

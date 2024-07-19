@@ -19,6 +19,8 @@ if(!roleData || roleData.role !== 'admin'){
       <input id="email" name="email" type="email" required />
       <label htmlFor="password">Password:</label>
       <input id="password" name="password" type="password" required />
+      <label htmlFor="displayName">DisplayName</label>
+      <input id="displayName" name="displayName" type="text" required/>
       <button formAction={createUser}>ユーザー登録</button>
     </form>
   )
