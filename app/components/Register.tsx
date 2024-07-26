@@ -16,15 +16,53 @@ export default function Register() {
 
   return (
     <>
-			<div>新規登録</div>
+			<div>新規ユーザー登録</div>
     	<form action={handleSubmit}>
-				<label htmlFor="email">Email:</label>
-				<input id="email" name="email" type="email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)} required />
-				<label htmlFor="password">Password:</label>
-				<input id="password" name="password" type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)} required />
-				<label htmlFor="displayName">DisplayName:</label>
-				<input id="displayName" name="displayName" type="text" value={displayName} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)} required/>
-				<button>ユーザー登録</button>
+				<div className="flex flex-col">
+					<div>
+						<div>
+							<label htmlFor="email">Email</label>
+						</div>
+						<input 
+							id="email"
+							name="email"
+							type="email"
+							className="border"
+							value={email}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
+							required
+						/>
+					</div>
+					<div>
+						<div>
+							<label htmlFor="password">Password</label>
+						</div>
+						<input
+							id="password"
+							name="password"
+							type="password"
+							className="border"
+							value={password}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
+							required
+						/>
+					</div>
+					<div>
+						<div>
+							<label htmlFor="displayName">DisplayName</label>
+						</div>
+						<input 
+							id="displayName"
+							name="displayName"
+							type="text"
+							className="border"
+							value={displayName}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
+							required
+						/>
+					</div>
+				</div>
+				<button className="p-1 border bg-green-400">登録</button>
     	</form>
     </>
   )

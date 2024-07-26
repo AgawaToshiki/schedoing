@@ -18,8 +18,15 @@ const User = async() => {
 	}
 		return (
     <>
-			<div className="my-10"><Register /></div>
-			<div className="my-10"><UserList /></div>
+			<div className="w-full">
+				<div className="mb-10">
+					<Register />
+				</div>
+				<div>
+					<UserList />
+				</div>
+			</div>
+
     </>
   )
 }
