@@ -26,7 +26,7 @@ export async function createUser(formData: FormData) {
 
   const userData = {
 		displayName: formData.get('displayName') as string,
-    role: 'user',
+		role: 'user',
   }
 
   const { data: { user }, error: signUpError } = await supabaseAdmin.auth.admin.createUser(registerData)
@@ -42,6 +42,5 @@ export async function createUser(formData: FormData) {
     console.log(insertError.message);
     redirect('/error')
   }
-
-
+	redirect('/user')
 }
