@@ -12,19 +12,19 @@ const UserList = async() => {
 			<div>ユーザー一覧</div>
 			<table>
 				<thead>
-					<tr>
-						<th>権限</th>
-						<th>ユーザー名</th>
-						<th>Email</th>
+					<tr className="border">
+						<th className="px-4 py-2 text-left">権限</th>
+						<th className="px-4 py-2 text-left">ユーザー名</th>
+						<th className="px-4 py-2 text-left">Email</th>
 					</tr>
 				</thead>
 				<tbody>
 					{data?.map((user) => (
-						<tr key={user.id}>
-							<td>{user.role}</td>
-							<td>{user.displayName}</td>
-							<td>{user.email}</td>
-							<td>
+						<tr key={user.id} className="border">
+							<td className="px-4 py-2">{user.role}</td>
+							<td className="px-4 py-2">{user.displayName}</td>
+							<td className="px-4 py-2">{user.email}</td>
+							<td className="px-4 py-2">
 								<EditButton id={user.id} />
 								<DeleteButton id={user.id} />
 							</td>
