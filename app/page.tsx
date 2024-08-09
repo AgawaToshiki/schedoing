@@ -1,10 +1,9 @@
-import { createClient } from '@/utils/supabase/server'
-import SignOut from "./components/SignOut";
-import { getCurrentUser } from './utils/server';
+import { supabase } from './lib/supabase';
+import SignOutButton from "./components/SignOutButton";
+import { getCurrentUser } from './utils/auth';
 
 export default async function DashBoard() {
   const userId = await getCurrentUser();
-  const supabase = createClient();
   const { data, error } = await supabase.from('users').select('id,created_at,email,role,displayName,status');
 
   return (
@@ -12,7 +11,7 @@ export default async function DashBoard() {
       <div>
         <div className="flex items-center justify-between mb-10">
           <div>DashBoard</div>
-          <SignOut id={userId}/>
+          <SignOutButton id={userId}/>
         </div>
         <div className="flex bg-blue-100">
           {data?.map((user) => (

@@ -1,11 +1,10 @@
-import { createClient } from '@/utils/supabase/server'
 import React from 'react'
 import EditButton from './EditButton'
 import DeleteButton from './DeleteButton'
+import { getAllUser } from '../utils/supabaseFunctions'
 
 const UserList = async() => {
-	const supabase = createClient()
-	const { data, error } = await supabase.from('users').select('id,created_at,email,role,displayName');
+	const data = await getAllUser();
 
   return (
 		<>
@@ -24,7 +23,7 @@ const UserList = async() => {
 							<td className="px-4 py-2">{user.role}</td>
 							<td className="px-4 py-2">{user.displayName}</td>
 							<td className="px-4 py-2">{user.email}</td>
-							<td className="px-4 py-2">
+							<td className="flex px-4 py-2">
 								<EditButton id={user.id} />
 								<DeleteButton id={user.id} />
 							</td>

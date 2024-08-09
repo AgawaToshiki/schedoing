@@ -1,8 +1,8 @@
 'use server'
 
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@supabase/supabase-js'
+import { supabase } from '../lib/supabase'
 
 export async function createUser(formData: FormData) {
 	const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -36,7 +36,7 @@ export async function createUser(formData: FormData) {
     redirect('/error')
   }
   
-  const { error: insertError } = await supabaseAdmin.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role })
+  const { error: insertError } = await supabase.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role })
 
   if (insertError) {
     console.log(insertError.message);
