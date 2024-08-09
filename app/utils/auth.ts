@@ -13,11 +13,8 @@ export async function getCurrentUser() {
   return user.id
 }
 
-// export async function signOut() {
-//   const supabase = createClient();
-//   const { data: { user }} = await supabase.auth.getUser();
-//   if(user) {
-//     const { error } = await supabase.auth.signOut();
-//     if (error) throw new Error(error.message)
-//   }
-// }
+export async function signIn(loginData: { email: string, password: string }) {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.signInWithPassword(loginData);
+  return { data, error }
+}

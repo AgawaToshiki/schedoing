@@ -1,17 +1,17 @@
-import { supabase } from './lib/supabase';
 import SignOutButton from "./components/SignOutButton";
+import { getAllUser } from './utils/supabaseFunctions';
 import { getCurrentUser } from './utils/auth';
 
 export default async function DashBoard() {
-  const userId = await getCurrentUser();
-  const { data, error } = await supabase.from('users').select('id,created_at,email,role,displayName,status');
+  await getCurrentUser();
+  const data = await getAllUser();
 
   return (
     <>
       <div>
         <div className="flex items-center justify-between mb-10">
           <div>DashBoard</div>
-          <SignOutButton id={userId}/>
+          <SignOutButton/>
         </div>
         <div className="flex bg-blue-100">
           {data?.map((user) => (

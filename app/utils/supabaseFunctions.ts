@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 export async function getAllUser() {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName');
+    .select('id,created_at,email,role,displayName,status');
   if(error) {
     console.error('Error getUsers:', error);
   }
