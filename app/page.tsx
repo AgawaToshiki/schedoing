@@ -1,11 +1,14 @@
 import { getAllUser } from './utils/supabaseFunctions';
 import { getCurrentUser } from './utils/auth';
+import { Database } from '../database.types';
 import UserList from "./components/UserList";
 import SignOutButton from "./components/SignOutButton";
 
+type User = Database['public']['Tables']['users']['Row'];
+
 export default async function DashBoard() {
   await getCurrentUser();
-  const data = await getAllUser();
+  const data: User[] | null = await getAllUser();
 
   return (
     <>

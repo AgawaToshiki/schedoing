@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
+import { Database } from "@/database.types";
+
+type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  data: {
-    id: any;
-    created_at: any;
-    email: any;
-    role: any;
-    displayName: any;
-    status: any;
-  }[]| null
+  data: User[] | null
 }
 
 const UserList = ({ data }: Props) => {
