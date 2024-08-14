@@ -1,6 +1,7 @@
-import SignOutButton from "./components/SignOutButton";
 import { getAllUser } from './utils/supabaseFunctions';
 import { getCurrentUser } from './utils/auth';
+import UserList from "./components/UserList";
+import SignOutButton from "./components/SignOutButton";
 
 export default async function DashBoard() {
   await getCurrentUser();
@@ -20,6 +21,9 @@ export default async function DashBoard() {
               <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
             </div>
           ))}
+        </div>
+        <div className="flex bg-blue-100">
+          <UserList data={data}/>
         </div>
       </div>
     </>

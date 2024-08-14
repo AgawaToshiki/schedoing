@@ -1,6 +1,6 @@
 import React from 'react'
 import Register from '../components/Register'
-import UserList from '../components/UserList'
+import AdminUserList from '../components/AdminUserList'
 import { getCurrentUser } from '../utils/auth';
 import { checkRole } from '../utils/supabaseFunctions';
 
@@ -17,7 +17,7 @@ const User = async() => {
 					<Register />
 				</div>
 				<div>
-					<UserList />
+					<AdminUserList />
 				</div>
 			</div>
 
