@@ -39,7 +39,7 @@ const UserList = ({ data }: Props) => {
 
   useEffect(() => {
     listenData();
-  }, [users])
+  }, [])
 
   return (
     <>
