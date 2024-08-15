@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "./components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
-      <body className={`${inter.className} m-4 p-0`}>{children}</body>
+      <body className={`${inter.className} m-4 p-0`}>
+        <div className="flex h-screen overflow-hidden">
+          <Header />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }

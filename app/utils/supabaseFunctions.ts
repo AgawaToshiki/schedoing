@@ -22,14 +22,14 @@ export async function updateStatus(userId: string, status: string) {
   }
 }
 
-export async function checkRole(id: string) {
+export async function isAdmin(id: string) {
   const { data: roleData } = await supabase
     .from("users")
     .select('role')
     .eq('id', id)
     .single();
 	if(!roleData || roleData.role !== 'admin'){
-			redirect('/')
+    redirect('/')
 	}
 }
 
