@@ -1,5 +1,5 @@
 import { supabase } from '../lib/supabase';
-import { redirect } from 'next/navigation'
+import { redirect } from 'next/navigation';
 
 
 export async function getAllUser() {
@@ -22,15 +22,21 @@ export async function updateStatus(userId: string, status: string) {
   }
 }
 
-export async function isAdmin(id: string) {
+export async function isAdminUser(id: string): Promise<boolean> {
   const { data: roleData } = await supabase
     .from("users")
     .select('role')
     .eq('id', id)
     .single();
-	if(!roleData || roleData.role !== 'admin'){
-    redirect('/')
-	}
+
+  if(roleData && roleData.role === 'admin'){
+    return true
+  }
+
+  return false
+	// if(!roleData || roleData.role !== 'admin'){
+  //   redirect('/')
+	// }
 }
 
 export async function deleteUser(id: string) {

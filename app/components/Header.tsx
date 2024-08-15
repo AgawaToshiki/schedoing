@@ -1,14 +1,24 @@
-import React from 'react'
-import SignOutButton from './SignOutButton'
+import React from 'react';
+import Link from 'next/link';
+import { isAdminUser } from '../utils/supabaseFunctions';
+import { getCurrentUser } from '../utils/auth';
+import { redirect } from 'next/navigation';
+import SignOutButton from './SignOutButton';
 
-const Header = () => {
+const Header = async() => {
+  const userId = await getCurrentUser();
+  if(!userId){
+		return null
+	}
+  const isAdmin = await isAdminUser(userId);
+
   return (
     <header className="bg-green-200">
       <div>
         <nav>
           <ul>
-            <li>ダッシュボード</li>
-            <li>ユーザー管理</li>
+            <li><Link href="/">ダッシュボード</Link></li>
+            <li className={`${isAdmin ? "block" : "hidden"}`}><Link href="/user">ユーザー管理</Link></li>
             <li></li>
             <li></li>
             <li></li>

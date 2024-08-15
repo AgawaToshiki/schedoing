@@ -1,14 +1,21 @@
 import React from 'react'
+import { getCurrentUser } from '../utils/auth';
+import { isAdminUser } from '../utils/supabaseFunctions';
+import { redirect } from 'next/navigation';
 import Register from '../components/Register'
 import AdminUserList from '../components/AdminUserList'
-import { getCurrentUser } from '../utils/auth';
-import { isAdmin } from '../utils/supabaseFunctions';
 
 
 
 const User = async() => {
 	const userId = await getCurrentUser();
-	await isAdmin(userId);
+	if(!userId){
+		redirect('/login')
+	}
+	const isAdmin = await isAdminUser(userId);
+	if(!isAdmin) {
+		redirect('/')
+	}
 
 		return (
     <>
