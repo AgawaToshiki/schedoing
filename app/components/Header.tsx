@@ -14,19 +14,21 @@ const Header = async() => {
 
   return (
     <header className="bg-green-200">
-      <div>
-        <nav>
-          <ul>
-            <li><Link href="/">ダッシュボード</Link></li>
-            <li className={`${isAdmin ? "block" : "hidden"}`}><Link href="/user">ユーザー管理</Link></li>
-            <li></li>
-            <li></li>
-            <li></li>
-          </ul>
-        </nav>
-      </div>
-      <div>
-        <SignOutButton />
+      <div className="flex flex-col justify-between w-[275px] h-full p-6">
+        <div>
+          <nav>
+            <ul className="flex flex-col gap-3">
+              <li><Link href="/">ダッシュボード</Link></li>
+              <li className={`${isAdmin ? "block" : "hidden"}`}><Link href="/user">ユーザー管理</Link></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </nav>
+        </div>
+        <div>
+          <SignOutButton />
+        </div>
       </div>
     </header>
   )
