@@ -1,8 +1,8 @@
-import { getAllUser } from './utils/supabaseFunctions';
-import { getCurrentUser } from './utils/auth';
+import { getAllUser } from '../utils/supabaseFunctions';
+import { getCurrentUser } from '../utils/auth';
 import { redirect } from 'next/navigation'
-import { Database } from '../database.types';
-import UserList from "./components/UserList";
+import { Database } from '../../database.types';
+import UserList from "../components/UserList";
 
 
 type User = Database['public']['Tables']['users']['Row'];

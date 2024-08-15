@@ -8,7 +8,7 @@ import SignOutButton from './SignOutButton';
 const Header = async() => {
   const userId = await getCurrentUser();
   if(!userId){
-		return null
+		redirect('/login')
 	}
   const isAdmin = await isAdminUser(userId);
 

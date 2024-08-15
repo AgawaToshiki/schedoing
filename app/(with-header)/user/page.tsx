@@ -1,9 +1,9 @@
 import React from 'react'
-import { getCurrentUser } from '../utils/auth';
-import { isAdminUser } from '../utils/supabaseFunctions';
+import { getCurrentUser } from '../../utils/auth';
+import { isAdminUser } from '../../utils/supabaseFunctions';
 import { redirect } from 'next/navigation';
-import Register from '../components/Register'
-import AdminUserList from '../components/AdminUserList'
+import Register from '../../components/Register'
+import AdminUserList from '../../components/AdminUserList'
 
 
 
