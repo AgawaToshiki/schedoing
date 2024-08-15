@@ -3,6 +3,7 @@ import { getCurrentUser } from '../utils/auth';
 import { redirect } from 'next/navigation'
 import { Database } from '../../database.types';
 import UserList from "../components/UserList";
+import MyStatus from '../components/MyStatus';
 
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -16,9 +17,12 @@ export default async function DashBoard() {
 
   return (
     <>
-      <div>
-        <div className="flex items-center justify-between mb-10">
+      <div className="flex flex-col">
+        <div className="flex mb-10">
           <div>DashBoard</div>
+        </div>
+        <div className="flex mb-10">
+          <MyStatus />
         </div>
         <div className="flex bg-blue-100">
           <UserList data={data}/>
