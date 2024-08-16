@@ -9,13 +9,13 @@ import { getCurrentUser } from '@/app/utils/auth';
 export async function POST(req: NextRequest) {
   try {
     const supabase = createClient();
-    const userId = await getCurrentUser();
-    if(!userId){
+    const user = await getCurrentUser();
+    if(!user || !user.id){
       redirect('/login')
     }
     await supabase.auth.signOut();
 
-    await updateStatus(userId, 'offline');
+    await updateStatus(user.id, 'offline');
   
     revalidatePath('/', 'layout')
     return NextResponse.redirect(new URL('/login', req.url), {

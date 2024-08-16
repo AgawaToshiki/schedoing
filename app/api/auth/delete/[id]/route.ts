@@ -5,7 +5,6 @@ import { deleteUserFromAuth } from '@/app/utils/authAdmin';
 
 export async function POST(req: NextRequest) {
   const id = req.nextUrl.pathname.split('/').pop();
-  console.log(req.nextUrl.pathname)
   try {
     if(!id) throw new Error();
     await deleteUserFromAuth(id);
