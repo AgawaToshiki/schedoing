@@ -40,8 +40,8 @@ const UserList = ({ data }: Props) => {
   return (
     <>
       {users?.map((user) => (
-        <div className="flex items-center mx-4 p-4 border border-black rounded-lg bg-red-100" key={user.id}>
-          <div className="p-4 bg-red-100">{user.displayName}</div>
+        <div className="flex items-center gap-4 mx-4 p-6 border border-black rounded-lg bg-red-100" key={user.id}>
+          <div>{user.displayName}</div>
           <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
         </div>
       ))}

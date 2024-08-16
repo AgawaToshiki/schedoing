@@ -1,7 +1,7 @@
 import React from 'react'
+import { getAllUser } from '../utils/supabaseFunctions'
 import EditButton from './EditButton'
 import DeleteButton from './DeleteButton'
-import { getAllUser } from '../utils/supabaseFunctions'
 
 const AdminUserList = async() => {
 	const data = await getAllUser();
@@ -11,7 +11,7 @@ const AdminUserList = async() => {
 			<div>ユーザー一覧</div>
 			<table>
 				<thead>
-					<tr className="border">
+					<tr className="border border-gray-400">
 						<th className="px-4 py-2 text-left">権限</th>
 						<th className="px-4 py-2 text-left">ユーザー名</th>
 						<th className="px-4 py-2 text-left">Email</th>
@@ -19,7 +19,7 @@ const AdminUserList = async() => {
 				</thead>
 				<tbody>
 					{data?.map((user) => (
-						<tr key={user.id} className="border">
+						<tr key={user.id} className="border border-gray-400">
 							<td className="px-4 py-2">{user.role}</td>
 							<td className="px-4 py-2">{user.displayName}</td>
 							<td className="px-4 py-2">{user.email}</td>

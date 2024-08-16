@@ -1,8 +1,10 @@
+import { Database } from '../../database.types';
 import { supabase } from '../lib/supabase';
-import { redirect } from 'next/navigation';
 
 
-export async function getAllUser() {
+type User = Database['public']['Tables']['users']['Row'];
+
+export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
     .select('id,created_at,email,role,displayName,status');
@@ -10,6 +12,27 @@ export async function getAllUser() {
     console.error('Error getUsers:', error);
   }
   return data
+}
+
+export async function getUser(id: string): Promise<User | null> {
+  const { data: user, error } = await supabase
+    .from("users")
+    .select('*')
+    .eq('id', id)
+    .single();
+  if(error || !user) {
+    console.error("Error fetching user:", error);
+    return null
+  }
+
+  return user
+}
+
+export function isAdminUser(user: User | null): boolean {
+  if (user && user.role === "admin") {
+    return true;
+  }
+  return false;
 }
 
 export async function updateStatus(userId: string, status: string) {
@@ -20,23 +43,6 @@ export async function updateStatus(userId: string, status: string) {
   if(error) {
     console.error('Error updating status:', error);
   }
-}
-
-export async function isAdminUser(id: string): Promise<boolean> {
-  const { data: roleData } = await supabase
-    .from("users")
-    .select('role')
-    .eq('id', id)
-    .single();
-
-  if(roleData && roleData.role === 'admin'){
-    return true
-  }
-
-  return false
-	// if(!roleData || roleData.role !== 'admin'){
-  //   redirect('/')
-	// }
 }
 
 export async function deleteUser(id: string) {

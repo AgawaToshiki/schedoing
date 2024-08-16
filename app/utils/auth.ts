@@ -1,16 +1,16 @@
 'use server'
 
 import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
+import { User } from "@supabase/supabase-js";
 
 
-export async function getCurrentUser(): Promise<string | null> {
+export async function getCurrentUser(): Promise<User | null> {
   const supabase = createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
 	if (error || !user) {
 		return null
 	}
-  return user.id
+  return user
 }
 
 export async function signIn(loginData: { email: string, password: string }) {

@@ -17,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className={`${inter.className} m-0 p-0`}>
-        <div className="flex h-screen overflow-hidden">
+        <div>
           {children}
         </div>
       </body>

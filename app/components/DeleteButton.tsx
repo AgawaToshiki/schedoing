@@ -9,7 +9,7 @@ const DeleteButton = ({ id }: Props) => {
 
   return (
 		<>
-			<form action={`../auth/delete/${id}`} method="post">
+			<form action={`../api/auth/delete/${id}`} method="post">
 				<button className="p-1 border bg-red-400">削除</button>
 			</form>
 		</>

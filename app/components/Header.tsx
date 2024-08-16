@@ -1,19 +1,15 @@
 import React from 'react';
 import Link from 'next/link';
-import { isAdminUser } from '../utils/supabaseFunctions';
-import { getCurrentUser } from '../utils/auth';
-import { redirect } from 'next/navigation';
 import SignOutButton from './SignOutButton';
 
-const Header = async() => {
-  const userId = await getCurrentUser();
-  if(!userId){
-		redirect('/login')
-	}
-  const isAdmin = await isAdminUser(userId);
+type Props = {
+  isAdmin: boolean;
+}
+
+const Header = async({ isAdmin }: Props) => {
 
   return (
-    <header className="bg-green-200">
+    <header className="bg-blue-400">
       <div className="flex flex-col justify-between w-[275px] h-full p-6">
         <div>
           <nav>
