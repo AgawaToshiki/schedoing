@@ -8,21 +8,20 @@ const AdminUserList = async() => {
 
   return (
 		<>
-			<div>ユーザー一覧</div>
-			<table>
+			<table className="border border-gray-200 shadow-md bg-white">
 				<thead>
-					<tr className="border border-gray-400">
-						<th className="px-4 py-2 text-left">権限</th>
-						<th className="px-4 py-2 text-left">ユーザー名</th>
-						<th className="px-4 py-2 text-left">Email</th>
+					<tr className="border border-gray-200">
+						<th className="px-4 py-2 text-left w-[100px]">権限</th>
+						<th className="px-4 py-2 text-left min-w-[300px]">ユーザー名</th>
+						<th className="px-4 py-2 text-left min-w-[300px]">Email</th>
 					</tr>
 				</thead>
 				<tbody>
 					{data?.map((user) => (
-						<tr key={user.id} className="border border-gray-400">
-							<td className="px-4 py-2">{user.role}</td>
-							<td className="px-4 py-2">{user.displayName}</td>
-							<td className="px-4 py-2">{user.email}</td>
+						<tr key={user.id} className="border border-gray-200">
+							<td className="px-4 py-2 w-[100px]">{user.role}</td>
+							<td className="px-4 py-2 min-w-[300px]">{user.displayName}</td>
+							<td className="px-4 py-2 min-w-[300px]">{user.email}</td>
 							<td className="flex px-4 py-2">
 								<EditButton id={user.id} />
 								<DeleteButton id={user.id} />

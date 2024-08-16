@@ -25,9 +25,15 @@ const User = async() => {
     <>
 			<Main isAdmin={isAdmin}>
 				<div className="flex flex-col w-full">
+				<div className="mb-6">
+            <h2>新規ユーザー登録</h2>
+          </div>
 					<div className="mb-10">
 						<Register />
 					</div>
+					<div className="mb-6">
+            <h2>ユーザー一覧</h2>
+          </div>
 					<div>
 						<AdminUserList />
 					</div>

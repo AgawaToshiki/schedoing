@@ -25,11 +25,14 @@ export default async function DashBoard() {
     <>
       <Main isAdmin={isAdmin}>
         <div className="flex flex-col">
-          <div className="flex mb-10">
-            <div>DashBoard</div>
+          <div className="mb-6">
+            <h2>マイステータス</h2>
           </div>
           <div className="flex mb-10">
             <MyStatus user={user}/>
+          </div>
+          <div className="mb-6">
+            <h2>DashBoard</h2>
           </div>
           <div className="flex">
             <UserList data={data}/>

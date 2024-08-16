@@ -16,7 +16,6 @@ export default function Register() {
 
   return (
     <>
-			<div>新規ユーザー登録</div>
     	<form action={handleSubmit}>
 				<div className="flex flex-col">
 					<div>

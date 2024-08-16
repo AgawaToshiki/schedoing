@@ -9,16 +9,10 @@ type Props = {
 }
 
 const MyStatus = ({ user }: Props) => {
-  // const [status, setStatus] = useState<User>(user);
 
-  const handleUpdate = () => {
-
-  }
-  console.log(user);
   return (
     <div>
-      <div>マイステータス</div>
-      <div className="flex flex-col justify-center mx-4 p-6 border border-black rounded-lg bg-red-100">
+      <div className="flex flex-col justify-center mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
         <div>ユーザー名：{user.displayName}</div>
         <div className="flex items-center gap-1.5">
           <div>状態：</div>
@@ -33,8 +27,9 @@ const MyStatus = ({ user }: Props) => {
           }
           <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
         </div>
+        <div>スケジュール</div>
+        <p>9:00~16:00 </p>
       </div>
-      <button>更新</button>
     </div>
   )
 }
