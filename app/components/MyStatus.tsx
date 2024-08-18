@@ -1,5 +1,6 @@
-// import React, { useState } from 'react'
+import React from 'react'
 import { Database } from '../../database.types';
+import Schedule from '../components/Schedule';
 
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -9,7 +10,6 @@ type Props = {
 }
 
 const MyStatus = ({ user }: Props) => {
-
   return (
     <div>
       <div className="flex flex-col justify-center mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
@@ -30,6 +30,7 @@ const MyStatus = ({ user }: Props) => {
         <div>スケジュール</div>
         <p>9:00~16:00 </p>
       </div>
+      <Schedule />
     </div>
   )
 }
