@@ -2,7 +2,7 @@ import React from 'react'
 import { getCurrentUser } from '../utils/auth';
 import { getUser, isAdminUser } from '../utils/supabaseFunctions';
 import { redirect } from 'next/navigation';
-import Main from '../components/Main';
+import Main from '../components/layouts/Main';
 import Register from '../components/Register'
 import AdminUserList from '../components/AdminUserList'
 

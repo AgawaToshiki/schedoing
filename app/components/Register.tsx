@@ -61,7 +61,7 @@ export default function Register() {
 						/>
 					</div>
 				</div>
-				<button className="p-1 border bg-green-400">登録</button>
+				<button type="submit" className="p-1 border bg-green-400">登録</button>
     	</form>
     </>
   )

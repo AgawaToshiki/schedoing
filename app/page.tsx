@@ -2,7 +2,7 @@ import { getAllUser, getUser, isAdminUser } from './utils/supabaseFunctions';
 import { getCurrentUser } from './utils/auth';
 import { redirect } from 'next/navigation'
 import { Database } from '../database.types';
-import Main from './components/Main';
+import Main from './components/layouts/Main';
 import UserList from "./components/UserList";
 import MyStatus from './components/MyStatus';
 

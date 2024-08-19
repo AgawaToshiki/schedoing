@@ -1,9 +1,9 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { updateStatus } from '../utils/supabaseFunctions';
+import { updateStatus } from '../../utils/supabaseFunctions';
 import { createClient } from '@/utils/supabase/server';
-import { getCurrentUser } from '../utils/auth';
+import { getCurrentUser } from '../../utils/auth';
 
 
 const SignOutButton = () => {

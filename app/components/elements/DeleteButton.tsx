@@ -1,6 +1,6 @@
 import React from 'react'
-import { deleteUserFromAuth } from '../utils/authAdmin';
-import { deleteUser } from '../utils/supabaseFunctions';
+import { deleteUserFromAuth } from '../../utils/authAdmin';
+import { deleteUser } from '../../utils/supabaseFunctions';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
