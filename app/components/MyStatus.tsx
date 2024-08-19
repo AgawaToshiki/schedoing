@@ -1,7 +1,7 @@
 import React from 'react'
 import { Database } from '../../database.types';
 import Schedule from '../components/Schedule';
-import SectionField from './layouts/SectionField';
+import SectionField from '../components/layouts/SectionField';
 
 
 type User = Database['public']['Tables']['users']['Row'];
