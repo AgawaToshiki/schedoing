@@ -10,7 +10,7 @@ const Main = ({ children, isAdmin }: Props) => {
   return (
     <div className="flex h-screen overflow-hidden">
       <Header isAdmin={isAdmin}/>
-      <div className="flex flex-col w-full bg-blue-100">
+      <div className="flex flex-col w-full p-6 bg-blue-100">
         {children}
       </div>
     </div>

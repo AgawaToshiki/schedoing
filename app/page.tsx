@@ -5,6 +5,8 @@ import { Database } from '../database.types';
 import Main from './components/layouts/Main';
 import UserList from "./components/UserList";
 import MyStatus from './components/MyStatus';
+import Schedule from './components/Schedule';
+import SectionField from './components/layouts/SectionField';
 
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -24,19 +26,24 @@ export default async function DashBoard() {
   return (
     <>
       <Main isAdmin={isAdmin}>
-        <div className="flex flex-col">
-          <div className="mb-6">
-            <h2>マイステータス</h2>
-          </div>
-          <div className="flex mb-10">
+        <div className="flex flex-col mb-10">
+          <SectionField>
             <MyStatus user={user}/>
-          </div>
+          </SectionField>
+        </div>
+        <div className="mb-10">
+        <SectionField>
           <div className="mb-6">
-            <h2>DashBoard</h2>
+            <h2>新規スケジュール</h2>
           </div>
-          <div className="flex">
-            <UserList data={data}/>
-          </div>
+          <Schedule />
+        </SectionField>
+        </div>
+        <div className="mb-6">
+          <h2>DashBoard</h2>
+        </div>
+        <div className="flex">
+          <UserList data={data}/>
         </div>
       </Main>
     </>

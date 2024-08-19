@@ -50,7 +50,7 @@ export default function Register() {
 						<div>
 							<label htmlFor="displayName">DisplayName</label>
 						</div>
-						<input 
+						<input
 							id="displayName"
 							name="displayName"
 							type="text"

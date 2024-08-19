@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import Main from '../components/layouts/Main';
 import Register from '../components/Register'
 import AdminUserList from '../components/AdminUserList'
+import SectionField from '../components/layouts/SectionField';
 
 
 const User = async() => {
@@ -24,20 +25,20 @@ const User = async() => {
 		return (
     <>
 			<Main isAdmin={isAdmin}>
-				<div className="flex flex-col w-full">
-				<div className="mb-6">
-            <h2>新規ユーザー登録</h2>
-          </div>
-					<div className="mb-10">
+				<div className="mb-10">
+					<SectionField>
+						<div className="mb-6">
+							<h2>新規ユーザー登録</h2>
+						</div>
 						<Register />
-					</div>
-					<div className="mb-6">
-            <h2>ユーザー一覧</h2>
-          </div>
-					<div>
-						<AdminUserList />
-					</div>
+					</SectionField>
 				</div>
+				<SectionField>
+					<div className="mb-6">
+						<h2>ユーザー一覧</h2>
+					</div>
+					<AdminUserList />
+				</SectionField>
 			</Main>
 
     </>
