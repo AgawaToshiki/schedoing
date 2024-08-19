@@ -29,39 +29,37 @@ const Schedule = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
-        <div>新規スケジュール</div>
-        <input 
-          type="text"
-          placeholder="タイトル"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+      <div>新規スケジュール</div>
+      <input 
+        type="text"
+        placeholder="タイトル"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+      />
+      <div className="flex">
+        <TimePicker
+          id='startTime'
+          name='startTime'
+          title='開始'
+          value={startTime}
+          setter={setStartTime}
+          onChange={handleStartTime}
         />
-        <div className="flex">
-          <TimePicker
-            id='startTime'
-            name='startTime'
-            title='開始'
-            value={startTime}
-            setter={setStartTime}
-            onChange={handleStartTime}
-          />
-          <TimePicker
-            id='endTime'
-            name='endTime'
-            title='終了'
-            value={endTime}
-            setter={setEndTime}
-            onChange={handleEndTime}
-          />
-        </div>
-        <button 
-          onClick={handleRegisterSchedule}
-          className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
-            +
-        </button>
+        <TimePicker
+          id='endTime'
+          name='endTime'
+          title='終了'
+          value={endTime}
+          setter={setEndTime}
+          onChange={handleEndTime}
+        />
       </div>
+      <button 
+        onClick={handleRegisterSchedule}
+        className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
+          +
+      </button>
     </>
   )
 }
