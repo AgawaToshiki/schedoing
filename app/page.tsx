@@ -28,15 +28,12 @@ export default async function DashBoard() {
     <>
       <Main isAdmin={isAdmin}>
         <div className="flex flex-col mb-10">
-          <SectionField>
+          <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
           </SectionField>
         </div>
         <div className="mb-10">
-        <SectionField>
-          <div className="mb-6">
-            <h2>新規スケジュール</h2>
-          </div>
+        <SectionField sectionTitle="新規スケジュール">
           <Schedule />
         </SectionField>
         </div>

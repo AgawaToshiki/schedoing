@@ -26,17 +26,11 @@ const User = async() => {
     <>
 			<Main isAdmin={isAdmin}>
 				<div className="mb-10">
-					<SectionField>
-						<div className="mb-6">
-							<h2>新規ユーザー登録</h2>
-						</div>
+					<SectionField sectionTitle="新規ユーザー登録">
 						<Register />
 					</SectionField>
 				</div>
-				<SectionField>
-					<div className="mb-6">
-						<h2>ユーザー一覧</h2>
-					</div>
+				<SectionField sectionTitle="ユーザー一覧">
 					<AdminUserList />
 				</SectionField>
 			</Main>

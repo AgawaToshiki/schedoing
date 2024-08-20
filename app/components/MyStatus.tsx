@@ -11,9 +11,6 @@ type Props = {
 const MyStatus = ({ user }: Props) => {
   return (
     <>
-      <div className="mb-6">
-        <h2>マイステータス</h2>
-      </div>
       <div>ユーザー名：{user.displayName}</div>
         <div className="flex items-center gap-1.5">
           <div>状態：</div>

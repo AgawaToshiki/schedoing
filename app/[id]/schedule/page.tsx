@@ -32,8 +32,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
           </div>
         ))}
       </div>
-      <SectionField>
-        Schedule
+      <SectionField sectionTitle="SchedulePanel">
         <div className="relative overflow-y-scroll">
           <div className="absolute"></div>
           <div></div>
