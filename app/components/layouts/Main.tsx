@@ -8,7 +8,7 @@ type Props = {
 
 const Main = ({ children, isAdmin }: Props) => {
   return (
-    <div className="flex h-screen overflow-hidden">
+    <div className="flex h-screen">
       <Header isAdmin={isAdmin}/>
       <div className="flex flex-col w-full p-6 bg-blue-100">
         {children}

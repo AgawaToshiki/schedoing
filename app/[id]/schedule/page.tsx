@@ -1,9 +1,9 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getSchedule, getUser, isAdminUser } from '@/app/utils/supabaseFunctions'
-import { getCurrentUser } from '@/app/utils/auth';
+import { getSchedule, getUser, isAdminUser } from '../../utils/supabaseFunctions';
+import { getCurrentUser } from '../../utils/auth';
 import Main from '../../components/layouts/Main';
-import SectionField from '@/app/components/layouts/SectionField';
+import SchedulePanel from '../../components/SchedulePanel';
 
 const Schedule = async({ params }: { params: { id: string } }) => {
   const authUser = await getCurrentUser();
@@ -21,47 +21,19 @@ const Schedule = async({ params }: { params: { id: string } }) => {
 
   return (
     <>
-    <Main isAdmin={isAdmin}>
-      <div>
-        {data?.displayName}
-        {data?.schedules.map((schedule) => (
-          <div key={schedule.id} className="flex flex-col">
-            <div>タイトル：{schedule.title}</div>
-            <div>開始時刻：{schedule.start_time}</div>
-            <div>終了時刻：{schedule.end_time}</div>
-          </div>
-        ))}
-      </div>
-      <SectionField sectionTitle="SchedulePanel">
-        <div className="relative overflow-y-scroll">
-          <div className="absolute"></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+      <Main isAdmin={isAdmin}>
+        <div>
+          {data?.displayName}
+          {data?.schedules.map((schedule) => (
+            <div key={schedule.id} className="flex flex-col">
+              <div>タイトル：{schedule.title}</div>
+              <div>開始時刻：{schedule.start_time}</div>
+              <div>終了時刻：{schedule.end_time}</div>
+            </div>
+          ))}
         </div>
-      </SectionField>
-    </Main>
-
+        <SchedulePanel />
+      </Main>
     </>
   )
 }

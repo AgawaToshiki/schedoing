@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { Database } from "@/database.types";
+import { Database } from "../../database.types";
 
 type User = Database['public']['Tables']['users']['Row'];
 
