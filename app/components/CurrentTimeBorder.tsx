@@ -1,10 +1,21 @@
-import React from 'react'
+'use client'
+import React, { useState } from 'react'
+import { useInterval } from '../hooks/useInterval';
 
-type Props = {
-  currentTimeHeight: number;
-}
+const CurrentTimeBorder = () => {
+  const currentDate = new Date();
+  const hours = currentDate.getHours();
+  const minutes = currentDate.getMinutes();
+  const currentTime = hours * 60 + minutes;
 
-const CurrentTimeBorder = ({ currentTimeHeight }: Props) => {
+  const [currentTimeHeight, setCurrentTimeHeight] = useState<number>(currentTime);
+
+  const getCurrentTimeHeight = () => {
+    setCurrentTimeHeight(currentTime);
+  }
+
+  useInterval(() => getCurrentTimeHeight())
+
   return (
     <>
       <div className="absolute z-10 w-full" style={{top:`${currentTimeHeight}px`}}>
