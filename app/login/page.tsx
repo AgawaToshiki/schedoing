@@ -4,10 +4,7 @@ import SectionField from '../components/layouts/SectionField'
 export default function Login() {
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
-      <SectionField>
-        <div className="mb-6">
-          <h2>ログイン</h2>
-        </div>
+      <SectionField sectionTitle="ログイン">
         <form>
           <div className="flex flex-col">
             <div>
