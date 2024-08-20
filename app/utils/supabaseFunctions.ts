@@ -61,7 +61,9 @@ export async function getSchedule(id: string) {
       role,
       schedules (
         id,
-        title
+        title,
+        start_time,
+        end_time
       )      
     `)
     .eq("id", id)
