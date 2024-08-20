@@ -10,7 +10,10 @@ const Header = async({ isAdmin }: Props) => {
 
   return (
     <header className="bg-blue-400">
-      <div className="flex flex-col justify-between w-[275px] h-full p-6">
+      <div className="flex flex-col gap-12 w-[275px] h-full p-6">
+        <div>
+          <h1 className="text-2xl">Share-do</h1>
+        </div>
         <div>
           <nav>
             <ul className="flex flex-col gap-3">
@@ -22,7 +25,7 @@ const Header = async({ isAdmin }: Props) => {
             </ul>
           </nav>
         </div>
-        <div>
+        <div className="mt-auto">
           <SignOutButton />
         </div>
       </div>
