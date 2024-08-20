@@ -1,6 +1,5 @@
 import React from 'react'
 import { Database } from '../../database.types';
-import SectionField from '../components/layouts/SectionField';
 
 
 type User = Database['public']['Tables']['users']['Row'];

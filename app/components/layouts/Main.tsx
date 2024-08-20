@@ -3,7 +3,7 @@ import Header from '../../components/layouts/Header';
 
 type Props = {
   isAdmin: boolean;
-  children: Readonly<React.ReactNode>
+  children: Readonly<React.ReactNode>;
 }
 
 const Main = ({ children, isAdmin }: Props) => {

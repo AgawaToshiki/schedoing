@@ -21,6 +21,7 @@ export default async function DashBoard() {
     redirect('/login')
   }
   const isAdmin = isAdminUser(user);
+
   const data: User[] | null = await getAllUser();
 
   return (

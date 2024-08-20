@@ -16,7 +16,7 @@ export async function getAllUser(): Promise<User[] | null> {
 
 export async function getUser(id: string): Promise<User | null> {
   const { data: user, error } = await supabase
-    .from("users")
+    .from('users')
     .select('*')
     .eq('id', id)
     .single();
@@ -50,4 +50,26 @@ export async function deleteUser(id: string) {
     .from('users')
     .delete()
     .eq('id', id);
+}
+
+export async function getSchedule(id: string) {
+  const {data, error} = await supabase
+    .from('users')
+    .select(`
+      id,
+      displayName,
+      role,
+      schedules (
+        id,
+        title
+      )      
+    `)
+    .eq("id", id)
+    .single();
+
+  if(error) {
+    console.error('Error getSchedule:', error);
+  }
+
+  return data
 }
