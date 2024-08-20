@@ -32,7 +32,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
             </div>
           ))}
         </div>
-        <SchedulePanel />
+        <SchedulePanel schedules={data?.schedules}/>
       </Main>
     </>
   )
