@@ -5,7 +5,7 @@ import { Database } from '../database.types';
 import Main from './components/layouts/Main';
 import UserList from "./components/UserList";
 import MyStatus from './components/MyStatus';
-import Schedule from './components/Schedule';
+import RegisterSchedule from './components/RegisterSchedule';
 import SectionField from './components/layouts/SectionField';
 
 
@@ -34,7 +34,7 @@ export default async function DashBoard() {
         </div>
         <div className="mb-10">
         <SectionField sectionTitle="新規スケジュール">
-          <Schedule />
+          <RegisterSchedule />
         </SectionField>
         </div>
         <div className="mb-6">

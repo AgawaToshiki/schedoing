@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import TimePicker from '../components/TimePicker';
+import TimePicker from './TimePicker';
 
-const Schedule = () => {
+const RegisterSchedule = () => {
   //初期時刻を直近の15分刻みの時刻に設定
   const initialDate = new Date();
   const minutes = initialDate.getMinutes();
@@ -65,4 +65,4 @@ const Schedule = () => {
   )
 }
 
-export default Schedule
+export default RegisterSchedule
