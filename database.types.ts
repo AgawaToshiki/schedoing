@@ -12,24 +12,24 @@ export type Database = {
       users: {
         Row: {
           created_at: string
-          displayName: string | null
-          email: string | null
+          displayName: string
+          email: string
           id: string
           role: string
           status: string
         }
         Insert: {
           created_at?: string
-          displayName?: string | null
-          email?: string | null
+          displayName?: string
+          email?: string
           id?: string
           role: string
           status?: string
         }
         Update: {
           created_at?: string
-          displayName?: string | null
-          email?: string | null
+          displayName?: string
+          email?: string
           id?: string
           role?: string
           status?: string
