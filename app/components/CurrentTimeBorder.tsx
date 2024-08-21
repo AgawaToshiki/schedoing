@@ -18,7 +18,7 @@ const CurrentTimeBorder = () => {
 
   return (
     <>
-      <div className="absolute z-10 w-full" style={{top:`${currentTimeHeight}px`}}>
+      <div className="absolute z-50 w-full" style={{top:`${currentTimeHeight}px`}}>
         <div className='h-0 w-full'>
           <div className='w-full border-t-4 border-red-400 rounded-sm'></div>
         </div>
