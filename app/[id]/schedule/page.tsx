@@ -22,15 +22,8 @@ const Schedule = async({ params }: { params: { id: string } }) => {
   return (
     <>
       <Main isAdmin={isAdmin}>
-        <div>
+        <div className="mb-6">
           {data?.displayName}
-          {data?.schedules.map((schedule) => (
-            <div key={schedule.id} className="flex flex-col">
-              <div>タイトル：{schedule.title}</div>
-              <div>開始時刻：{schedule.start_time}</div>
-              <div>終了時刻：{schedule.end_time}</div>
-            </div>
-          ))}
         </div>
         <SchedulePanel schedules={data?.schedules}/>
       </Main>
