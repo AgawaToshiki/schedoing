@@ -12,12 +12,14 @@ type Props = {
 };
 
 const TimePicker = (props: Props) => {
+  
   const handleChange = (date: Date | null) => {
     if(date) {
       props.setter(date);
       props.onChange && props.onChange(date);
     }
   }
+
   return (
     <>
       <DatePicker

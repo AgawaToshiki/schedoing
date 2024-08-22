@@ -1,26 +1,40 @@
 'use client'
 import React, { useState } from 'react'
-import TimePicker from './TimePicker';
+import TimePicker from '../components/TimePicker';
 
 const RegisterSchedule = () => {
   //初期時刻を直近の15分刻みの時刻に設定
-  const initialDate = new Date();
-  const minutes = initialDate.getMinutes();
+  const defaultStartDate = new Date();
+  const minutes = defaultStartDate.getMinutes();
   const remainder = minutes % 15;
-  initialDate.setMinutes(minutes + (15 - remainder));
+  defaultStartDate.setMinutes(minutes + (15 - remainder));
+  defaultStartDate.setSeconds(0);
+  defaultStartDate.setMilliseconds(0);
+  //デフォルト終了時刻は開始時刻+15分
+  const defaultEndDate = new Date(defaultStartDate.getTime());
+  defaultEndDate.setMinutes(defaultStartDate.getMinutes() + 15);
 
-
-  const [startTime, setStartTime] = useState<Date>(initialDate);
-  const [endTime, setEndTime] = useState<Date>(initialDate);
+  const [startTime, setStartTime] = useState<Date>(defaultStartDate);
+  const [endTime, setEndTime] = useState<Date>(defaultEndDate);
   const [title, setTitle] = useState<string>("");
 
 
-  const handleStartTime = (startTime: Date) => {
-    setStartTime(startTime)
+  const handleChangeStartTime = (newStartTime: Date) => {
+    //設定した開始時刻が終了時刻より後の場合は終了時刻を開始時刻+15分に設定
+    if(newStartTime.getTime() >= endTime.getTime()){
+      const newEndTime = new Date(newStartTime.getTime());
+      newEndTime.setMinutes(newEndTime.getMinutes() + 15);
+      setEndTime(newEndTime);
+    }
   }
 
-  const handleEndTime = () => {
-    
+  const handleChangeEndTime = (newEndTime: Date) => {
+    //設定した終了時刻が開始時刻より前の場合は開始時刻を終了時刻-15分に設定
+    if(newEndTime.getTime() <= startTime.getTime()){
+      const newStartTime = new Date(newEndTime.getTime());
+      newStartTime.setMinutes(newStartTime.getMinutes() - 15);
+      setStartTime(newStartTime);
+    }
   }
 
   const handleRegisterSchedule = () => {
@@ -44,7 +58,7 @@ const RegisterSchedule = () => {
             title='開始'
             value={startTime}
             setter={setStartTime}
-            onChange={handleStartTime}
+            onChange={handleChangeStartTime}
           />
           <TimePicker
             id='endTime'
@@ -52,7 +66,7 @@ const RegisterSchedule = () => {
             title='終了'
             value={endTime}
             setter={setEndTime}
-            onChange={handleEndTime}
+            onChange={handleChangeEndTime}
           />
         </div>
         <button 
