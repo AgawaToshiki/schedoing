@@ -80,3 +80,12 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
 
   return data
 }
+
+export async function registerSchedule(id: string, startTime: Date, endTime: Date, title: string): Promise<void>{
+  const { error } = await supabase
+    .from('schedules')
+    .insert({ 'user_id': id, 'start_time': startTime, 'end_time': endTime, 'title': title })
+    if(error) {
+      console.error(error);
+    }
+}

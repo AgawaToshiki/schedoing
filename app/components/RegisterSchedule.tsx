@@ -37,43 +37,68 @@ const RegisterSchedule = () => {
     }
   }
 
-  const handleRegisterSchedule = () => {
+  const handleSubmit = async(e: React.FormEvent) => {
+    e.preventDefault();
+    try{
+      const response = await fetch('../api/registerSchedule', {
+        cache: "no-store",
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ startTime, endTime, title }),
+      })
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data.error, data.status);
+      }
+      setStartTime(defaultStartDate);
+      setEndTime(defaultEndDate);
+      setTitle("");
+
+    }catch(err){
+      console.error(err);
+    }
   }
 
   return (
     <>
       <div className="w-[300px]">
-        <input 
-          type="text"
-          placeholder="タイトル"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
-        />
-        <div className="flex">
-          <TimePicker
-            id='startTime'
-            name='startTime'
-            title='開始'
-            value={startTime}
-            setter={setStartTime}
-            onChange={handleChangeStartTime}
+        <form action="" onSubmit={handleSubmit}>
+          <input 
+            type="text"
+            name="title"
+            placeholder="タイトル"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
           />
-          <TimePicker
-            id='endTime'
-            name='endTime'
-            title='終了'
-            value={endTime}
-            setter={setEndTime}
-            onChange={handleChangeEndTime}
-          />
-        </div>
-        <button 
-          onClick={handleRegisterSchedule}
-          className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
-            +
-        </button>
+          <div className="flex">
+            <TimePicker
+              id='startTime'
+              name='startTime'
+              title='開始'
+              value={startTime}
+              setter={setStartTime}
+              onChange={handleChangeStartTime}
+            />
+            <TimePicker
+              id='endTime'
+              name='endTime'
+              title='終了'
+              value={endTime}
+              setter={setEndTime}
+              onChange={handleChangeEndTime}
+            />
+          </div>
+          <button 
+            type="submit"
+            className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
+              +
+          </button>
+        </form>
       </div>
     </>
   )
