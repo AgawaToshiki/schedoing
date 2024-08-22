@@ -40,7 +40,7 @@ export function isAdminUser(user: User | null): boolean {
   return false;
 }
 
-export async function updateStatus(userId: string, status: string) {
+export async function updateStatus(userId: string, status: string): Promise<void> {
   const { error } = await supabase
     .from('users')
     .update({ status: status })

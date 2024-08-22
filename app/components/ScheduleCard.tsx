@@ -38,8 +38,8 @@ const ScheduleCard = ({ schedule }: Props) => {
         className="flex items-center justify-center gap-10 absolute z-30 w-[80%] left-0 right-0 mx-auto border border-green-500 shadow-md rounded-lg bg-green-300 hover:bg-green-500"
         style={{height:`${height}px`, top:`${startMinutes}px`}}
       >
-        <div className="text-xl z-30">{schedule.title}</div>
-        <div className="text-xl z-30">{formatStartTime}～{formatEndTime}</div>
+        <div className="text-xl z-30 select-none">{schedule.title}</div>
+        <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
       </div>
     </>
   )
