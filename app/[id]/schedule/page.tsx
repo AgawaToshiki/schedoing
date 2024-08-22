@@ -5,6 +5,7 @@ import { getCurrentUser } from '../../utils/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/SchedulePanel';
 
+
 const Schedule = async({ params }: { params: { id: string } }) => {
   const authUser = await getCurrentUser();
   if(!authUser || !authUser.id){
@@ -18,6 +19,9 @@ const Schedule = async({ params }: { params: { id: string } }) => {
   const isAdmin = isAdminUser(user);
 
   const data = await getSchedule(params.id);
+  if(!data){
+    redirect('/login')
+  }
 
   return (
     <>
@@ -25,7 +29,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
         <div className="mb-6">
           {data?.displayName}
         </div>
-        <SchedulePanel schedules={data?.schedules}/>
+        <SchedulePanel schedules={data.schedules}/>
       </Main>
     </>
   )

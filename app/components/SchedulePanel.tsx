@@ -1,14 +1,13 @@
 import React from 'react'
-import CurrentTimeBorder from '../components/CurrentTimeBorder'
-import ScheduleCard from '../components/ScheduleCard'
+import { Database } from '../../database.types';
+import CurrentTimeBorder from '../components/CurrentTimeBorder';
+import ScheduleCard from '../components/ScheduleCard';
+
+type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
+type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
 
 type Props = {
-  schedules: {
-    id: string,
-    title: string,
-    start_time: Date,
-    end_time: Date
-  }[] | undefined
+  schedules: Schedule[] | null
 }
 
 const SchedulePanel = ({schedules}: Props) => {

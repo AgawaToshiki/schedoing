@@ -1,20 +1,19 @@
 import React from 'react'
+import { Database } from '../../database.types';
 import { format } from "date-fns";
 
+type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
+type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
+
 type Props = {
-  schedule: {
-    id: string,
-    title: string,
-    start_time: Date,
-    end_time: Date
-  }
+  schedule: Schedule
 }
 
 const ScheduleCard = ({ schedule }: Props) => {
   
-  const calculateHeight = (startTime: Date, endTime: Date): { startMinutes: number, result: number } => {
-    const getTotalMinutes = (date: Date): number => {
-      const getDate = new Date(date);
+  const calculateHeight = (startTime: string, endTime: string): { startMinutes: number, result: number } => {
+    const getTotalMinutes = (timestamp: string): number => {
+      const getDate = new Date(timestamp);
       const hours = getDate.getHours();
       const minutes = getDate.getMinutes();
       const sum = hours * 60 + minutes;

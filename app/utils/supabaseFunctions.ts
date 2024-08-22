@@ -3,6 +3,11 @@ import { supabase } from '../lib/supabase';
 
 
 type User = Database['public']['Tables']['users']['Row'];
+type Schedule = Database['public']['Tables']['schedules']['Row'];
+
+type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
+  schedules: Pick<Schedule, 'id' | 'title' | 'start_time' | 'end_time'>[] | null
+ }
 
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
@@ -52,7 +57,7 @@ export async function deleteUser(id: string) {
     .eq('id', id);
 }
 
-export async function getSchedule(id: string) {
+export async function getSchedule(id: string): Promise<UserWithSchedule | null> {
   const {data, error} = await supabase
     .from('users')
     .select(`
@@ -69,7 +74,7 @@ export async function getSchedule(id: string) {
     .eq("id", id)
     .single();
 
-  if(error) {
+  if(!data || error) {
     console.error('Error getSchedule:', error);
   }
 
