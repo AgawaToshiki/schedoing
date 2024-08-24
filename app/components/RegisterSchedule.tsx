@@ -40,7 +40,7 @@ const RegisterSchedule = () => {
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     try{
-      const response = await fetch('../api/registerSchedule', {
+      const response = await fetch('../api/schedule/register', {
         cache: "no-store",
         method: "POST",
         headers: {
