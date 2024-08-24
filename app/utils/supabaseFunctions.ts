@@ -89,3 +89,13 @@ export async function registerSchedule(id: string, startTime: Date, endTime: Dat
       console.error(error);
     }
 }
+
+export async function deleteAllSchedule(): Promise<void>{
+  const { error } = await supabase
+    .from('schedules')
+    .delete()
+
+    if(error) {
+      console.error(error);
+    }
+}
