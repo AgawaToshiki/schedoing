@@ -37,7 +37,7 @@ const RegisterSchedule = () => {
     }
   }
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
       const response = await fetch('../api/schedule/register', {
@@ -72,7 +72,7 @@ const RegisterSchedule = () => {
             name="title"
             placeholder="タイトル"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
             className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
           />
           <div className="flex">
