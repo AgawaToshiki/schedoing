@@ -26,6 +26,8 @@ const RegisterSchedule = () => {
       newEndTime.setMinutes(newEndTime.getMinutes() + 15);
       setEndTime(newEndTime);
     }
+    console.log("starttime:", startTime);
+    console.log("endtime:", endTime);
   }
 
   const handleChangeEndTime = (newEndTime: Date) => {
@@ -35,6 +37,8 @@ const RegisterSchedule = () => {
       newStartTime.setMinutes(newStartTime.getMinutes() - 15);
       setStartTime(newStartTime);
     }
+    console.log("starttime:", startTime);
+    console.log("endtime:", endTime);
   }
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
