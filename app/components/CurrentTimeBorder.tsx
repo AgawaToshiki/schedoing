@@ -3,15 +3,17 @@ import React, { useState } from 'react'
 import { useInterval } from '../hooks/useInterval';
 
 const CurrentTimeBorder = () => {
-  const currentDate = new Date();
-  const hours = currentDate.getHours();
-  const minutes = currentDate.getMinutes();
-  const currentTime = hours * 60 + minutes;
-
-  const [currentTimeHeight, setCurrentTimeHeight] = useState<number>(currentTime);
+  const getCurrentTime = () => {
+    const currentDate = new Date();
+    const hours = currentDate.getHours();
+    const minutes = currentDate.getMinutes();
+    const currentTime = hours * 60 + minutes;
+    return currentTime
+  }
+  const [currentTimeHeight, setCurrentTimeHeight] = useState<number>(getCurrentTime());
 
   const getCurrentTimeHeight = () => {
-    setCurrentTimeHeight(currentTime);
+    setCurrentTimeHeight(getCurrentTime());
   }
 
   useInterval(() => getCurrentTimeHeight())
