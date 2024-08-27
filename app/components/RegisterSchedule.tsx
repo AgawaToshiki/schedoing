@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import TimePicker from '../components/TimePicker';
 
 const RegisterSchedule = () => {
+
   //初期時刻を直近の15分刻みの時刻に設定
   const defaultStartDate = new Date();
   const minutes = defaultStartDate.getMinutes();
@@ -26,8 +27,6 @@ const RegisterSchedule = () => {
       newEndTime.setMinutes(newEndTime.getMinutes() + 15);
       setEndTime(newEndTime);
     }
-    console.log("starttime:", startTime);
-    console.log("endtime:", endTime);
   }
 
   const handleChangeEndTime = (newEndTime: Date) => {
@@ -37,12 +36,36 @@ const RegisterSchedule = () => {
       newStartTime.setMinutes(newStartTime.getMinutes() - 15);
       setStartTime(newStartTime);
     }
-    console.log("starttime:", startTime);
-    console.log("endtime:", endTime);
   }
+
+  const filterStartTime = (time: Date): boolean => {
+    const selectedDate = new Date(time);
+
+    // 23:45 を選択不可にする
+    const hour = selectedDate.getHours();
+    const minutes = selectedDate.getMinutes();
+
+    return !(hour === 23 && minutes === 45);
+  };
+
+  const filterEndTime = (time: Date): boolean => {
+    const selectedDate = new Date(time);
+
+    // 00:00 を選択不可にする
+    const hour = selectedDate.getHours();
+    const minutes = selectedDate.getMinutes();
+
+    return !(hour === 0 && minutes === 0);
+  };
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!title) {
+      throw new Error("title is null")
+    }
+    if(startTime.getTime() >= endTime.getTime()) {
+      throw new Error("Schedule Error")
+    }
     try{
       const response = await fetch('../api/schedule/register', {
         cache: "no-store",
@@ -78,6 +101,7 @@ const RegisterSchedule = () => {
             value={title}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
             className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+            required
           />
           <div className="flex">
             <TimePicker
@@ -85,6 +109,7 @@ const RegisterSchedule = () => {
               name='startTime'
               title='開始'
               value={startTime}
+              filterTime={filterStartTime}
               setter={setStartTime}
               onChange={handleChangeStartTime}
             />
@@ -93,6 +118,7 @@ const RegisterSchedule = () => {
               name='endTime'
               title='終了'
               value={endTime}
+              filterTime={filterEndTime}
               setter={setEndTime}
               onChange={handleChangeEndTime}
             />
