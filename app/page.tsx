@@ -32,11 +32,6 @@ export default async function DashBoard() {
             <MyStatus user={user}/>
           </SectionField>
         </div>
-        <div className="mb-10">
-        <SectionField sectionTitle="新規スケジュール">
-          <RegisterSchedule />
-        </SectionField>
-        </div>
         <div className="mb-6">
           <h2>DashBoard</h2>
         </div>

@@ -7,7 +7,7 @@ type Props = {
 
 const SectionField = ({ sectionTitle, children }: Props) => {
   return (
-    <div className="flex flex-col justify-center mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
+    <div className="flex flex-col justify-center p-6 border border-gray-200 rounded-md shadow-md bg-white">
       <div className="mb-6">
         <h2>{sectionTitle}</h2>
       </div>

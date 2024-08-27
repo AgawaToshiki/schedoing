@@ -4,6 +4,8 @@ import { getSchedule, getUser, isAdminUser } from '../../utils/supabaseFunctions
 import { getCurrentUser } from '../../utils/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/SchedulePanel';
+import SectionField from '../../components/layouts/SectionField';
+import RegisterSchedule from '../../components/RegisterSchedule';
 
 
 const Schedule = async({ params }: { params: { id: string } }) => {
@@ -28,6 +30,11 @@ const Schedule = async({ params }: { params: { id: string } }) => {
       <Main isAdmin={isAdmin}>
         <div className="mb-6">
           {data?.displayName}
+        </div>
+        <div className="mb-10">
+        <SectionField sectionTitle="新規スケジュール">
+          <RegisterSchedule />
+        </SectionField>
         </div>
         <SchedulePanel schedules={data.schedules}/>
       </Main>
