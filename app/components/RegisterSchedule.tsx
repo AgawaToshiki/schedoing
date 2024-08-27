@@ -64,7 +64,7 @@ const RegisterSchedule = () => {
       throw new Error("title is null")
     }
     if(startTime.getTime() >= endTime.getTime()) {
-      throw new Error("Schedule Error")
+      throw new Error("Schedule time Error")
     }
     try{
       const response = await fetch('../api/schedule/register', {
