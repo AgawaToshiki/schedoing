@@ -69,7 +69,7 @@ const RegisterSchedule = () => {
 
   return (
     <>
-      <div className="w-[300px]">
+      <div className="relative z-50 w-[300px]">
         <form action="" onSubmit={handleSubmit}>
           <input 
             type="text"
