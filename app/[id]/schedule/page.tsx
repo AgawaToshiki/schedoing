@@ -31,11 +31,13 @@ const Schedule = async({ params }: { params: { id: string } }) => {
         <div className="mb-6">
           {data?.displayName}
         </div>
-        <div className="mb-10">
-        <SectionField sectionTitle="新規スケジュール">
-          <RegisterSchedule />
-        </SectionField>
-        </div>
+        {user.id === params.id && (
+          <div className="mb-10">
+            <SectionField sectionTitle="新規スケジュール">
+              <RegisterSchedule />
+            </SectionField>
+          </div>
+        )}
         <SchedulePanel schedules={data.schedules}/>
       </Main>
     </>
