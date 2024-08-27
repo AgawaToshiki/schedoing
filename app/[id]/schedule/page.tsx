@@ -27,7 +27,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <Main isAdmin={isAdmin}>
+      <Main isAdmin={isAdmin} id={user.id}>
         <div className="mb-6">
           {data?.displayName}
         </div>

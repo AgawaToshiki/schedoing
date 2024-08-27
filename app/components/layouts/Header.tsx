@@ -4,9 +4,10 @@ import SignOutButton from '../../components/elements/SignOutButton';
 
 type Props = {
   isAdmin: boolean;
+  id: string;
 }
 
-const Header = async({ isAdmin }: Props) => {
+const Header = async({ isAdmin, id }: Props) => {
 
   return (
     <header className="bg-blue-400">
@@ -17,11 +18,15 @@ const Header = async({ isAdmin }: Props) => {
         <div>
           <nav>
             <ul className="flex flex-col gap-3">
-              <li><Link href="/">ダッシュボード</Link></li>
-              <li className={`${isAdmin ? "block" : "hidden"}`}><Link href="/user">ユーザー管理</Link></li>
-              <li></li>
-              <li></li>
-              <li></li>
+              <li>
+                <Link href="/">ダッシュボード</Link>
+              </li>
+              <li>
+                <Link href={`/${id}/schedule#currentTimeBorder`}>スケジュール管理</Link>
+              </li>
+              <li className={`${isAdmin ? "block" : "hidden"}`}>
+                <Link href="/user">ユーザー管理</Link>
+              </li>
             </ul>
           </nav>
         </div>

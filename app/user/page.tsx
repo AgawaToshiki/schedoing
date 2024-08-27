@@ -24,7 +24,7 @@ const User = async() => {
 
 		return (
     <>
-			<Main isAdmin={isAdmin}>
+			<Main isAdmin={isAdmin} id={user.id}>
 				<div className="mb-10">
 					<SectionField sectionTitle="新規ユーザー登録">
 						<Register />

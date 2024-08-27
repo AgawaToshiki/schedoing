@@ -3,13 +3,14 @@ import Header from '../../components/layouts/Header';
 
 type Props = {
   isAdmin: boolean;
+  id: string;
   children: Readonly<React.ReactNode>;
 }
 
-const Main = ({ children, isAdmin }: Props) => {
+const Main = ({ children, isAdmin, id }: Props) => {
   return (
     <div className="flex h-screen">
-      <Header isAdmin={isAdmin}/>
+      <Header isAdmin={isAdmin} id={id}/>
       <div className="flex flex-col w-full p-6 bg-blue-100">
         {children}
       </div>

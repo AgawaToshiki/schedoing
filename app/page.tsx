@@ -5,7 +5,6 @@ import { Database } from '../database.types';
 import Main from './components/layouts/Main';
 import UserList from "./components/UserList";
 import MyStatus from './components/MyStatus';
-import RegisterSchedule from './components/RegisterSchedule';
 import SectionField from './components/layouts/SectionField';
 
 
@@ -26,7 +25,7 @@ export default async function DashBoard() {
 
   return (
     <>
-      <Main isAdmin={isAdmin}>
+      <Main isAdmin={isAdmin} id={user.id}>
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
