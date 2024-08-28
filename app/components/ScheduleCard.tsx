@@ -51,7 +51,10 @@ const ScheduleCard = ({ schedule }: Props) => {
         <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
       </div>
       {isShow && (
-        <EditScheduleModal isShow={isShow} />
+        <EditScheduleModal
+          isShow={isShow} 
+          setter={setShow}
+        />
       )}
 
     </>

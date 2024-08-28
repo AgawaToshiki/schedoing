@@ -4,13 +4,14 @@ import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react
 type Props = {
   isShow: boolean;
   setter: React.Dispatch<React.SetStateAction<boolean>>;
+  children: Readonly<React.ReactNode>;
 }
 
-const EditScheduleModal = ({ isShow, setter }: Props) => {
+const Modal = ({ isShow, setter }: Props) => {
   return (
     <>
       <Dialog open={isShow} onClose={() => setter(false)} className="relative z-50">
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-50">
+        <div className="fixed inset-0 flex items-center justify-center">
           <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
             <DialogTitle className="font-bold">Deactivate account</DialogTitle>
             <Description>This will permanently deactivate your account</Description>
@@ -20,11 +21,10 @@ const EditScheduleModal = ({ isShow, setter }: Props) => {
               <button onClick={() => setter(false)}>Deactivate</button>
             </div>
           </DialogPanel>
-          </div>
+        </div>
       </Dialog>
     </>
-
   )
 }
 
-export default EditScheduleModal
+export default Modal
