@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
-import { Database } from '../../database.types';
+import { Database } from '@/database.types';
 import { format } from "date-fns";
-import EditScheduleModal from './EditScheduleModal';
+import EditScheduleModal from '../components/EditScheduleModal';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
@@ -54,6 +54,7 @@ const ScheduleCard = ({ schedule }: Props) => {
         <EditScheduleModal
           isShow={isShow} 
           setter={setShow}
+          schedule={schedule}
         />
       )}
 

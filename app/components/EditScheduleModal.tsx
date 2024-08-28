@@ -1,27 +1,104 @@
-import React from 'react'
-import { Description, Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
+import React, { useState } from 'react'
+import { Database } from '@/database.types';
+import Modal from '../components/layouts/Modal';
+import TimePicker from '../components/TimePicker';
+
+type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
+type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
+
 
 type Props = {
   isShow: boolean;
+  schedule: Schedule;
   setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditScheduleModal = ({ isShow, setter }: Props) => {
+const EditScheduleModal = ({ isShow, schedule, setter }: Props) => {
+  
+  const [startTime, setStartTime] = useState<Date>(new Date(schedule.start_time));
+  const [endTime, setEndTime] = useState<Date>(new Date(schedule.end_time));
+  const [title, setTitle] = useState<string>(schedule.title);
+
+
+  const handleChangeStartTime = (newStartTime: Date) => {
+    //設定した開始時刻が終了時刻より後の場合は終了時刻を開始時刻+15分に設定
+    if(newStartTime.getTime() >= endTime.getTime()){
+      const newEndTime = new Date(newStartTime.getTime());
+      newEndTime.setMinutes(newEndTime.getMinutes() + 15);
+      setEndTime(newEndTime);
+    }
+  }
+
+  const handleChangeEndTime = (newEndTime: Date) => {
+    //設定した終了時刻が開始時刻より前の場合は開始時刻を終了時刻-15分に設定
+    if(newEndTime.getTime() <= startTime.getTime()){
+      const newStartTime = new Date(newEndTime.getTime());
+      newStartTime.setMinutes(newStartTime.getMinutes() - 15);
+      setStartTime(newStartTime);
+    }
+  }
+
+  const filterStartTime = (time: Date): boolean => {
+    const selectedDate = new Date(time);
+
+    // 23:45 を選択不可にする
+    const hour = selectedDate.getHours();
+    const minutes = selectedDate.getMinutes();
+
+    return !(hour === 23 && minutes === 45);
+  };
+
+  const filterEndTime = (time: Date): boolean => {
+    const selectedDate = new Date(time);
+
+    // 00:00 を選択不可にする
+    const hour = selectedDate.getHours();
+    const minutes = selectedDate.getMinutes();
+
+    return !(hour === 0 && minutes === 0);
+  };
+
   return (
     <>
-      <Dialog open={isShow} onClose={() => setter(false)} className="relative z-50">
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-100 bg-opacity-50">
-          <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-            <DialogTitle className="font-bold">Deactivate account</DialogTitle>
-            <Description>This will permanently deactivate your account</Description>
-            <p>Are you sure you want to deactivate your account? All of your data will be permanently removed.</p>
-            <div className="flex gap-4">
-              <button onClick={() => setter(false)}>Cancel</button>
-              <button onClick={() => setter(false)}>Deactivate</button>
+      <Modal isShow={isShow} setter={setter} title="スケジュール詳細">
+        <form>
+          <div className="flex flex-col mb-6">
+            <input 
+              type="text"
+              name="title"
+              placeholder="タイトル"
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              required
+            />
+            <div className="flex">
+              <TimePicker
+                id='startTime'
+                name='startTime'
+                title='開始'
+                value={startTime}
+                filterTime={filterStartTime}
+                setter={setStartTime}
+                onChange={handleChangeStartTime}
+              />
+              <TimePicker
+                id='endTime'
+                name='endTime'
+                title='終了'
+                value={endTime}
+                filterTime={filterEndTime}
+                setter={setEndTime}
+                onChange={handleChangeEndTime}
+              />
             </div>
-          </DialogPanel>
           </div>
-      </Dialog>
+          <div className="flex gap-4 justify-end">
+            <button onClick={() => setter(false)}>削除</button>
+            <button onClick={() => setter(false)}>更新</button>
+          </div>
+        </form>
+      </Modal>
     </>
 
   )
