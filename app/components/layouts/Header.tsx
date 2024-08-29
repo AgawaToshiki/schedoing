@@ -15,7 +15,7 @@ const Header = async({ isAdmin, id }: Props) => {
       showFlag: true
     },
     {
-      href: `${id}/schedule#currentTimeBorder`,
+      href: `/${id}/schedule#currentTimeBorder`,
       title: "スケジュール管理",
       showFlag: true
     },
