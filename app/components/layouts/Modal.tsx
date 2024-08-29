@@ -21,7 +21,7 @@ const Modal = ({ isOpen, setter, title, children }: Props) => {
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
         <div className="fixed inset-0 flex items-center justify-center">
           <DialogPanel
-            className="max-w-lg bg-blue-100 rounded-md shadow-md"
+            className="max-w-lg w-full bg-blue-100 rounded-md shadow-md"
           >
             <div className="flex items-center justify-between bg-blue-400 p-6 rounded-t-md">
               <DialogTitle className="font-bold">{title}</DialogTitle>

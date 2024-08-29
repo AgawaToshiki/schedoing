@@ -81,7 +81,7 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
   return data
 }
 
-export async function registerSchedule(userId: string, title: string, startTime: Date, endTime: Date): Promise<void>{
+export async function registerSchedule(userId: string, title: string, startTime: Date, endTime: Date): Promise<void> {
   const { error } = await supabase
     .from('schedules')
     .insert({ 'user_id': userId, 'start_time': startTime, 'end_time': endTime, 'title': title })
@@ -91,7 +91,7 @@ export async function registerSchedule(userId: string, title: string, startTime:
   }
 }
 
-export async function updateSchedule(id: string, title: string, startTime: Date, endTime: Date): Promise<void>{
+export async function updateSchedule(id: string, title: string, startTime: Date, endTime: Date): Promise<void> {
   const { error } = await supabase
     .from('schedules')
     .update({ 'start_time': startTime, 'end_time': endTime, 'title': title })
@@ -103,7 +103,19 @@ export async function updateSchedule(id: string, title: string, startTime: Date,
   }
 }
 
-export async function deleteAllSchedule(): Promise<void>{
+export async function deleteSchedule(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('schedules')
+    .delete()
+    .eq("id", id)
+    .single()
+
+  if(error) {
+    console.error(error);
+  }
+}
+
+export async function deleteAllSchedule(): Promise<void> {
   const { error } = await supabase
     .from('schedules')
     .delete()

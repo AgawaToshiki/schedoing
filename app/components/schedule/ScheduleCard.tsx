@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import { Database } from '@/database.types';
 import { format } from "date-fns";
-import EditScheduleModal from '../../components/schedule/EditScheduleModal';
+import ScheduleModal from '../../components/schedule/ScheduleModal';
+import DeleteSchedule from '../../components/schedule/DeleteSchedule';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
@@ -36,22 +37,25 @@ const ScheduleCard = ({ schedule }: Props) => {
   const formatStartTime = format(schedule.start_time, "k:mm");
   const formatEndTime = format(schedule.end_time, "k:mm");
 
-  const handleShowModal = () => {
+  const handleOpenModal = () => {
     setIsOpen(true);
   }
+
+
 
   return (
     <>
       <div 
         className="flex items-center justify-center gap-10 absolute z-30 w-[80%] left-0 right-0 mx-auto border border-green-500 shadow-md rounded-lg bg-green-300 hover:bg-green-500 cursor-pointer"
         style={{height:`${height}px`, top:`${startMinutes}px`}}
-        onClick={handleShowModal}
+        onClick={handleOpenModal}
       >
         <div className="text-xl z-30 select-none">{schedule.title}</div>
         <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
+        <DeleteSchedule id={schedule.id} />
       </div>
       {isOpen && (
-        <EditScheduleModal
+        <ScheduleModal
           isOpen={isOpen} 
           setter={setIsOpen}
           schedule={schedule}

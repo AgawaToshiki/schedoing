@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import { Database } from '@/database.types';
-import Modal from '../../components/layouts/Modal';
+import Modal from '../layouts/Modal';
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
@@ -14,7 +14,7 @@ type Props = {
   setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EditScheduleModal = ({ isOpen, schedule, setter }: Props) => {
+const ScheduleModal = ({ isOpen, schedule, setter }: Props) => {
 
   const scheduleStartTime = new Date(schedule.start_time);
   const scheduleEndTime = new Date(schedule.end_time);
@@ -30,8 +30,7 @@ const EditScheduleModal = ({ isOpen, schedule, setter }: Props) => {
           setter={setter}
           path="update"
         >
-          <div className="flex gap-4 justify-end">
-            <button onClick={() => setter(false)}>削除</button>
+          <div className="flex justify-end">
             <button type="submit">更新</button>
           </div>
         </ScheduleForm>
@@ -41,4 +40,4 @@ const EditScheduleModal = ({ isOpen, schedule, setter }: Props) => {
   )
 }
 
-export default EditScheduleModal
+export default ScheduleModal

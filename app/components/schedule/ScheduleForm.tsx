@@ -83,7 +83,7 @@ const ScheduleForm = (props: Props) => {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if(!response.ok){
         console.error(data.error, data.status);
       }
 
