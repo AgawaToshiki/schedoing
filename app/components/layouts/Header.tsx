@@ -8,6 +8,23 @@ type Props = {
 }
 
 const Header = async({ isAdmin, id }: Props) => {
+  const lists = [
+    {
+      href: "/",
+      title: "ダッシュボード",
+      showFlag: true
+    },
+    {
+      href: `${id}/schedule#currentTimeBorder`,
+      title: "スケジュール管理",
+      showFlag: true
+    },
+    {
+      href: "/user",
+      title: "ユーザー管理",
+      showFlag: isAdmin
+    },
+  ]
 
   return (
     <header className="bg-blue-400">
@@ -18,15 +35,13 @@ const Header = async({ isAdmin, id }: Props) => {
         <div>
           <nav>
             <ul className="flex flex-col gap-3">
-              <li>
-                <Link href="/">ダッシュボード</Link>
-              </li>
-              <li>
-                <Link href={`/${id}/schedule#currentTimeBorder`}>スケジュール管理</Link>
-              </li>
-              <li className={`${isAdmin ? "block" : "hidden"}`}>
-                <Link href="/user">ユーザー管理</Link>
-              </li>
+              {lists.map((list) => (
+                list.showFlag && (
+                  <li key={list.href}>
+                    <Link href={list.href}>{list.title}</Link>
+                  </li>
+                )
+              ))}
             </ul>
           </nav>
         </div>
