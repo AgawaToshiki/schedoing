@@ -9,10 +9,11 @@ type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
 
 type Props = {
-  schedule: Schedule
+  isOwn: boolean;
+  schedule: Schedule;
 }
 
-const ScheduleCard = ({ schedule }: Props) => {
+const ScheduleCard = ({ isOwn, schedule }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   
@@ -34,8 +35,8 @@ const ScheduleCard = ({ schedule }: Props) => {
   }
   const { startMinutes, result: height } = calculateHeight(schedule.start_time, schedule.end_time);
 
-  const formatStartTime = format(schedule.start_time, "k:mm");
-  const formatEndTime = format(schedule.end_time, "k:mm");
+  const formatStartTime = format(schedule.start_time, "H:mm");
+  const formatEndTime = format(schedule.end_time, "H:mm");
 
   const handleOpenModal = () => {
     setIsOpen(true);
@@ -52,7 +53,9 @@ const ScheduleCard = ({ schedule }: Props) => {
       >
         <div className="text-xl z-30 select-none">{schedule.title}</div>
         <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
-        <DeleteSchedule id={schedule.id} />
+        {isOwn && (
+          <DeleteSchedule id={schedule.id} />
+        )}
       </div>
       {isOpen && (
         <ScheduleModal

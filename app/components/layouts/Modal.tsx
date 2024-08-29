@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Dialog, DialogPanel, DialogTitle, DialogBackdrop, Button } from '@headlessui/react'
+import React from 'react'
+import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
 
 type Props = {
   isOpen: boolean;

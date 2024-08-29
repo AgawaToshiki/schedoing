@@ -25,6 +25,10 @@ const Schedule = async({ params }: { params: { id: string } }) => {
     redirect('/login')
   }
 
+  const isOwn = (): boolean => {
+    return user.id === params.id
+  }
+
   return (
     <>
       <Main isAdmin={isAdmin} id={user.id}>
@@ -38,7 +42,11 @@ const Schedule = async({ params }: { params: { id: string } }) => {
             </SectionField>
           </div>
         )}
-        <SchedulePanel schedulesData={data.schedules}/>
+        <SchedulePanel 
+          schedulesData={data.schedules} 
+          userId={params.id}
+          isOwn={isOwn()}
+        />
       </Main>
     </>
   )

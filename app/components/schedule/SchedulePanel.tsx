@@ -10,10 +10,12 @@ type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
 
 type Props = {
-  schedulesData: Schedule[] | null
+  userId: string;
+  isOwn: boolean;
+  schedulesData: Schedule[] | null;
 }
 
-const SchedulePanel = ({ schedulesData }: Props) => {
+const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
 
   const [schedules, setSchedules] = useState<Schedule[] | null>(schedulesData);
 
@@ -31,7 +33,13 @@ const SchedulePanel = ({ schedulesData }: Props) => {
   const listenScheduleData = async() => {
     const channel = supabase
       .channel('schedules')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'schedules' }, 
+      .on('postgres_changes',
+        { 
+          event: '*', 
+          schema: 'public', 
+          table: 'schedules',
+          filter: `user_id=eq.${userId}`
+        }, 
         (payload: RealtimePostgresChangesPayload<Schedule>) => {
           setSchedules((currentSchedules): Schedule[] | null => {
             if(!currentSchedules){
@@ -71,7 +79,7 @@ const SchedulePanel = ({ schedulesData }: Props) => {
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />
             {schedules?.map((schedule) => (
-              <ScheduleCard key={schedule.id} schedule={schedule} />
+              <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} />
             ))}
 
             {timeArray.map((index) => (
