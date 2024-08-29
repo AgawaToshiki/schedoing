@@ -112,25 +112,30 @@ const ScheduleForm = (props: Props) => {
             className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
             required
           />
-          <div className="flex">
-            <TimePicker
-              id='startTime'
-              name='startTime'
-              title='開始'
-              value={startTime}
-              filterTime={filterStartTime}
-              setter={setStartTime}
-              onChange={handleChangeStartTime}
-            />
-            <TimePicker
-              id='endTime'
-              name='endTime'
-              title='終了'
-              value={endTime}
-              filterTime={filterEndTime}
-              setter={setEndTime}
-              onChange={handleChangeEndTime}
-            />
+          <div className="flex items-center">
+            <div className="mr-2">
+              <TimePicker
+                id='startTime'
+                name='startTime'
+                title='開始'
+                value={startTime}
+                filterTime={filterStartTime}
+                setter={setStartTime}
+                onChange={handleChangeStartTime}
+              />
+            </div>
+            <div>～</div>
+            <div className="ml-2">
+              <TimePicker
+                id='endTime'
+                name='endTime'
+                title='終了'
+                value={endTime}
+                filterTime={filterEndTime}
+                setter={setEndTime}
+                onChange={handleChangeEndTime}
+              />
+            </div>
           </div>
         </div>
         {props.children}
