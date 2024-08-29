@@ -3,9 +3,9 @@ import { redirect } from 'next/navigation';
 import { getSchedule, getUser, isAdminUser } from '../../utils/supabaseFunctions';
 import { getCurrentUser } from '../../utils/auth';
 import Main from '../../components/layouts/Main';
-import SchedulePanel from '../../components/SchedulePanel';
+import SchedulePanel from '../../components/schedule/SchedulePanel';
 import SectionField from '../../components/layouts/SectionField';
-import RegisterSchedule from '../../components/RegisterSchedule';
+import RegisterSchedule from '../../components/schedule/RegisterSchedule';
 
 
 const Schedule = async({ params }: { params: { id: string } }) => {
@@ -38,7 +38,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
             </SectionField>
           </div>
         )}
-        <SchedulePanel schedules={data.schedules}/>
+        <SchedulePanel schedulesData={data.schedules}/>
       </Main>
     </>
   )

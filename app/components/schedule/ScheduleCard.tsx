@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { Database } from '@/database.types';
 import { format } from "date-fns";
-import EditScheduleModal from '../components/EditScheduleModal';
+import EditScheduleModal from '../../components/schedule/EditScheduleModal';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
@@ -13,7 +13,7 @@ type Props = {
 
 const ScheduleCard = ({ schedule }: Props) => {
 
-  const [isShow, setShow] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   
   const calculateHeight = (startTime: string, endTime: string): { startMinutes: number, result: number } => {
     const getTotalMinutes = (timestamp: string): number => {
@@ -37,7 +37,7 @@ const ScheduleCard = ({ schedule }: Props) => {
   const formatEndTime = format(schedule.end_time, "k:mm");
 
   const handleShowModal = () => {
-    setShow(true);
+    setIsOpen(true);
   }
 
   return (
@@ -50,10 +50,10 @@ const ScheduleCard = ({ schedule }: Props) => {
         <div className="text-xl z-30 select-none">{schedule.title}</div>
         <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
       </div>
-      {isShow && (
+      {isOpen && (
         <EditScheduleModal
-          isShow={isShow} 
-          setter={setShow}
+          isOpen={isOpen} 
+          setter={setIsOpen}
           schedule={schedule}
         />
       )}
