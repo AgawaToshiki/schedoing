@@ -65,6 +65,12 @@ const ScheduleForm = (props: Props) => {
     if(startTime.getTime() >= endTime.getTime()) {
       throw new Error("Schedule time Error")
     }
+    if(title === props.title && startTime === props.startTime && endTime === props.endTime) {
+      if(props.setter){
+        props.setter(false);
+      }
+      return
+    }
     try{
       const response = await fetch(`../../api/schedule/${props.path}`, {
         cache: "no-store",
