@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/auth';
-import { registerSchedule } from '@/app/utils/supabaseFunctions';
+import { updateSchedule } from '@/app/utils/supabaseFunctions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -11,8 +11,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if(!user || !user.id){
       redirect('/login')
     }
-    const data: { title: string, startTime: Date, endTime: Date } = await req.json();
-    await registerSchedule(user.id, data.title, data.startTime, data.endTime);
+    const data: { id: string, title: string, startTime: Date, endTime: Date } = await req.json();
+    await updateSchedule(data.id, data.title, data.startTime, data.endTime);
 
     return NextResponse.json({ status: 201 });
   }catch (error) {

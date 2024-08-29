@@ -81,13 +81,26 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
   return data
 }
 
-export async function registerSchedule(id: string, startTime: Date, endTime: Date, title: string): Promise<void>{
+export async function registerSchedule(userId: string, title: string, startTime: Date, endTime: Date): Promise<void>{
   const { error } = await supabase
     .from('schedules')
-    .insert({ 'user_id': id, 'start_time': startTime, 'end_time': endTime, 'title': title })
-    if(error) {
-      console.error(error);
-    }
+    .insert({ 'user_id': userId, 'start_time': startTime, 'end_time': endTime, 'title': title })
+
+  if(error) {
+    console.error(error);
+  }
+}
+
+export async function updateSchedule(id: string, title: string, startTime: Date, endTime: Date): Promise<void>{
+  const { error } = await supabase
+    .from('schedules')
+    .update({ 'start_time': startTime, 'end_time': endTime, 'title': title })
+    .eq("id", id)
+    .single()
+
+  if(error) {
+    console.error(error);
+  }
 }
 
 export async function deleteAllSchedule(): Promise<void>{
@@ -95,7 +108,7 @@ export async function deleteAllSchedule(): Promise<void>{
     .from('schedules')
     .delete()
 
-    if(error) {
-      console.error(error);
-    }
+  if(error) {
+    console.error(error);
+  }
 }
