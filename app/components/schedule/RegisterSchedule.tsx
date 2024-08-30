@@ -27,14 +27,8 @@ const RegisterSchedule = ({ isOwn }: Props) => {
           startTime={defaultStartDate} 
           endTime={defaultEndDate}
           isOwn={isOwn}
-          path="register"
-        >
-          <button
-            type="submit"
-            className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
-              +
-          </button>
-        </ScheduleForm>
+          name="register"
+        />
       </div>
     </>
   )

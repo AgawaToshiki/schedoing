@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
+import Button from '../../components/elements/button/Button';
 
 
 type Props = {
@@ -10,9 +11,7 @@ type Props = {
   endTime: Date;
   isOwn: boolean;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
-  setBtnAttr?: React.Dispatch<React.SetStateAction<boolean>>;
-  path: string;
-  children: Readonly<React.ReactNode>;
+  name: string;
 }
 
 const ScheduleForm = (props: Props) => {
@@ -20,19 +19,22 @@ const ScheduleForm = (props: Props) => {
   const [title, setTitle] = useState<string>(props.title);
   const [startTime, setStartTime] = useState<Date>(props.startTime);
   const [endTime, setEndTime] = useState<Date>(props.endTime);
+  const [disabled, setDisabled] = useState<boolean>(true);
+
+  const buttonAttrs: React.ButtonHTMLAttributes<HTMLButtonElement> = {
+    type: "submit",
+    disabled: disabled,
+  }
 
   const checkChangeState = (): void => {
-    if(!props.setBtnAttr) {
-      return
-    }
     if(
       title === props.title && 
       startTime.getTime() === props.startTime.getTime() && 
       endTime.getTime() === props.endTime.getTime()
     ){
-      props.setBtnAttr(true);
+      setDisabled(true);
     }else{
-      props.setBtnAttr(false);
+      setDisabled(false);
     }
   }
 
@@ -79,6 +81,30 @@ const ScheduleForm = (props: Props) => {
     return !(hour === 0 && minutes === 0);
   };
 
+  const renderSubmitButton = (): React.JSX.Element | null => {
+    if(props.name === 'register') {
+      return (
+        <button
+          type="submit"
+          className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
+            +
+        </button>
+      )
+    }
+    if(props.name === 'update') {
+      return (
+        <div className="flex justify-end">
+          <Button
+            attrs={buttonAttrs}
+          >
+            更新
+          </Button>
+        </div>
+      )
+    }
+    return null
+  }
+
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(!props.isOwn){
@@ -95,7 +121,7 @@ const ScheduleForm = (props: Props) => {
     }
 
     try{
-      const response = await fetch(`../../api/schedule/${props.path}`, {
+      const response = await fetch(`../../api/schedule/${props.name}`, {
         cache: "no-store",
         method: "POST",
         headers: {
@@ -161,7 +187,7 @@ const ScheduleForm = (props: Props) => {
             </div>
           </div>
         </div>
-        {props.children}
+        {renderSubmitButton()}
       </form>
     </>
   )
