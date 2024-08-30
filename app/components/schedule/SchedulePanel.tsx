@@ -1,10 +1,9 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Database } from '../../../database.types';
-import { supabase } from "../../lib/supabase";
 import CurrentTimeBorder from '../../components/CurrentTimeBorder';
 import ScheduleCard from '../../components/schedule/ScheduleCard';
-import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
+import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
@@ -17,60 +16,21 @@ type Props = {
 
 const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
 
-  const [schedules, setSchedules] = useState<Schedule[] | null>(schedulesData);
+  const schedules = useRealtimeListener<Schedule>({
+    table: 'schedules',
+    defaultData: schedulesData,
+    userId: userId,
+    isValidData: (obj: any): obj is Schedule => {
+      return (
+        typeof obj.id === 'string' &&
+        typeof obj.title === 'string' &&
+        obj.start_time instanceof Date &&
+        obj.end_time instanceof Date
+      );
+    }
+  })
 
   const timeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
-
-  const isValidSchedule = (obj: any): obj is Schedule => {
-    return (
-      typeof obj.id === 'string' &&
-      typeof obj.title === 'string' &&
-      obj.start_time instanceof Date &&
-      obj.end_time instanceof Date
-    );
-  }
-
-  const listenScheduleData = async() => {
-    const channel = supabase
-      .channel('schedules')
-      .on('postgres_changes',
-        { 
-          event: '*', 
-          schema: 'public', 
-          table: 'schedules',
-          filter: `user_id=eq.${userId}`
-        }, 
-        (payload: RealtimePostgresChangesPayload<Schedule>) => {
-          setSchedules((currentSchedules): Schedule[] | null => {
-            if(!currentSchedules){
-              if(isValidSchedule(payload.new)){
-                return [payload.new]
-              }
-              return null
-            }
-            switch(payload.eventType) {
-              case 'INSERT':
-                return [...currentSchedules, payload.new]
-              case 'UPDATE':
-                return currentSchedules.map((schedule) => (
-                  schedule.id === payload.new.id ? { ...schedule, ...payload.new } : schedule
-                ))
-              case 'DELETE':
-                return currentSchedules.filter(schedule => schedule.id !== payload.old.id)
-              default:
-                return currentSchedules
-            }
-          })
-        })
-      .subscribe()
-    return () => {
-      channel.unsubscribe();
-    };
-  }
-
-  useEffect(() => {
-    listenScheduleData();
-  }, [])
 
   return (
     <>
