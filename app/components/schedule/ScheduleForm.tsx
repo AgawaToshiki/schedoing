@@ -10,6 +10,7 @@ type Props = {
   endTime: Date;
   isOwn: boolean;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
+  setBtnAttr?: React.Dispatch<React.SetStateAction<boolean>>;
   path: string;
   children: Readonly<React.ReactNode>;
 }
@@ -75,6 +76,11 @@ const ScheduleForm = (props: Props) => {
       }
       return
     }
+    if(props.setBtnAttr){
+      console.log(props.setBtnAttr)
+      props.setBtnAttr(false);
+    }
+
     try{
       const response = await fetch(`../../api/schedule/${props.path}`, {
         cache: "no-store",
