@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 
 
@@ -20,6 +20,26 @@ const ScheduleForm = (props: Props) => {
   const [title, setTitle] = useState<string>(props.title);
   const [startTime, setStartTime] = useState<Date>(props.startTime);
   const [endTime, setEndTime] = useState<Date>(props.endTime);
+
+  const checkChangeState = (): void => {
+    if(!props.setBtnAttr) {
+      return
+    }
+    if(
+      title === props.title && 
+      startTime.getTime() === props.startTime.getTime() && 
+      endTime.getTime() === props.endTime.getTime()
+    ){
+      props.setBtnAttr(true);
+    }else{
+      props.setBtnAttr(false);
+    }
+  }
+
+  useEffect(() => {
+    checkChangeState();
+  }, [title, startTime, endTime])
+
 
   const handleChangeStartTime = (newStartTime: Date) => {
     //設定した開始時刻が終了時刻より後の場合は終了時刻を開始時刻+15分に設定
@@ -62,7 +82,7 @@ const ScheduleForm = (props: Props) => {
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if(!props.isOwn){
-      throw new Error("unauthorized user");
+      throw new Error("Unauthorized user");
     }
     if(!title) {
       throw new Error("title is null");
@@ -70,15 +90,8 @@ const ScheduleForm = (props: Props) => {
     if(startTime.getTime() >= endTime.getTime()) {
       throw new Error("Schedule time Error");
     }
-    if(title === props.title && startTime === props.startTime && endTime === props.endTime) {
-      if(props.setter){
-        props.setter(false);
-      }
+    if(title === props.title && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
       return
-    }
-    if(props.setBtnAttr){
-      console.log(props.setBtnAttr)
-      props.setBtnAttr(false);
     }
 
     try{

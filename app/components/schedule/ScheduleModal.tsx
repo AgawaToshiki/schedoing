@@ -45,7 +45,6 @@ const ScheduleModal = ({ isOpen, isOwn, schedule, setter }: Props) => {
             path="update"
           >
             <div className="flex justify-end">
-              <button type="submit">更新</button>
               <Button
                 attrs={buttonAttrs}
               >
