@@ -8,6 +8,7 @@ type Props = {
   title: string;
   startTime: Date;
   endTime: Date;
+  isOwn: boolean;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
   path: string;
   children: Readonly<React.ReactNode>;
@@ -59,11 +60,14 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(!props.isOwn){
+      throw new Error("unauthorized user");
+    }
     if(!title) {
-      throw new Error("title is null")
+      throw new Error("title is null");
     }
     if(startTime.getTime() >= endTime.getTime()) {
-      throw new Error("Schedule time Error")
+      throw new Error("Schedule time Error");
     }
     if(title === props.title && startTime === props.startTime && endTime === props.endTime) {
       if(props.setter){

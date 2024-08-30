@@ -52,14 +52,19 @@ const ScheduleCard = ({ isOwn, schedule }: Props) => {
         onClick={handleOpenModal}
       >
         <div className="text-xl z-30 select-none">{schedule.title}</div>
-        <div className="text-xl z-30 select-none">{formatStartTime}～{formatEndTime}</div>
+        <div className="flex items-center text-xl z-30 select-none">
+          <div className="mr-2">{formatStartTime}</div>
+          <div>～</div>
+          <div className="ml-2">{formatEndTime}</div>
+        </div>
         {isOwn && (
           <DeleteSchedule id={schedule.id} />
         )}
       </div>
       {isOpen && (
         <ScheduleModal
-          isOpen={isOpen} 
+          isOpen={isOpen}
+          isOwn={isOwn}
           setter={setIsOpen}
           schedule={schedule}
         />
