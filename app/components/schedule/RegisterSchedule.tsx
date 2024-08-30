@@ -2,7 +2,11 @@
 import React from 'react'
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
-const RegisterSchedule = () => {
+type Props = {
+  isOwn: boolean;
+}
+
+const RegisterSchedule = ({ isOwn }: Props) => {
 
   //初期時刻を直近の15分刻みの時刻に設定
   const defaultStartDate = new Date();
@@ -22,6 +26,7 @@ const RegisterSchedule = () => {
           title="" 
           startTime={defaultStartDate} 
           endTime={defaultEndDate}
+          isOwn={isOwn}
           path="register"
         >
           <button

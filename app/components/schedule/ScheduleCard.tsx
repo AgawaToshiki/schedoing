@@ -43,7 +43,6 @@ const ScheduleCard = ({ isOwn, schedule }: Props) => {
   }
 
 
-
   return (
     <>
       <div 
