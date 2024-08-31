@@ -16,7 +16,7 @@ const CurrentTimeBorder = () => {
     setCurrentTimeHeight(getCurrentTime());
   }
 
-  useInterval(() => getCurrentTimeHeight())
+  useInterval(() => getCurrentTimeHeight(), 30000)
 
   return (
     <>
