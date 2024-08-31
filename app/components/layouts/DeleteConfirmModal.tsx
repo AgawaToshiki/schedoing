@@ -12,10 +12,6 @@ type Props = {
 
 const DeleteConfirmModal = ({ isOpen, title, setter, children }: Props) => {
 
-  const buttonAttrs: React.ButtonHTMLAttributes<HTMLButtonElement> = {
-    type: "button",
-  }
-
   return (
     <>
       <Modal isOpen={isOpen} setter={setter} title={title}>
@@ -23,11 +19,14 @@ const DeleteConfirmModal = ({ isOpen, title, setter, children }: Props) => {
         <div className="flex gap-4 justify-end items-center">
           <Button 
             onClick={() => setter(false)}
-            attrs={buttonAttrs}
+            variant="secondary"
+            size="medium"
+            attrs={
+              { type: "button" }
+            }
           >
             キャンセル
           </Button>
-          <button onClick={() => setter(false)}>キャンセル</button>
           {children}
         </div>
       </Modal>

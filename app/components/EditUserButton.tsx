@@ -5,7 +5,7 @@ type Props = {
   id: string;
 }
 
-const EditButton = ({ id }: Props) => {
+const EditUserButton = ({ id }: Props) => {
   const handleEdit = (id: string) => {
 
   }
@@ -14,4 +14,4 @@ const EditButton = ({ id }: Props) => {
   )
 }
 
-export default EditButton
+export default EditUserButton

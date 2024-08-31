@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import SignOutButton from '../../components/elements/SignOutButton';
+import SignOutButton from '../../components/SignOutButton';
 
 type Props = {
   isAdmin: boolean;

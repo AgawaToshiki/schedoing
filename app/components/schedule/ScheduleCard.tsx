@@ -46,7 +46,7 @@ const ScheduleCard = ({ isOwn, schedule }: Props) => {
   return (
     <>
       <div 
-        className="flex items-center justify-center gap-10 absolute z-30 w-[80%] left-0 right-0 mx-auto border border-green-500 shadow-md rounded-lg bg-green-300 hover:bg-green-500 cursor-pointer"
+        className="flex items-center justify-center gap-10 absolute z-30 w-[80%] left-0 right-0 mx-auto bg-green-300 border border-green-500 shadow-md rounded-lg cursor-pointer transition duration-200 ease-in-out hover:bg-green-500"
         style={{height:`${height}px`, top:`${startMinutes}px`}}
         onClick={handleOpenModal}
       >

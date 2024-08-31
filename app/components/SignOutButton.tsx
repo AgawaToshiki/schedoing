@@ -1,9 +1,10 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
-import { updateStatus } from '../../utils/supabaseFunctions';
+import { updateStatus } from '../utils/supabaseFunctions';
 import { createClient } from '@/utils/supabase/server';
-import { getCurrentUser } from '../../utils/auth';
+import { getCurrentUser } from '../utils/auth';
+import Button from '../components/elements/button/Button';
 
 
 const SignOutButton = () => {
@@ -30,9 +31,15 @@ const SignOutButton = () => {
   return (
     <>
       <form action={handleSignOut}>
-        <button className="p-1 border bg-red-400" type="submit">
+        <Button
+          variant="danger"
+          size="medium"
+          attrs={
+            { type: "submit" }
+          }
+        >
           サインアウト
-        </button>
+        </Button>
       </form>
     </>
   );

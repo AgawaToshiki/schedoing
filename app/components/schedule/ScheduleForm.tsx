@@ -21,11 +21,6 @@ const ScheduleForm = (props: Props) => {
   const [endTime, setEndTime] = useState<Date>(props.endTime);
   const [disabled, setDisabled] = useState<boolean>(true);
 
-  const buttonAttrs: React.ButtonHTMLAttributes<HTMLButtonElement> = {
-    type: "submit",
-    disabled: disabled,
-  }
-
   const checkChangeState = (): void => {
     if(
       title === props.title && 
@@ -84,18 +79,30 @@ const ScheduleForm = (props: Props) => {
   const renderSubmitButton = (): React.JSX.Element | null => {
     if(props.name === 'register') {
       return (
-        <button
-          type="submit"
-          className="flex items-center justify-center w-[50px] h-[50px] border rounded-full text-2xl bg-blue-500">
-            +
-        </button>
+        <Button
+          variant="primary"
+          size="medium"
+          attrs={
+            { type: "submit" }
+          }
+          className="flex items-center justify-center w-[50px] h-[50px] rounded-full"
+        >
+          +
+        </Button>
       )
     }
     if(props.name === 'update') {
       return (
         <div className="flex justify-end">
           <Button
-            attrs={buttonAttrs}
+            variant="primary"
+            size="medium"
+            attrs={
+              {
+                type: "submit",
+                disabled: disabled
+              }
+            }
           >
             更新
           </Button>

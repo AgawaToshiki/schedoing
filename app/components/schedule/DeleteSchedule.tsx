@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import DeleteConfirmModal from '../../components/layouts/DeleteConfirmModal';
+import Button from '../../components/elements/button/Button';
 
 type Props = {
   id: string;
@@ -34,7 +35,7 @@ const DeleteSchedule = ({ id }: Props) => {
       }
       setIsOpen(false);
     }catch(err){
-      console.error(err);
+      console.error("DeleteSchedule Error:", err);
     }
   }
 
@@ -48,7 +49,15 @@ const DeleteSchedule = ({ id }: Props) => {
           setter={setIsOpen}
         >
           <form onSubmit={handleDeleteSubmit}>
-            <button type="submit">削除する</button>
+            <Button
+              variant="danger"
+              size="medium"
+              attrs={
+                { type: "submit" }
+              }
+            >
+              削除する
+            </Button>
           </form>
         </DeleteConfirmModal>
       )}

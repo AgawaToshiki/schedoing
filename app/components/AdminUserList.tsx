@@ -1,7 +1,7 @@
 import React from 'react'
 import { getAllUser } from '../utils/supabaseFunctions'
-import EditButton from '../components/elements/EditButton'
-import DeleteButton from '../components/elements/DeleteButton'
+import EditUserButton from '../components/EditUserButton'
+import DeleteUserButton from '../components/DeleteUserButton'
 
 const AdminUserList = async() => {
 	const data = await getAllUser();
@@ -23,8 +23,8 @@ const AdminUserList = async() => {
 							<td className="px-4 py-2 min-w-[300px]">{user.displayName}</td>
 							<td className="px-4 py-2 min-w-[300px]">{user.email}</td>
 							<td className="flex px-4 py-2">
-								<EditButton id={user.id} />
-								<DeleteButton id={user.id} />
+								<EditUserButton id={user.id} />
+								<DeleteUserButton id={user.id} />
 							</td>
 						</tr>
 					))}

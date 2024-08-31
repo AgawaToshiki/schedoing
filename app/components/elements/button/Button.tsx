@@ -1,16 +1,46 @@
 import React from 'react'
 
+type variant = "primary" | "secondary" | "danger" | "icon";
+
+type size = "small" | "medium" | "large";
+
 type Props = {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  variant: variant;
+  size: size;
+  className?: string;
   attrs: React.ButtonHTMLAttributes<HTMLButtonElement>;
   children: Readonly<React.ReactNode>;
 }
 
-const Button = ({ onClick, attrs, children }: Props) => {
+const Button = ({ onClick, variant, size, className, attrs, children }: Props) => {
+
+  const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50"
+
+  const baseStyle = `flex justify-center items-center border rounded-md font-semibold text-white transition duration-200 ease-in-out hover:brightness-90 ${disabledStyle}`;
+
+  const variantStyle: Record<variant, string> = {
+    primary: "bg-blue-500 border-blue-500",
+    secondary: "bg-white border-gray-500 text-black",
+    danger: "bg-red-500 border-red-500",
+    icon: ""
+  }
+
+  const sizeStyle: Record<size, string> = {
+    small: "",
+    medium: "px-3 py-1.5 text-sm/6",
+    large: "",
+  }
+
+  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${className}`;
 
   return (
     <>
-      <button className="inline-flex items-center gap-2 rounded-md bg-gray-700 py-1.5 px-3 text-sm/6 font-semibold text-white shadow-inner shadow-white/10 hover:bg-gray-600 disabled:cursor-default disabled:opacity-50" {...attrs} onClick={onClick}>
+      <button 
+        className={`${buttonStyle}`}
+        {...attrs} 
+        onClick={onClick}
+      >
         {children}
       </button>
     </>

@@ -1,11 +1,25 @@
 'use client'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
+import Button from '../components/elements/button/Button'
 
 export default function Register() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
+	const [disabled, setDisabled] = useState<boolean>(true);
+
+	const checkChangeState = (): void => {
+    if(!email || !password || !displayName){
+      setDisabled(true);
+    }else{
+      setDisabled(false);
+    }
+  }
+
+  useEffect(() => {
+    checkChangeState();
+  }, [email, password, displayName])
 
 	const handleSubmit = async(formData: FormData) => {
 		await createUser(formData);
@@ -61,7 +75,18 @@ export default function Register() {
 						/>
 					</div>
 				</div>
-				<button type="submit" className="p-1 border bg-green-400">登録</button>
+				<Button
+					variant="primary"
+					size="medium"
+					attrs={
+						{
+							type: "submit",
+							disabled: disabled
+						}
+					}
+				>
+					登録
+				</Button>
     	</form>
     </>
   )
