@@ -1,0 +1,77 @@
+'use client'
+import React, { useState } from 'react'
+import Button from '../components/elements/button/Button';
+import DeleteConfirmModal from '../components/layouts/DeleteConfirmModal';
+
+
+type Props = {
+  id: string;
+}
+
+const DeleteUserButton = ({ id }: Props) => {
+
+	const [isOpen, setIsOpen] = useState<boolean>(false);
+
+	const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsOpen(true);
+  }
+
+	const handleDeleteSubmit = async() => {
+		try {
+			const response = await fetch('../api/user/delete', {
+				cache: 'no-store',
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ id: id })
+			})
+
+			const data = await response.json();
+
+			if(!response.ok) {
+				console.error(data.error, data.status);
+			}
+		}catch (error) {
+			console.error("DeleteUser Error:", error)
+		}
+	}
+
+  return (
+		<>
+			<Button
+				onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
+				variant="danger"
+				size="medium"
+				attrs={
+					{ type: "submit" }
+				}
+			>
+				削除
+			</Button>
+			{isOpen && (
+        <DeleteConfirmModal 
+          isOpen={isOpen}
+          title="ユーザー削除"
+          setter={setIsOpen}
+        >
+          <form onSubmit={handleDeleteSubmit}>
+            <Button
+              variant="danger"
+              size="medium"
+              attrs={
+                { type: "submit" }
+              }
+            >
+              削除する
+            </Button>
+          </form>
+        </DeleteConfirmModal>
+      )}
+		</>
+
+  )
+}
+
+export default DeleteUserButton
