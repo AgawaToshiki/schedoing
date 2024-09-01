@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Button from '../components/elements/button/Button';
-import DeleteConfirmModal from '../components/layouts/DeleteConfirmModal';
+import ConfirmModal from '../components/layouts/ConfirmModal';
 
 
 type Props = {
@@ -45,15 +45,16 @@ const DeleteUserButton = ({ id }: Props) => {
 				variant="danger"
 				size="medium"
 				attrs={
-					{ type: "submit" }
+					{ type: "button" }
 				}
 			>
 				削除
 			</Button>
 			{isOpen && (
-        <DeleteConfirmModal 
+        <ConfirmModal 
           isOpen={isOpen}
           title="ユーザー削除"
+					message="本当に削除しますか？"
           setter={setIsOpen}
         >
           <form onSubmit={handleDeleteSubmit}>
@@ -67,7 +68,7 @@ const DeleteUserButton = ({ id }: Props) => {
               削除する
             </Button>
           </form>
-        </DeleteConfirmModal>
+        </ConfirmModal>
       )}
 		</>
 

@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import DeleteConfirmModal from '../../components/layouts/DeleteConfirmModal';
+import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/button/Button';
 
 type Props = {
@@ -43,9 +43,10 @@ const DeleteSchedule = ({ id }: Props) => {
     <>
       <button onClick={(e) => handleOpenModal(e)} className="bg-red-400 hover:bg-red-200">削除</button>
       {isOpen && (
-        <DeleteConfirmModal 
+        <ConfirmModal 
           isOpen={isOpen}
           title="スケジュール削除"
+          message="本当に削除しますか？"
           setter={setIsOpen}
         >
           <form onSubmit={handleDeleteSubmit}>
@@ -59,7 +60,7 @@ const DeleteSchedule = ({ id }: Props) => {
               削除する
             </Button>
           </form>
-        </DeleteConfirmModal>
+        </ConfirmModal>
       )}
     </>
   )

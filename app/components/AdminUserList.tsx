@@ -1,7 +1,7 @@
 import React from 'react'
-import { getAllUser } from '../utils/supabaseFunctions'
-import EditUserButton from '../components/EditUserButton'
-import DeleteUserButton from '../components/DeleteUserButton'
+import { getAllUser } from '../utils/supabaseFunctions';
+import EditUserButton from '../components/EditUserButton';
+import DeleteUserButton from '../components/DeleteUserButton';
 
 const AdminUserList = async() => {
 	const data = await getAllUser();

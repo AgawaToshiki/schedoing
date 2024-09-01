@@ -1,25 +1,15 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useCheckChangeState } from '../hooks/useCheckChangeState';
 import { createUser } from '../actions/register';
-import Button from '../components/elements/button/Button'
+import Button from '../components/elements/button/Button';
 
-export default function Register() {
+export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
-	const [disabled, setDisabled] = useState<boolean>(true);
 
-	const checkChangeState = (): void => {
-    if(!email || !password || !displayName){
-      setDisabled(true);
-    }else{
-      setDisabled(false);
-    }
-  }
-
-  useEffect(() => {
-    checkChangeState();
-  }, [email, password, displayName])
+	const isDisabled = useCheckChangeState(email, password, displayName);
 
 	const handleSubmit = async(formData: FormData) => {
 		await createUser(formData);
@@ -31,7 +21,7 @@ export default function Register() {
   return (
     <>
     	<form action={handleSubmit}>
-				<div className="flex flex-col">
+				<div className="flex flex-col mb-6">
 					<div>
 						<div>
 							<label htmlFor="email">Email</label>
@@ -81,7 +71,7 @@ export default function Register() {
 					attrs={
 						{
 							type: "submit",
-							disabled: disabled
+							disabled: isDisabled
 						}
 					}
 				>
