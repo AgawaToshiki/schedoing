@@ -1,15 +1,19 @@
 'use client'
-import { useState } from 'react';
-import { useCheckChangeState } from '../hooks/useCheckChangeState';
+import { useEffect, useState } from 'react';
 import { login } from '../actions/login'
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
+import { loginFormValidation } from '../utils/functions';
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
+  const [isDisabled, setDisabled] = useState<boolean>(true);
 
-  const isDisabled = useCheckChangeState(email, password);
+  useEffect(() => {
+    const isValid = loginFormValidation(email, password);
+    setDisabled(!isValid);
+	}, [email, password])
 
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">

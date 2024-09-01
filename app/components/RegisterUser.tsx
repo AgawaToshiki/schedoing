@@ -1,15 +1,20 @@
 'use client'
-import { useState } from 'react';
-import { useCheckChangeState } from '../hooks/useCheckChangeState';
+import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
+import { registerFormValidation } from '../utils/functions';
 
 export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
+	const [isDisabled, setDisabled] = useState<boolean>(true);
 
-	const isDisabled = useCheckChangeState(email, password, displayName);
+	useEffect(() => {
+		const isValid = registerFormValidation(email, password, displayName)
+		setDisabled(!isValid);
+	}, [email, password, displayName])
+
 
 	const handleSubmit = async(formData: FormData) => {
 		await createUser(formData);
