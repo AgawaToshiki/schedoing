@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/button/Button';
+import Icon from '../../components/elements/icon/Icon';
 
 
 type Props = {
@@ -81,13 +82,14 @@ const ScheduleForm = (props: Props) => {
       return (
         <Button
           variant="primary"
-          size="medium"
+          size="small"
+          form="circle"
           attrs={
             { type: "submit" }
           }
-          className="flex items-center justify-center w-[50px] h-[50px] rounded-full"
+          className="w-[50px] h-[50px]"
         >
-          +
+          <Icon icon="plus" color="#fff" size={20} />
         </Button>
       )
     }
@@ -97,6 +99,7 @@ const ScheduleForm = (props: Props) => {
           <Button
             variant="primary"
             size="medium"
+            form="square"
             attrs={
               {
                 type: "submit",

@@ -20,6 +20,7 @@ const SignOutButton = () => {
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
         variant="danger"
         size="medium"
+        form="square"
         attrs={
           { type: "button" }
         }
@@ -37,6 +38,7 @@ const SignOutButton = () => {
             <Button
               variant="danger"
               size="medium"
+              form="square"
               attrs={
                 { type: "submit" }
               }

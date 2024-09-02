@@ -54,6 +54,7 @@ export default function Login() {
           <Button
             variant="primary"
             size="medium"
+            form="square"
             attrs={
               {
                 type: "submit",

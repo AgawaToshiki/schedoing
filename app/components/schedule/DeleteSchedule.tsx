@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/button/Button';
+import Icon from '../../components/elements/icon/Icon';
 
 type Props = {
   id: string;
@@ -41,7 +42,18 @@ const DeleteSchedule = ({ id }: Props) => {
 
   return (
     <>
-      <button onClick={(e) => handleOpenModal(e)} className="bg-red-400 hover:bg-red-200">削除</button>
+      <Button
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
+        variant="danger"
+        size="small"
+        form="circle"
+        attrs={
+          { type: "button" }
+        }
+        className="w-[30px] h-[30px]"
+      >
+        <Icon icon="delete" color="#fff" size={20}/>
+      </Button>
       {isOpen && (
         <ConfirmModal 
           isOpen={isOpen}
@@ -53,6 +65,7 @@ const DeleteSchedule = ({ id }: Props) => {
             <Button
               variant="danger"
               size="medium"
+              form="square"
               attrs={
                 { type: "submit" }
               }

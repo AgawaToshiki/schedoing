@@ -44,6 +44,7 @@ const DeleteUserButton = ({ id }: Props) => {
 				onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
 				variant="danger"
 				size="medium"
+				form="square"
 				attrs={
 					{ type: "button" }
 				}
@@ -61,6 +62,7 @@ const DeleteUserButton = ({ id }: Props) => {
             <Button
               variant="danger"
               size="medium"
+							form="square"
               attrs={
                 { type: "submit" }
               }

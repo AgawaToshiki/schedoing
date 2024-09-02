@@ -1,30 +1,15 @@
+'use client'
 import React from 'react';
-import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import SignOutButton from '../../components/SignOutButton';
+import Navigation from '../../components/layouts/Navigation';
 
 type Props = {
   isAdmin: boolean;
   id: string;
 }
 
-const Header = async({ isAdmin, id }: Props) => {
-  const lists = [
-    {
-      href: "/",
-      title: "ダッシュボード",
-      showFlag: true
-    },
-    {
-      href: `/${id}/schedule#currentTimeBorder`,
-      title: "スケジュール管理",
-      showFlag: true
-    },
-    {
-      href: "/user",
-      title: "ユーザー管理",
-      showFlag: isAdmin
-    },
-  ]
+const Header = ({ isAdmin, id }: Props) => {
 
   return (
     <header className="bg-blue-400">
@@ -33,17 +18,7 @@ const Header = async({ isAdmin, id }: Props) => {
           <h1 className="text-2xl">Share-do</h1>
         </div>
         <div>
-          <nav>
-            <ul className="flex flex-col gap-3">
-              {lists.map((list) => (
-                list.showFlag && (
-                  <li key={list.href}>
-                    <Link href={list.href}>{list.title}</Link>
-                  </li>
-                )
-              ))}
-            </ul>
-          </nav>
+          <Navigation isAdmin={isAdmin} id={id} />
         </div>
         <div className="mt-auto">
           <SignOutButton />

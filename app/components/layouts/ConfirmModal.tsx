@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
-import Modal from './Modal'
-import Button from '../elements/button/Button'
+import Modal from '../../components/layouts/Modal';
+import Button from '../../components/elements/button/Button';
 
 type Props = {
   isOpen: boolean;
@@ -22,6 +22,7 @@ const DeleteConfirmModal = ({ isOpen, title, message, setter, children }: Props)
             onClick={() => setter(false)}
             variant="secondary"
             size="medium"
+            form="square"
             attrs={
               { type: "button" }
             }

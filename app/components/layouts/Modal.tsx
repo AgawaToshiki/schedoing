@@ -1,5 +1,7 @@
 import React from 'react'
-import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react'
+import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react';
+import Button from '../../components/elements/button/Button';
+import Icon from '../../components/elements/icon/Icon';
 
 type Props = {
   isOpen: boolean;
@@ -25,7 +27,17 @@ const Modal = ({ isOpen, setter, title, children }: Props) => {
           >
             <div className="flex items-center justify-between bg-blue-400 p-6 rounded-t-md">
               <DialogTitle className="font-bold">{title}</DialogTitle>
-              <button onClick={() => setter(false)}>×</button>
+              <Button
+                onClick={() => setter(false)}
+                variant="secondary"
+                size="small"
+                form="circle"
+                attrs={
+                  { type: "button" }
+                }
+              >
+                <Icon icon="close" size={20} className="text-gray-500" />
+              </Button>
             </div>
             <div className="flex flex-col p-6">
               {children}

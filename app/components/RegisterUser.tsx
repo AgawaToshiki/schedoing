@@ -75,6 +75,7 @@ export default function RegisterUser() {
 				<Button
 					variant="primary"
 					size="medium"
+					form="square"
 					attrs={
 						{
 							type: "submit",
