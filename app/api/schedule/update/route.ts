@@ -1,8 +1,8 @@
 'use server'
 import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/app/utils/auth';
-import { updateSchedule } from '@/app/utils/supabaseFunctions';
+import { getCurrentUser } from '@/app/utils/supabase/auth';
+import { updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {

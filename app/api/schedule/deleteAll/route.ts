@@ -1,7 +1,7 @@
 'use server'
 
 import { NextRequest, NextResponse } from 'next/server'
-import { deleteAllSchedule } from '@/app/utils/supabaseFunctions';
+import { deleteAllSchedule } from '@/app/utils/supabase/supabaseFunctions';
 
 export const dynamic = 'force-dynamic';
 

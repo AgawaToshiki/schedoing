@@ -1,5 +1,5 @@
-import { Database } from '../../database.types';
-import { supabase } from '../lib/supabase';
+import { Database } from '../../../database.types';
+import { supabase } from '../../lib/supabase';
 
 
 type User = Database['public']['Tables']['users']['Row'];

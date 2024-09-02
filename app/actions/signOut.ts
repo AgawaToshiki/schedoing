@@ -2,8 +2,8 @@
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { createClient } from "@/utils/supabase/server";
-import { getCurrentUser } from "../utils/auth";
-import { updateStatus } from '../utils/supabaseFunctions';
+import { getCurrentUser } from "../utils/supabase/auth";
+import { updateStatus } from '../utils/supabase/supabaseFunctions';
 
 export const handleSignOut = async() => {
   try {

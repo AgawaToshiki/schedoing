@@ -1,7 +1,7 @@
 'use server'
 import { NextRequest, NextResponse } from "next/server";
-import { deleteUserFromAuth } from "@/app/utils/authAdmin";
-import { deleteUser } from "@/app/utils/supabaseFunctions";
+import { deleteUserFromAuth } from "@/app/utils/supabase/authAdmin";
+import { deleteUser } from "@/app/utils/supabase/supabaseFunctions";
 
 
 export async function POST(req: NextRequest, res: NextResponse) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getSchedule, getUser, isAdminUser } from '../../utils/supabaseFunctions';
-import { getCurrentUser } from '../../utils/auth';
+import { getSchedule, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
+import { getCurrentUser } from '../../utils/supabase/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/schedule/SchedulePanel';
 import SectionField from '../../components/layouts/SectionField';

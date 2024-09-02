@@ -1,5 +1,5 @@
 import React from 'react'
-import { getAllUser } from '../utils/supabaseFunctions';
+import { getAllUser } from '../utils/supabase/supabaseFunctions';
 import EditUserButton from '../components/EditUserButton';
 import DeleteUserButton from '../components/DeleteUserButton';
 
