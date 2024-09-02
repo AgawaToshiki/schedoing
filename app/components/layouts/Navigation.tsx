@@ -12,7 +12,6 @@ type Props = {
 const Navigation = ({ isAdmin, id }: Props) => {
 
   const pathname = usePathname();
-  console.log(pathname)
 
   const lists = [
     {
