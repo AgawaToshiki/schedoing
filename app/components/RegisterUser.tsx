@@ -2,13 +2,15 @@
 import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
-import { registerFormValidation } from '../utils/functions';
+import { formValidation } from '../utils/functions';
 
 export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
 	const [isDisabled, setDisabled] = useState<boolean>(true);
+
+	const { registerFormValidation } = formValidation();
 
 	useEffect(() => {
 		const isValid = registerFormValidation(email, password, displayName)
