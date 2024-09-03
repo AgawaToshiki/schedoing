@@ -1,16 +1,45 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
+import { Database } from '@/database.types';
+import Button from '../components/elements/button/Button';
+import Modal from '../components/layouts/Modal';
+import EditUserForm from '../components/EditUserForm';
+
+type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  id: string;
+  user: User;
 }
 
-const EditUserButton = ({ id }: Props) => {
-  const handleEdit = (id: string) => {
+const EditUserButton = ({ user }: Props) => {
 
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+	const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsOpen(true);
   }
+
   return (
-    <button className="p-1 border bg-green-400" onClick={ () => handleEdit(id) }>編集</button>
+    <>
+      <Button
+				onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
+				variant="primary"
+				size="medium"
+				form="square"
+				attrs={
+					{ type: "button" }
+				}
+			>
+				編集
+			</Button>
+			{isOpen && (
+        <Modal isOpen={isOpen} setter={setIsOpen} title="ユーザー編集">
+          <EditUserForm user={user} setter={setIsOpen}/>
+        </Modal>
+      )}
+    </>
+    
   )
 }
 

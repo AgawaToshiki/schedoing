@@ -28,8 +28,8 @@ export default function RegisterUser() {
   return (
     <>
     	<form action={handleSubmit}>
-				<div className="flex flex-col mb-6">
-					<div>
+				<div className="flex flex-col w-[300px] mb-6">
+					<div className="mb-2">
 						<div>
 							<label htmlFor="email">Email</label>
 						</div>
@@ -37,13 +37,13 @@ export default function RegisterUser() {
 							id="email"
 							name="email"
 							type="email"
-							className="border"
+							className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
 							required
 						/>
 					</div>
-					<div>
+					<div className="mb-2">
 						<div>
 							<label htmlFor="password">Password</label>
 						</div>
@@ -51,13 +51,13 @@ export default function RegisterUser() {
 							id="password"
 							name="password"
 							type="password"
-							className="border"
+							className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
 							required
 						/>
 					</div>
-					<div>
+					<div className="mb-2">
 						<div>
 							<label htmlFor="displayName">DisplayName</label>
 						</div>
@@ -65,7 +65,7 @@ export default function RegisterUser() {
 							id="displayName"
 							name="displayName"
 							type="text"
-							className="border"
+							className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
 							required

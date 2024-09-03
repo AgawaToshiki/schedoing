@@ -23,16 +23,18 @@ const ScheduleForm = (props: Props) => {
   const [disabled, setDisabled] = useState<boolean>(true);
 
   const checkChangeState = (): void => {
-    if(
-      title === props.title && 
-      startTime.getTime() === props.startTime.getTime() && 
-      endTime.getTime() === props.endTime.getTime()
-    ){
-      setDisabled(true);
-    }else{
-      setDisabled(false);
+    if(props.name === "update") {
+      const isSetTitle = !!title;
+      const hasChanged = 
+        title !== props.title ||
+        startTime.getTime() !== props.startTime.getTime() ||
+        endTime.getTime() !== props.endTime.getTime();
+      setDisabled(!isSetTitle || !hasChanged);
+    } else if (props.name === "register") {
+      setDisabled(title === props.title);
     }
   }
+
 
   useEffect(() => {
     checkChangeState();
@@ -85,7 +87,10 @@ const ScheduleForm = (props: Props) => {
           size="small"
           form="circle"
           attrs={
-            { type: "submit" }
+            {
+              type: "submit",
+              disabled: disabled
+            }
           }
           className="w-[50px] h-[50px]"
         >
@@ -162,19 +167,24 @@ const ScheduleForm = (props: Props) => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col mb-6">
-          <input 
-            type="text"
-            name="title"
-            placeholder="タイトル"
-            value={title}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-            className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
-            required
-          />
-          <div className="flex items-center">
+          <div className="mb-2">
+            <label htmlFor={`${props.name}title`}>タイトル</label>
+            <input 
+              type="text"
+              name="title"
+              id={`${props.name}title`}
+              placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
+              value={title}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              required
+            />
+          </div>
+          <div className="flex items-end">
             <div className="mr-2">
+              <label htmlFor={`${props.name}startTime`}>開始</label>
               <TimePicker
-                id='startTime'
+                id={`${props.name}startTime`}
                 name='startTime'
                 title='開始'
                 value={startTime}
@@ -183,10 +193,11 @@ const ScheduleForm = (props: Props) => {
                 onChange={handleChangeStartTime}
               />
             </div>
-            <div>～</div>
+            <div className="flex items-center h-12">～</div>
             <div className="ml-2">
+              <label htmlFor={`${props.name}endTime`}>終了</label>
               <TimePicker
-                id='endTime'
+                id={`${props.name}endTime`}
                 name='endTime'
                 title='終了'
                 value={endTime}

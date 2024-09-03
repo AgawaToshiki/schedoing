@@ -25,6 +25,7 @@ const TimePicker = (props: Props) => {
   return (
     <>
       <DatePicker
+        id={props.id}
         timeFormat={'HH:mm'}
         selected={props.value}
         onChange={handleChange}

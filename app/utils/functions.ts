@@ -1,30 +1,49 @@
 
 export function formValidation() {
 
-  function checkPattern(email: string, password: string) {
-    const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
-    const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
+  function checkPattern() {
+
+    function checkEmail(email: string) {
+      const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
+    
+      const regEmail = email.match(emailPattern);
+    
+      return regEmail
+    }
   
-    const regEmail = email.match(emailPattern);
-    const regPassword = password.match(passwordPattern);
-  
+    function checkPassword(password: string) {
+      const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
+      const regPassword = password.match(passwordPattern);
+    
+      return regPassword
+    }
+
     return {
-      regEmail,
-      regPassword
+      checkEmail,
+      checkPassword
     }
   }
 
+
   function loginFormValidation(email: string, password: string): boolean {
-    const { regEmail, regPassword } = checkPattern(email, password);
-    if(regEmail && regPassword && password.length >= 8) {
+    const { checkEmail, checkPassword } = checkPattern();
+    if(checkEmail(email) && checkPassword(password) && password.length >= 8) {
       return true
     }
     return false
   }
   
   function registerFormValidation(email: string, password: string, displayName: string): boolean {
-    const { regEmail, regPassword } = checkPattern(email, password);
-    if(regEmail && regPassword && displayName && password.length >= 8) {
+    const { checkEmail, checkPassword } = checkPattern();
+    if(checkEmail(email) && checkPassword(password) && displayName && password.length >= 8) {
+      return true
+    }
+    return false
+  }
+
+  function updateEmailValidation(email: string): boolean {
+    const { checkEmail } = checkPattern();
+    if(checkEmail(email)) {
       return true
     }
     return false
@@ -32,7 +51,8 @@ export function formValidation() {
 
   return {
     loginFormValidation,
-    registerFormValidation
+    registerFormValidation,
+    updateEmailValidation
   }
 }
 

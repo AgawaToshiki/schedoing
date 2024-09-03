@@ -21,8 +21,8 @@ export default function Login() {
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
         <form>
-          <div className="flex flex-col mb-6">
-            <div>
+          <div className="flex flex-col w-[300px] mb-6">
+            <div className="mb-2">
               <div>
                 <label htmlFor="email">Email</label>
               </div>
@@ -30,13 +30,13 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className="border"
+                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 required
               />
             </div>
-            <div>
+            <div className="mb-2">
               <div>
                 <label htmlFor="password">Password</label>
               </div>
@@ -44,7 +44,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className="border"
+                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 required

@@ -1,13 +1,16 @@
 import { IconType } from 'react-icons';
-import { FaUser, FaPlus } from 'react-icons/fa';
+import { FaUser, FaPlus, FaChevronDown } from 'react-icons/fa';
 import { IoClose } from "react-icons/io5";
-import { MdSpaceDashboard, MdSchedule, MdDelete } from "react-icons/md";
+import { MdSpaceDashboard, MdEditCalendar, MdSchedule, MdDelete, MdSettings } from "react-icons/md";
 
 export const iconList: Record<string, IconType> = {
   'dashboard': MdSpaceDashboard,
-  'schedule': MdSchedule,
+  'schedule': MdEditCalendar,
+  'work': MdSchedule,
   'user': FaUser,
   'plus': FaPlus,
   'delete': MdDelete,
-  'close': IoClose
+  'close': IoClose,
+  'down': FaChevronDown,
+  'setting': MdSettings
 }

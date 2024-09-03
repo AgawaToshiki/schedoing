@@ -30,8 +30,7 @@ const ScheduleDetail = ({ title, startTime, endTime }: Props) => {
             </div>
           </div>
         </div>
-
-        </div>
+      </div>
     </>
   )
 }

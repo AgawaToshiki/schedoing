@@ -22,8 +22,8 @@ const AdminUserList = async() => {
 							<td className="px-4 py-2 w-[100px]">{user.role}</td>
 							<td className="px-4 py-2 min-w-[300px]">{user.displayName}</td>
 							<td className="px-4 py-2 min-w-[300px]">{user.email}</td>
-							<td className="flex px-4 py-2">
-								<EditUserButton id={user.id} />
+							<td className="flex gap-1.5 px-4 py-2">
+								<EditUserButton user={user} />
 								<DeleteUserButton id={user.id} />
 							</td>
 						</tr>
