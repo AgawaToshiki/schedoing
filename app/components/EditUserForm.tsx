@@ -37,13 +37,13 @@ const EditUserForm = (props: Props) => {
 
   const handleSubmit = async() => {
     try {
-			const response = await fetch('../api/user/edit', {
+			const response = await fetch('../api/user/update', {
 				cache: 'no-store',
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ id: props.user.id })
+				body: JSON.stringify({ id: props.user.id, role, displayName, email })
 			})
 
 			const data = await response.json();
@@ -52,7 +52,7 @@ const EditUserForm = (props: Props) => {
 				console.error(data.error, data.status);
 			}
 		}catch (error) {
-			console.error("DeleteUser Error:", error)
+			console.error("UpdateUser Error:", error)
 		}
   }
 
