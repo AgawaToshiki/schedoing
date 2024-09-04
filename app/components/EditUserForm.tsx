@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation';
 import Button from '../components/elements/button/Button';
 import Icon from '../components/elements/icon/Icon';
 import { Database } from '@/database.types';
@@ -13,6 +14,8 @@ type Props = {
 }
 
 const EditUserForm = (props: Props) => {
+
+  const router = useRouter();
 
   const [displayName, setDisplayName] = useState<string>(props.user.displayName);
   const [role, setRole] = useState<string>(props.user.role);
@@ -35,22 +38,27 @@ const EditUserForm = (props: Props) => {
     checkChangeState();
   }, [role, displayName, email])
 
-  const handleSubmit = async() => {
+  const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     try {
 			const response = await fetch('../api/user/update', {
 				cache: 'no-store',
-				method: 'POST',
+				method: "POST",
 				headers: {
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({ id: props.user.id, role, displayName, email })
 			})
 
+
 			const data = await response.json();
 
 			if(!response.ok) {
 				console.error(data.error, data.status);
 			}
+
+      props.setter(false);
+      router.refresh();
 		}catch (error) {
 			console.error("UpdateUser Error:", error)
 		}
@@ -58,7 +66,7 @@ const EditUserForm = (props: Props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleUpdateSubmit}>
         <div className="flex flex-col mb-6">
           <div className="mb-2">
             <label htmlFor="editRole">権限</label>

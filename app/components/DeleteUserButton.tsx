@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 import Button from '../components/elements/button/Button';
 import ConfirmModal from '../components/layouts/ConfirmModal';
 
@@ -10,6 +11,8 @@ type Props = {
 
 const DeleteUserButton = ({ id }: Props) => {
 
+	const router = useRouter();
+
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
 	const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -17,11 +20,12 @@ const DeleteUserButton = ({ id }: Props) => {
     setIsOpen(true);
   }
 
-	const handleDeleteSubmit = async() => {
+	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		try {
 			const response = await fetch('../api/user/delete', {
 				cache: 'no-store',
-				method: 'POST',
+				method: "POST",
 				headers: {
 					'Content-Type': 'application/json'
 				},
@@ -33,6 +37,9 @@ const DeleteUserButton = ({ id }: Props) => {
 			if(!response.ok) {
 				console.error(data.error, data.status);
 			}
+
+			setIsOpen(false);
+      router.refresh();
 		}catch (error) {
 			console.error("DeleteUser Error:", error)
 		}
@@ -73,7 +80,6 @@ const DeleteUserButton = ({ id }: Props) => {
         </ConfirmModal>
       )}
 		</>
-
   )
 }
 

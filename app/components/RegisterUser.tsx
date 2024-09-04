@@ -18,7 +18,7 @@ export default function RegisterUser() {
 	}, [email, password, displayName])
 
 
-	const handleSubmit = async(formData: FormData) => {
+	const handleRegisterSubmit = async(formData: FormData) => {
 		await createUser(formData);
 		setEmail("");
 		setPassword("");
@@ -27,7 +27,7 @@ export default function RegisterUser() {
 
   return (
     <>
-    	<form action={handleSubmit}>
+    	<form action={handleRegisterSubmit}>
 				<div className="flex flex-col w-[300px] mb-6">
 					<div className="mb-2">
 						<div>
