@@ -12,7 +12,7 @@ type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status');
+    .select('id,created_at,email,role,displayName,status,updated_at');
   if(error) {
     console.error('Error getUsers:', error);
   }
@@ -40,10 +40,21 @@ export function isAdminUser(user: User | null): boolean {
   return false;
 }
 
+export async function updateUser(userId: string, role: string, displayName: string, email: string): Promise<void> {
+  const { error } = await supabase
+    .from('users')
+    .update({ 'role': role, 'displayName': displayName, 'email': email })
+    .eq('id', userId);
+
+  if(error) {
+    console.error('Error updating user:', error);
+  }
+}
+
 export async function updateStatus(userId: string, status: string): Promise<void> {
   const { error } = await supabase
     .from('users')
-    .update({ status: status })
+    .update({ 'status': status })
     .eq('id', userId);
   if(error) {
     console.error('Error updating status:', error);
