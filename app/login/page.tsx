@@ -21,7 +21,7 @@ export default function Login() {
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
         <form>
-          <div className="flex flex-col w-[300px] mb-6">
+          <div className="flex flex-col max-w-[300px] mb-6">
             <div className="mb-2">
               <div>
                 <label htmlFor="email">Email</label>

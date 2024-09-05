@@ -36,8 +36,8 @@ const Navigation = ({ isAdmin, id }: Props) => {
       showFlag: isAdmin
     },
     {
-      href: "/work",
-      pathname: "/work",
+      href: `/${id}/work`,
+      pathname: `/${id}/work`,
       title: "勤怠管理",
       icon: "work",
       showFlag: isAdmin

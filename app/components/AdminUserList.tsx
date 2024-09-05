@@ -8,29 +8,48 @@ const AdminUserList = async() => {
 
   return (
 		<>
-			<div className="overflow-x-auto">
-				<table className="w-full border border-gray-200 shadow-md bg-white">
-					<thead>
-						<tr className="border border-gray-200">
-							<th className="px-4 py-2 text-left">権限</th>
-							<th className="px-4 py-2 text-left">ユーザー名</th>
-							<th className="px-4 py-2 text-left">Email</th>
-						</tr>
-					</thead>
-					<tbody>
-						{data?.map((user) => (
-							<tr key={user.id} className="border border-gray-200">
-								<td className="px-4 py-2">{user.role}</td>
-								<td className="px-4 py-2">{user.displayName}</td>
-								<td className="px-4 py-2">{user.email}</td>
-								<td className="flex gap-1.5 px-4 py-2">
-									<EditUserButton user={user} />
-									<DeleteUserButton id={user.id} />
-								</td>
+			<div className="max-w-[800px] flex bg-white overflow-y-auto">
+				<div className="flex-grow overflow-x-auto">
+					<table className="w-full border-collapse">
+						<thead>
+							<tr className="h-14 border border-r-0">
+								<th className="min-w-[150px] px-4 py-2 border text-left whitespace-nowrap">権限</th>
+								<th className="min-w-[250px] px-4 py-2 border text-left whitespace-nowrap">ユーザー名</th>
+								<th className="min-w-[250px] px-4 py-2 border border-r-0 text-left whitespace-nowrap">メールアドレス</th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							{data?.map((user) => (
+								<tr key={user.id} className="h-14 border border-r-0">
+									<td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
+									<td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
+									<td className="px-4 py-2 border border-r-0 whitespace-nowrap">{user.email}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+				<div className="flex-shrink-0 max-w-[150px]">
+					<table className="w-full border-collapse">
+						<thead>
+							<tr className="h-14 border">
+								<th className="px-4 py-2 border text-left whitespace-nowrap"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{data?.map((user) => (
+								<tr key={user.id} className="h-14 border">
+									<td className="px-4 py-2 whitespace-nowrap">
+										<div className="flex gap-1.5">
+											<EditUserButton user={user} />
+											<DeleteUserButton id={user.id} />
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</>
   )

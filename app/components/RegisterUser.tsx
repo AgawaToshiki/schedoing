@@ -28,7 +28,7 @@ export default function RegisterUser() {
   return (
     <>
     	<form action={handleRegisterSubmit}>
-				<div className="flex flex-col w-[300px] mb-6">
+				<div className="flex flex-col max-w-[300px] mb-6">
 					<div className="mb-2">
 						<div>
 							<label htmlFor="email">Email</label>

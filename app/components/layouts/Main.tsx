@@ -11,7 +11,7 @@ const Main = ({ children, isAdmin, id }: Props) => {
   return (
     <div className="flex min-h-screen">
       <Header isAdmin={isAdmin} id={id}/>
-      <div className="flex flex-col w-full p-6 bg-blue-100">
+      <div className="flex flex-col w-full p-6 bg-blue-100 overflow-x-auto">
         {children}
       </div>
     </div>
