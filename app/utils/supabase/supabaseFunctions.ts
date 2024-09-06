@@ -1,5 +1,5 @@
-import { Database } from '../../database.types';
-import { supabase } from '../lib/supabase';
+import { Database } from '../../../database.types';
+import { supabase } from '../../lib/supabase';
 
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -12,7 +12,7 @@ type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status');
+    .select('id,created_at,email,role,displayName,status,updated_at');
   if(error) {
     console.error('Error getUsers:', error);
   }
@@ -40,10 +40,21 @@ export function isAdminUser(user: User | null): boolean {
   return false;
 }
 
+export async function updateUser(userId: string, role: string, displayName: string, email: string): Promise<void> {
+  const { error } = await supabase
+    .from('users')
+    .update({ 'role': role, 'displayName': displayName, 'email': email })
+    .eq('id', userId);
+
+  if(error) {
+    console.error('Error updating user:', error);
+  }
+}
+
 export async function updateStatus(userId: string, status: string): Promise<void> {
   const { error } = await supabase
     .from('users')
-    .update({ status: status })
+    .update({ 'status': status })
     .eq('id', userId);
   if(error) {
     console.error('Error updating status:', error);
@@ -81,11 +92,46 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
   return data
 }
 
-export async function registerSchedule(id: string, startTime: Date, endTime: Date, title: string): Promise<void>{
+export async function registerSchedule(userId: string, title: string, startTime: Date, endTime: Date): Promise<void> {
   const { error } = await supabase
     .from('schedules')
-    .insert({ 'user_id': id, 'start_time': startTime, 'end_time': endTime, 'title': title })
-    if(error) {
-      console.error(error);
-    }
+    .insert({ 'user_id': userId, 'start_time': startTime, 'end_time': endTime, 'title': title })
+
+  if(error) {
+    console.error(error);
+  }
+}
+
+export async function updateSchedule(id: string, title: string, startTime: Date, endTime: Date): Promise<void> {
+  const { error } = await supabase
+    .from('schedules')
+    .update({ 'start_time': startTime, 'end_time': endTime, 'title': title })
+    .eq("id", id)
+    .single()
+
+  if(error) {
+    console.error(error);
+  }
+}
+
+export async function deleteSchedule(id: string): Promise<void> {
+  const { error } = await supabase
+    .from('schedules')
+    .delete()
+    .eq("id", id)
+    .single()
+
+  if(error) {
+    console.error(error);
+  }
+}
+
+export async function deleteAllSchedule(): Promise<void> {
+  const { error } = await supabase
+    .from('schedules')
+    .delete()
+
+  if(error) {
+    console.error(error);
+  }
 }

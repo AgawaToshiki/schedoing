@@ -1,9 +1,11 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getSchedule, getUser, isAdminUser } from '../../utils/supabaseFunctions';
-import { getCurrentUser } from '../../utils/auth';
+import { getSchedule, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
+import { getCurrentUser } from '../../utils/supabase/auth';
 import Main from '../../components/layouts/Main';
-import SchedulePanel from '../../components/SchedulePanel';
+import SchedulePanel from '../../components/schedule/SchedulePanel';
+import SectionField from '../../components/layouts/SectionField';
+import RegisterSchedule from '../../components/schedule/RegisterSchedule';
 
 
 const Schedule = async({ params }: { params: { id: string } }) => {
@@ -23,13 +25,28 @@ const Schedule = async({ params }: { params: { id: string } }) => {
     redirect('/login')
   }
 
+  const isOwn = (): boolean => {
+    return user.id === params.id
+  }
+
   return (
     <>
-      <Main isAdmin={isAdmin}>
+      <Main isAdmin={isAdmin} id={user.id}>
         <div className="mb-6">
           {data?.displayName}
         </div>
-        <SchedulePanel schedules={data.schedules}/>
+        {user.id === params.id && (
+          <div className="mb-10">
+            <SectionField sectionTitle="新規スケジュール">
+              <RegisterSchedule isOwn={isOwn()}/>
+            </SectionField>
+          </div>
+        )}
+        <SchedulePanel 
+          schedulesData={data.schedules} 
+          userId={params.id}
+          isOwn={isOwn()}
+        />
       </Main>
     </>
   )

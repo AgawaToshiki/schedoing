@@ -1,9 +1,7 @@
 'use client'
-
-import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabase";
 import { Database } from "../../database.types";
 import Link from "next/link";
+import { useRealtimeListener } from "../hooks/useRealtimeListener";
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -12,31 +10,22 @@ type Props = {
 }
 
 const UserList = ({ data }: Props) => {
-  const [users, setUsers] = useState(data);
 
-  const listenData = async() => {
-    const channel = supabase
-      .channel('users')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'users' }, 
-        (payload: any) => {
-          setUsers(currentUsers => {
-            if(!currentUsers){
-              return data
-            }
-            return currentUsers.map((user) => (
-              user.id === payload.new.id ? { ...user, ...payload.new }: user
-            ))
-          })
-        })
-      .subscribe()
-    return () => {
-      channel.unsubscribe();
-    };
-  }
-
-  useEffect(() => {
-    listenData();
-  }, [])
+  const users = useRealtimeListener<User>({
+    table: 'users',
+    defaultData: data,
+    isValidData: (obj: any): obj is User => {
+      return (
+        typeof obj.created_at === 'string' &&
+        typeof obj.displayName === 'string' &&
+        typeof obj.email === 'string' &&
+        typeof obj.title === 'string' &&
+        typeof obj.id === 'string' &&
+        typeof obj.role === 'string' &&
+        typeof obj.status === 'string'
+      );
+    }
+  })
 
   return (
     <>

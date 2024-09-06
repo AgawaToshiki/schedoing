@@ -1,8 +1,8 @@
 'use server'
 import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser } from '@/app/utils/auth';
-import { registerSchedule } from '@/app/utils/supabaseFunctions';
+import { getCurrentUser } from '@/app/utils/supabase/auth';
+import { deleteSchedule } from '@/app/utils/supabase/supabaseFunctions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -11,8 +11,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if(!user || !user.id){
       redirect('/login')
     }
-    const data: { startTime: Date, endTime: Date, title: string } = await req.json();
-    await registerSchedule(user.id, data.startTime, data.endTime, data.title);
+    const data: { id: string } = await req.json();
+    await deleteSchedule(data.id);
 
     return NextResponse.json({ status: 201 });
   }catch (error) {

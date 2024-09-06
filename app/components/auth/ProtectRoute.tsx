@@ -1,7 +1,7 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getCurrentUser } from '../../utils/auth';
-import { getUser, isAdminUser } from '../../utils/supabaseFunctions';
+import { getCurrentUser } from '../../utils/supabase/auth';
+import { getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
 
 type Props = {
   children: Readonly<React.ReactElement>

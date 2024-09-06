@@ -1,11 +1,10 @@
-import { getAllUser, getUser, isAdminUser } from './utils/supabaseFunctions';
-import { getCurrentUser } from './utils/auth';
+import { getAllUser, getUser, isAdminUser } from './utils/supabase/supabaseFunctions';
+import { getCurrentUser } from './utils/supabase/auth';
 import { redirect } from 'next/navigation'
 import { Database } from '../database.types';
 import Main from './components/layouts/Main';
 import UserList from "./components/UserList";
 import MyStatus from './components/MyStatus';
-import RegisterSchedule from './components/RegisterSchedule';
 import SectionField from './components/layouts/SectionField';
 
 
@@ -26,16 +25,11 @@ export default async function DashBoard() {
 
   return (
     <>
-      <Main isAdmin={isAdmin}>
+      <Main isAdmin={isAdmin} id={user.id}>
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
           </SectionField>
-        </div>
-        <div className="mb-10">
-        <SectionField sectionTitle="新規スケジュール">
-          <RegisterSchedule />
-        </SectionField>
         </div>
         <div className="mb-6">
           <h2>DashBoard</h2>

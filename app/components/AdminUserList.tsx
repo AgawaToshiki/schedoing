@@ -1,35 +1,56 @@
 import React from 'react'
-import { getAllUser } from '../utils/supabaseFunctions'
-import EditButton from '../components/elements/EditButton'
-import DeleteButton from '../components/elements/DeleteButton'
+import { getAllUser } from '../utils/supabase/supabaseFunctions';
+import EditUserButton from '../components/EditUserButton';
+import DeleteUserButton from '../components/DeleteUserButton';
 
 const AdminUserList = async() => {
 	const data = await getAllUser();
 
   return (
 		<>
-			<table className="border border-gray-200 shadow-md bg-white">
-				<thead>
-					<tr className="border border-gray-200">
-						<th className="px-4 py-2 text-left w-[100px]">権限</th>
-						<th className="px-4 py-2 text-left min-w-[300px]">ユーザー名</th>
-						<th className="px-4 py-2 text-left min-w-[300px]">Email</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data?.map((user) => (
-						<tr key={user.id} className="border border-gray-200">
-							<td className="px-4 py-2 w-[100px]">{user.role}</td>
-							<td className="px-4 py-2 min-w-[300px]">{user.displayName}</td>
-							<td className="px-4 py-2 min-w-[300px]">{user.email}</td>
-							<td className="flex px-4 py-2">
-								<EditButton id={user.id} />
-								<DeleteButton id={user.id} />
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
+			<div className="max-w-[800px] flex bg-white overflow-y-auto">
+				<div className="flex-grow overflow-x-auto">
+					<table className="w-full border-collapse">
+						<thead>
+							<tr className="h-14 border border-r-0">
+								<th className="min-w-[150px] px-4 py-2 border text-left whitespace-nowrap">権限</th>
+								<th className="min-w-[250px] px-4 py-2 border text-left whitespace-nowrap">ユーザー名</th>
+								<th className="min-w-[250px] px-4 py-2 border border-r-0 text-left whitespace-nowrap">メールアドレス</th>
+							</tr>
+						</thead>
+						<tbody>
+							{data?.map((user) => (
+								<tr key={user.id} className="h-14 border border-r-0">
+									<td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
+									<td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
+									<td className="px-4 py-2 border border-r-0 whitespace-nowrap">{user.email}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+				<div className="flex-shrink-0 max-w-[150px]">
+					<table className="w-full border-collapse">
+						<thead>
+							<tr className="h-14 border">
+								<th className="px-4 py-2 border text-left whitespace-nowrap"></th>
+							</tr>
+						</thead>
+						<tbody>
+							{data?.map((user) => (
+								<tr key={user.id} className="h-14 border">
+									<td className="px-4 py-2 whitespace-nowrap">
+										<div className="flex gap-1.5">
+											<EditUserButton user={user} />
+											<DeleteUserButton id={user.id} />
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</>
   )
 }

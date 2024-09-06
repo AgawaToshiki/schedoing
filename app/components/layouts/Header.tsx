@@ -1,31 +1,24 @@
 import React from 'react';
-import Link from 'next/link';
-import SignOutButton from '../../components/elements/SignOutButton';
+import SignOutButton from '../../components/SignOutButton';
+import Navigation from '../../components/layouts/Navigation';
 
 type Props = {
   isAdmin: boolean;
+  id: string;
 }
 
-const Header = async({ isAdmin }: Props) => {
+const Header = ({ isAdmin, id }: Props) => {
 
   return (
-    <header className="bg-blue-400">
-      <div className="flex flex-col gap-12 w-[275px] h-full p-6">
-        <div>
+    <header className="sticky top-0 h-screen bg-blue-400">
+      <div className="flex flex-col w-[275px] h-full overflow-y-auto">
+        <div className="sticky top-0 p-6 bg-blue-400">
           <h1 className="text-2xl">Share-do</h1>
         </div>
-        <div>
-          <nav>
-            <ul className="flex flex-col gap-3">
-              <li><Link href="/">ダッシュボード</Link></li>
-              <li className={`${isAdmin ? "block" : "hidden"}`}><Link href="/user">ユーザー管理</Link></li>
-              <li></li>
-              <li></li>
-              <li></li>
-            </ul>
-          </nav>
+        <div className="px-6">
+          <Navigation isAdmin={isAdmin} id={id} />
         </div>
-        <div className="mt-auto">
+        <div className="sticky bottom-0 p-6 mt-auto bg-blue-400">
           <SignOutButton />
         </div>
       </div>
