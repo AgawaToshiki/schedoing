@@ -51,9 +51,9 @@ const AdminUserList = async() => {
 					</table>
 				</div>
 			</div> */}
-			        <div className="max-w-[800px] h-full flex bg-white">
-          <div className="flex-grow overflow-x-auto h-full overflow-y-scroll">
-            <table className="w-full h-[200%] border border-collapse">
+				<div className="max-w-[800px] h-full flex bg-white">
+          <div className="flex-grow overflow-x-auto h-full">
+            <table className="w-full h-[200%] overflow-y-scroll border border-collapse">
               <thead>
                 <tr className="">
                   <th className="
