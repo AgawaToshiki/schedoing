@@ -8,9 +8,9 @@ const AdminUserList = async() => {
 
   return (
 		<>
-      <div className="max-w-[800px] overflow-x-auto h-[300px] overflow-y-auto flex bg-white">
-        <div className="flex-grow h-full">
-          <table className="w-full border border-collapse">
+      <div className="max-w-[800px] h-full flex bg-white">
+        <div className="flex-grow h-[400px] overflow-auto">
+          <table className="w-full h-full border border-collapse">
             <thead>
               <tr>
                 <th className="
