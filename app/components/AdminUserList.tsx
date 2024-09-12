@@ -8,11 +8,11 @@ const AdminUserList = async() => {
 
   return (
 		<>
-      <div className="max-w-[800px] h-full flex bg-white">
-        <div className="flex-grow h-[400px] overflow-auto">
-          <table className="w-full h-full border border-collapse">
-            <thead>
-              <tr>
+      <div className="relative max-w-[800px] h-full overflow-x-auto flex bg-white">
+        <div className="absolute flex-grow h-full">
+          <table className="w-full h-full overflow-y-auto border border-collapse">
+            <thead className="h-full">
+              <tr className="h-[50px]">
                 <th className="
                 sticky top-0 z-20 min-w-[150px] px-4 py-2 bg-gray-100 border text-left whitespace-nowrap
                 before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
@@ -38,9 +38,9 @@ const AdminUserList = async() => {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="h-full">
               {data?.map((user) => (
-                <tr key={user.id}>
+                <tr key={user.id} className="h-[50px]">
                   <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.email}</td>
