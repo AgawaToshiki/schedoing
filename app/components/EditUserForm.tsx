@@ -25,21 +25,31 @@ const EditUserForm = (props: Props) => {
   const { updateEmailValidation } = formValidation();
   const emailValidation = updateEmailValidation(email);
 
-  const checkChangeState = (): void => {
+  const checkState = (): boolean => {
     const isSetState = !!displayName && !!email;
     const hasChanged = 
       displayName !== props.user.displayName ||
       role !== props.user.role ||
       email !== props.user.email
-    setDisabled(!isSetState || !hasChanged || !emailValidation);
+    return isSetState && hasChanged && emailValidation
+  }
+
+  const changeDisabled = (): void => {
+    setDisabled(!checkState());
   }
 
   useEffect(() => {
-    checkChangeState();
+    changeDisabled();
   }, [role, displayName, email])
 
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if(!checkState()){
+      console.log("Validation failed")
+      return
+    }
+
     try {
 			const response = await fetch('../api/user/update', {
 				cache: 'no-store',
