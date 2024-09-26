@@ -112,7 +112,7 @@ const ScheduleForm = (props: Props) => {
               }
             }
           >
-            更新
+            更新する
           </Button>
         </div>
       )
