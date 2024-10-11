@@ -16,6 +16,7 @@ export type Database = {
           id: string
           start_time: string
           title: string
+          description: string
           updated_at: string | null
           user_id: string
         }
@@ -25,6 +26,7 @@ export type Database = {
           id?: string
           start_time?: string
           title?: string
+          description?: string
           updated_at?: string | null
           user_id?: string
         }
@@ -34,6 +36,7 @@ export type Database = {
           id?: string
           start_time?: string
           title?: string
+          description?: string
           updated_at?: string | null
           user_id?: string
         }

@@ -25,26 +25,26 @@ const Schedule = async({ params }: { params: { id: string } }) => {
     redirect('/login')
   }
 
-  const isOwn = (): boolean => {
-    return user.id === params.id
-  }
+  const isOwn: boolean = user.id === params.id
 
   return (
     <>
       <Main isAdmin={isAdmin} id={user.id}>
-        <div className="mb-6">
-          {data?.displayName}
-        </div>
+        {!isOwn && (
+          <div className="mb-6">
+            {data?.displayName}
+          </div>
+        )}
         {user.id === params.id && (
           <div className="mb-10">
             <SectionField sectionTitle="新規スケジュール">
-              <RegisterSchedule isOwn={isOwn()}/>
+              <RegisterSchedule isOwn={isOwn}/>
             </SectionField>
           </div>
         )}
         <SchedulePanel 
           schedulesData={data.schedules} 
-          isOwn={isOwn()}
+          isOwn={isOwn}
         />
       </Main>
     </>

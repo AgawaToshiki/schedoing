@@ -6,7 +6,7 @@ import ScheduleCard from '../../components/schedule/ScheduleCard';
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
+type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
   isOwn: boolean;
@@ -22,6 +22,7 @@ const SchedulePanel = ({ isOwn, schedulesData }: Props) => {
       return (
         typeof obj.id === 'string' &&
         typeof obj.title === 'string' &&
+        typeof obj.description === 'string' &&
         obj.start_time instanceof Date &&
         obj.end_time instanceof Date
       );
