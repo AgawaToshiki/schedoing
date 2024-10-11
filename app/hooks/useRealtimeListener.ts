@@ -5,10 +5,11 @@ import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 type RealTimeListenerOptions<T extends { [key: string]: any }> = {
   table: string;
   defaultData: T[] | null;
+  userId?: string,
   isValidData: (obj: any) => obj is T;
 }
 
-export const useRealtimeListener = <T extends { [key: string]: any }>({ table, defaultData, isValidData,}: RealTimeListenerOptions<T>): T[] | null => {
+export const useRealtimeListener = <T extends { [key: string]: any }>({ table, defaultData, userId, isValidData,}: RealTimeListenerOptions<T>): T[] | null => {
 
   const [data, setData] = useState<T[] | null>(defaultData);
 
@@ -20,9 +21,12 @@ export const useRealtimeListener = <T extends { [key: string]: any }>({ table, d
         event: '*', 
         schema: 'public', 
         table: table,
+        ...(userId && { filter: `user_id=eq.${userId}` })
       }, 
       (payload: RealtimePostgresChangesPayload<T>) => {
+        console.log(payload)
         setData((currentData): T[] | null => {
+          console.log(currentData);
           if(!currentData){
             if(isValidData(payload.new)){
               return [payload.new]

@@ -9,15 +9,17 @@ type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
+  userId: string;
   isOwn: boolean;
   schedulesData: Schedule[] | null;
 }
 
-const SchedulePanel = ({ isOwn, schedulesData }: Props) => {
+const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
 
   const schedules = useRealtimeListener<Schedule>({
     table: 'schedules',
     defaultData: schedulesData,
+    userId: userId,
     isValidData: (obj: any): obj is Schedule => {
       return (
         typeof obj.id === 'string' &&

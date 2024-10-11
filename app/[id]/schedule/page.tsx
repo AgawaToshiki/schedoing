@@ -43,7 +43,8 @@ const Schedule = async({ params }: { params: { id: string } }) => {
           </div>
         )}
         <SchedulePanel 
-          schedulesData={data.schedules} 
+          schedulesData={data.schedules}
+          userId={params.id}
           isOwn={isOwn}
         />
       </Main>
