@@ -5,7 +5,6 @@ import { updateUser } from "@/app/utils/supabase/supabaseFunctions";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-
     const data: { id: string, role: string, displayName: string, email: string } = await req.json();
 
     if(!data.id) throw new Error("User not found");
