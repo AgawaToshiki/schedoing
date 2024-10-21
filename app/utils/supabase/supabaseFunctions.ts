@@ -6,7 +6,7 @@ type User = Database['public']['Tables']['users']['Row'];
 type Schedule = Database['public']['Tables']['schedules']['Row'];
 
 type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
-  schedules: Pick<Schedule, 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
+  schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
  }
 
 export async function getAllUser(): Promise<User[] | null> {
@@ -76,6 +76,7 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
       displayName,
       role,
       schedules (
+        user_id,
         id,
         title,
         description,

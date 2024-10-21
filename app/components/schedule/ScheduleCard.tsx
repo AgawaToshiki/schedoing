@@ -6,7 +6,7 @@ import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
+type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
   isOwn: boolean;
