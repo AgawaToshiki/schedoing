@@ -6,7 +6,7 @@ type User = Database['public']['Tables']['users']['Row'];
 type Schedule = Database['public']['Tables']['schedules']['Row'];
 
 type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
-  schedules: Pick<Schedule, 'id' | 'title' | 'start_time' | 'end_time'>[] | null
+  schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
  }
 
 export async function getAllUser(): Promise<User[] | null> {
@@ -76,8 +76,10 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
       displayName,
       role,
       schedules (
+        user_id,
         id,
         title,
+        description,
         start_time,
         end_time
       )      
@@ -92,20 +94,20 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
   return data
 }
 
-export async function registerSchedule(userId: string, title: string, startTime: Date, endTime: Date): Promise<void> {
+export async function registerSchedule(userId: string, title: string, description: string, startTime: Date, endTime: Date): Promise<void> {
   const { error } = await supabase
     .from('schedules')
-    .insert({ 'user_id': userId, 'start_time': startTime, 'end_time': endTime, 'title': title })
+    .insert({ 'user_id': userId, 'title': title, 'description': description, 'start_time': startTime, 'end_time': endTime })
 
   if(error) {
     console.error(error);
   }
 }
 
-export async function updateSchedule(id: string, title: string, startTime: Date, endTime: Date): Promise<void> {
+export async function updateSchedule(id: string, title: string, description: string, startTime: Date, endTime: Date): Promise<void> {
   const { error } = await supabase
     .from('schedules')
-    .update({ 'start_time': startTime, 'end_time': endTime, 'title': title })
+    .update({ 'title': title, 'description': description, 'start_time': startTime, 'end_time': endTime })
     .eq("id", id)
     .single()
 

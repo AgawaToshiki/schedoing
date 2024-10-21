@@ -6,7 +6,7 @@ import ScheduleCard from '../../components/schedule/ScheduleCard';
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
+type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
   userId: string;
@@ -16,19 +16,22 @@ type Props = {
 
 const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
 
-  const schedules = useRealtimeListener<Schedule>({
+  const schedulesList = useRealtimeListener<Schedule>({
     table: 'schedules',
     defaultData: schedulesData,
-    userId: userId,
     isValidData: (obj: any): obj is Schedule => {
       return (
+        typeof obj.user_id === 'string' &&
         typeof obj.id === 'string' &&
         typeof obj.title === 'string' &&
+        typeof obj.description === 'string' &&
         obj.start_time instanceof Date &&
         obj.end_time instanceof Date
       );
     }
   })
+
+  const schedules = schedulesList?.filter(item => item.user_id === userId);
 
   const timeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
 

@@ -8,6 +8,7 @@ import Icon from '../../components/elements/icon/Icon';
 type Props = {
   id?: string;
   title: string;
+  description: string;
   startTime: Date;
   endTime: Date;
   isOwn: boolean;
@@ -18,6 +19,7 @@ type Props = {
 const ScheduleForm = (props: Props) => {
 
   const [title, setTitle] = useState<string>(props.title);
+  const [description, setDescription] = useState<string>(props.description);
   const [startTime, setStartTime] = useState<Date>(props.startTime);
   const [endTime, setEndTime] = useState<Date>(props.endTime);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -27,6 +29,7 @@ const ScheduleForm = (props: Props) => {
       const isSetTitle = !!title;
       const hasChanged = 
         title !== props.title ||
+        description !== props.description ||
         startTime.getTime() !== props.startTime.getTime() ||
         endTime.getTime() !== props.endTime.getTime();
       setDisabled(!isSetTitle || !hasChanged);
@@ -38,7 +41,7 @@ const ScheduleForm = (props: Props) => {
 
   useEffect(() => {
     checkChangeState();
-  }, [title, startTime, endTime])
+  }, [title, description, startTime, endTime])
 
 
   const handleChangeStartTime = (newStartTime: Date) => {
@@ -112,7 +115,7 @@ const ScheduleForm = (props: Props) => {
               }
             }
           >
-            更新
+            更新する
           </Button>
         </div>
       )
@@ -131,7 +134,7 @@ const ScheduleForm = (props: Props) => {
     if(startTime.getTime() >= endTime.getTime()) {
       throw new Error("Schedule time Error");
     }
-    if(title === props.title && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
+    if(title === props.title && description === props.description && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
       return
     }
 
@@ -142,7 +145,7 @@ const ScheduleForm = (props: Props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: props.id, title, startTime, endTime }),
+        body: JSON.stringify({ id: props.id, title, description, startTime, endTime }),
       })
 
       const data = await response.json();
@@ -157,6 +160,7 @@ const ScheduleForm = (props: Props) => {
       setStartTime(props.startTime);
       setEndTime(props.endTime);
       setTitle("");
+      setDescription("");
 
     }catch(err){
       console.error(err);
@@ -180,7 +184,7 @@ const ScheduleForm = (props: Props) => {
               required
             />
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end mb-2">
             <div className="mr-2">
               <label htmlFor={`${props.name}startTime`}>開始</label>
               <TimePicker
@@ -206,6 +210,17 @@ const ScheduleForm = (props: Props) => {
                 onChange={handleChangeEndTime}
               />
             </div>
+          </div>
+          <div>
+            <label htmlFor={`${props.name}description`}>備考</label>
+            <input
+              type="text"
+              name="description"
+              id={`${props.name}description`}
+              value={description ? description : ""}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
+              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+            />
           </div>
         </div>
         {renderSubmitButton()}

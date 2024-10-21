@@ -11,8 +11,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if(!user || !user.id){
       redirect('/login')
     }
-    const data: { title: string, startTime: Date, endTime: Date } = await req.json();
-    await registerSchedule(user.id, data.title, data.startTime, data.endTime);
+    const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
+    await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
 
     return NextResponse.json({ status: 201 });
   }catch (error) {

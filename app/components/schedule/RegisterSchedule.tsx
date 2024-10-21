@@ -24,6 +24,7 @@ const RegisterSchedule = ({ isOwn }: Props) => {
       <div className="relative z-50 w-[300px]">
         <ScheduleForm
           title="" 
+          description=""
           startTime={defaultStartDate} 
           endTime={defaultEndDate}
           isOwn={isOwn}

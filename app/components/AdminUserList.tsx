@@ -8,49 +8,62 @@ const AdminUserList = async() => {
 
   return (
 		<>
-			<div className="max-w-[800px] flex bg-white overflow-y-auto">
-				<div className="flex-grow overflow-x-auto">
-					<table className="w-full border-collapse">
-						<thead>
-							<tr className="h-14 border border-r-0">
-								<th className="min-w-[150px] px-4 py-2 border text-left whitespace-nowrap">権限</th>
-								<th className="min-w-[250px] px-4 py-2 border text-left whitespace-nowrap">ユーザー名</th>
-								<th className="min-w-[250px] px-4 py-2 border border-r-0 text-left whitespace-nowrap">メールアドレス</th>
-							</tr>
-						</thead>
-						<tbody>
-							{data?.map((user) => (
-								<tr key={user.id} className="h-14 border border-r-0">
-									<td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
-									<td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
-									<td className="px-4 py-2 border border-r-0 whitespace-nowrap">{user.email}</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-				<div className="flex-shrink-0 max-w-[150px]">
-					<table className="w-full border-collapse">
-						<thead>
-							<tr className="h-14 border">
-								<th className="px-4 py-2 border text-left whitespace-nowrap"></th>
-							</tr>
-						</thead>
-						<tbody>
-							{data?.map((user) => (
-								<tr key={user.id} className="h-14 border">
-									<td className="px-4 py-2 whitespace-nowrap">
-										<div className="flex gap-1.5">
-											<EditUserButton user={user} />
-											<DeleteUserButton id={user.id} />
-										</div>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+      <div className="w-full h-full overflow-x-auto flex bg-white">
+        <div className="relative flex-grow h-full overflow-y-auto">
+          <table className="absolute w-full h-full border border-collapse">
+            <thead>
+              <tr>
+                <th className="
+                sticky top-0 z-20 min-w-[150px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
+                before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
+                after:absolute after:z-10 after:left-0 after:bottom-[-1px] after:border-b after:w-full after:h-full
+                ">
+                  権限
+                </th>
+                <th className="
+                sticky top-0 z-20 min-w-[250px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
+                before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
+                after:absolute after:z-1 after:left-0 after:bottom-[-1px] after:border-b after:w-full after:h-full
+                ">
+                  ユーザー名
+                </th>
+                <th className="
+                sticky top-0 z-20 min-w-[250px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
+                before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
+                after:absolute after:z-10 after:left-0 after:bottom-[-1px] after:border-b after:w-full after:h-full
+                ">
+                  メールアドレス
+                </th>
+                <th className="
+                sticky top-0 right-0 z-20 min-w-[150px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
+                before:absolute before:top-[-1px] before:right-[-1px] before:w-full before:h-full before:border-t before:border-r
+                after:absolute after:z-10 after:left-[-1px] after:bottom-[-1px] after:border-l after:border-b after:w-full after:h-full
+                ">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {data?.map((user) => (
+                <tr key={user.id}>
+                  <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
+                  <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
+                  <td className="px-4 py-2 border whitespace-nowrap">{user.email}</td>
+                  <td className="
+                  sticky right-0 z-10 px-4 py-2 border bg-white whitespace-nowrap
+                  before:absolute before:z-10 before:top-[-1px] before:right-[-1px] before:w-full before:h-full before:border-r
+                  after:absolute after:z-10 after:top-[-1px] after:left-[-1px] after:border-l after:w-full after:h-full
+                  ">
+                    <div className="relative z-50 flex justify-center items-center gap-2">
+                      <EditUserButton user={user} />
+                      <DeleteUserButton id={user.id} />
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 		</>
   )
 }

@@ -5,7 +5,7 @@ import ScheduleForm from '../../components/schedule/ScheduleForm';
 import ScheduleDetail from '../../components/schedule/ScheduleDetail';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'id' | 'title' | 'start_time' | 'end_time'>
+type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 
 type Props = {
@@ -28,6 +28,7 @@ const ScheduleModal = ({ isOpen, isOwn, schedule, setter }: Props) => {
           <ScheduleForm
             id={schedule.id}
             title={schedule.title} 
+            description={schedule.description}
             startTime={scheduleStartTime} 
             endTime={scheduleEndTime}
             isOwn={isOwn}
@@ -36,7 +37,8 @@ const ScheduleModal = ({ isOpen, isOwn, schedule, setter }: Props) => {
           />
         ):(
           <ScheduleDetail
-            title={schedule.title} 
+            title={schedule.title}
+            description={schedule.description}
             startTime={scheduleStartTime} 
             endTime={scheduleEndTime}
           />
