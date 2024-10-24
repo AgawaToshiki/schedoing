@@ -13,14 +13,6 @@ const SignOutButton = () => {
     e.stopPropagation();
     setIsOpen(true);
   }
-
-  const handleSignOut = async() => {
-    const result = await signOut();
-    if(result && result.error){
-			alert(result.message);
-			return
-		}
-  }
   
   return (
     <>
@@ -42,7 +34,7 @@ const SignOutButton = () => {
           message="サインアウトしますか？"
           setter={setIsOpen}
         >
-          <form action={handleSignOut}>
+          <form action={signOut}>
             <Button
               variant="danger"
               size="medium"
