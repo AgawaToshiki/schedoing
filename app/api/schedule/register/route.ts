@@ -1,16 +1,21 @@
 'use server'
-import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
-import { registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
+import { getUser, registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const user = await getCurrentUser();
-    if(!user || !user.id){
-      redirect('/login')
+
+    const authUser = await getCurrentUser();
+    if(!authUser || !authUser.id){
+      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
     }
+    const user = await getUser(authUser.id);
+    if(!user){
+      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
+    }
+
     const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
     await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
 
