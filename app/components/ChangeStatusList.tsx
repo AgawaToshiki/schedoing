@@ -32,6 +32,13 @@ const ChangeStatusList = ({ id, status }: Props) => {
         },
         body: JSON.stringify({ id: id, status: item.status })
       })
+
+      const data = await response.json();
+
+      if(!response.ok) {
+				console.error(data.error, data.status);
+				alert(`${data.status}:${data.error}`);
+			}
     } catch(error) {
       console.error('Error updating status:', error);
     }

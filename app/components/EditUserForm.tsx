@@ -65,6 +65,7 @@ const EditUserForm = (props: Props) => {
 
 			if(!response.ok) {
 				console.error(data.error, data.status);
+        alert(`${data.status}:${data.error}`);
 			}
 
       props.setter(false);

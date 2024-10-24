@@ -33,10 +33,11 @@ const DeleteSchedule = ({ id }: Props) => {
 
       if(!response.ok){
         console.error(data.error, data.status);
+        alert(`${data.status}:${data.error}`);
       }
       setIsOpen(false);
-    }catch(err){
-      console.error("DeleteSchedule Error:", err);
+    }catch(error){
+      console.error("DeleteSchedule Error:", error);
     }
   }
 

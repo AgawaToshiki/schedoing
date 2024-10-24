@@ -152,6 +152,7 @@ const ScheduleForm = (props: Props) => {
 
       if(!response.ok){
         console.error(data.error, data.status);
+        alert(`${data.status}:${data.error}`);
       }
 
       if(props.setter){
@@ -162,8 +163,8 @@ const ScheduleForm = (props: Props) => {
       setTitle("");
       setDescription("");
 
-    }catch(err){
-      console.error(err);
+    }catch(error){
+      console.error(error);
     }
   }
 
