@@ -2,13 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { deleteSchedule, getUser } from '@/app/utils/supabase/supabaseFunctions';
-
-class APIError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.name = 'APIError';
-  }
-}
+import { APIError } from '@/app/utils/exceptions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {

@@ -3,13 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { updateUserEmailFromAuth } from "@/app/utils/supabase/authAdmin";
 import { getUser, isAdminUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
-
-class APIError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.name = 'APIError';
-  }
-}
+import { APIError } from '@/app/utils/exceptions';
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {

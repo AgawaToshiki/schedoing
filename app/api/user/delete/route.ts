@@ -3,13 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { deleteUserFromAuth } from "@/app/utils/supabase/authAdmin";
 import { deleteUser, getUser, isAdminUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
-
-class APIError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.name = 'APIError';
-  }
-}
+import { APIError } from '@/app/utils/exceptions';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {

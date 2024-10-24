@@ -2,13 +2,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUser, updateStatus } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
+import { APIError } from '@/app/utils/exceptions';
 
-class APIError extends Error {
-  constructor(public statusCode: number, message: string) {
-    super(message);
-    this.name = 'APIError';
-  }
-}
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
