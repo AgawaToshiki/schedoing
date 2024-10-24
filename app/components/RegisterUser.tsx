@@ -13,13 +13,17 @@ export default function RegisterUser() {
 	const { registerFormValidation } = formValidation();
 
 	useEffect(() => {
-		const isValid = registerFormValidation(email, password, displayName)
+		const isValid = registerFormValidation(email, password, displayName);
 		setDisabled(!isValid);
 	}, [email, password, displayName])
 
 
 	const handleRegisterSubmit = async(formData: FormData) => {
-		await createUser(formData);
+		const result = await createUser(formData);
+		if(result && result.error){
+			alert(result.message);
+			return
+		}
 		setEmail("");
 		setPassword("");
 		setDisplayName("");

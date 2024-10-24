@@ -4,24 +4,41 @@ import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { getUser, registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
 
 
+class APIError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message);
+    this.name = 'APIError';
+  }
+}
+
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
+      throw new APIError(401, 'Unauthorized User');
     }
     const user = await getUser(authUser.id);
     if(!user){
-      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
+      throw new APIError(401, 'Unauthorized User');
     }
 
     const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
     await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
 
     return NextResponse.json({ status: 201 });
+
   }catch (error) {
     console.error("RegisterSchedule Error:", error)
-    return NextResponse.json({ error: 'Internal Server Error' },{ status: 500 })
+    if(error instanceof APIError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.statusCode }
+      );
+    }
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

@@ -22,7 +22,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
 
   const data = await getSchedule(params.id);
   if(!data){
-    redirect('/login')
+    throw new Error("User does not exist");
   }
 
   const isOwn: boolean = user.id === params.id

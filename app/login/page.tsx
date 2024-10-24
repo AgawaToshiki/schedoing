@@ -17,10 +17,18 @@ export default function Login() {
     setDisabled(!isValid);
 	}, [email, password])
 
+  const handleLoginSubmit = async(formData: FormData) => {
+		const result = await login(formData);
+		if(result && result.error){
+			alert(result.message);
+			return
+		}
+	}
+
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
-        <form>
+        <form action={handleLoginSubmit}>
           <div className="flex flex-col max-w-[300px] mb-6">
             <div className="mb-2">
               <div>
@@ -59,7 +67,6 @@ export default function Login() {
               {
                 type: "submit",
                 disabled: isDisabled,
-                formAction: login
               }
             }
           >

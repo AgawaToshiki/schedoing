@@ -4,25 +4,34 @@ import { updateUserEmailFromAuth } from "@/app/utils/supabase/authAdmin";
 import { getUser, isAdminUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 
+class APIError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message);
+    this.name = 'APIError';
+  }
+}
+
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    //ここにユーザーは認証されている・ユーザーの権限がadminのバリデーションを実装
+
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
+      throw new APIError(401, 'Unauthorized User');
     }
     const user = await getUser(authUser.id);
     if(!user){
-      return NextResponse.json({ error: 'Unauthorized User' }, { status: 401 });
+      throw new APIError(401, 'Unauthorized User');
     }
     const isAdmin = isAdminUser(user);
     if(!isAdmin) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+      throw new APIError(403, 'Forbidden');
     }
     
     const data: { id: string, role: string, displayName: string, email: string } = await req.json();
 
-    if(!data.id) throw new Error("User not found");
+    if(!data.id) {
+      throw new APIError(400, 'Invalid Request: Missing user');
+    }
     
     await updateUser(data.id, data.role, data.displayName, data.email);
     await updateUserEmailFromAuth(data.id, data.email);
@@ -31,7 +40,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
   }catch (error) {
     console.error("UpdateUser Error:", error)
-    return NextResponse.json({ error: 'Internal Server Error' },{ status: 500 })
+    if(error instanceof APIError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.statusCode }
+      );
+    }
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 
 }
