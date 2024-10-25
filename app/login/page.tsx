@@ -1,19 +1,19 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { login } from '../actions/login'
+import { login } from '../actions/login';
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
-import { formValidation } from '../utils/validation';
+import { loginFormValidation } from '../utils/validation';
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
   const [isDisabled, setDisabled] = useState<boolean>(true);
-
-  const { loginFormValidation } = formValidation();
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 
   useEffect(() => {
-    const isValid = loginFormValidation(email, password);
+    const { isValid } = loginFormValidation(email, password);
     setDisabled(!isValid);
 	}, [email, password])
 
@@ -24,6 +24,36 @@ export default function Login() {
 			return
 		}
 	}
+
+  const handleBlurEmail = () => {
+    const { isValidEmail, isEmptyEmail } = loginFormValidation(email, password);
+    if(isEmptyEmail) {
+      setEmailErrorMessage("入力必須項目です");
+      return
+    }
+    if(!isValidEmail) {
+      setEmailErrorMessage("メールアドレスの形式で入力してください");
+      return
+    }
+    setEmailErrorMessage("");
+  }
+
+  const handleBlurPassword = () => {
+    const { isValidPassword, isCheckPasswordLength, isEmptyPassword } = loginFormValidation(email, password);
+    if(isEmptyPassword) {
+      setPasswordErrorMessage("入力必須項目です")
+      return
+    }
+    if(!isCheckPasswordLength) {
+      setPasswordErrorMessage("8文字以上で入力してください");
+      return
+    }
+    if(!isValidPassword) {
+      setPasswordErrorMessage("半角英数字と1つ以上の大文字を含めてください");
+      return
+    }
+    setPasswordErrorMessage("");
+  }
 
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
@@ -41,8 +71,10 @@ export default function Login() {
                 className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
+                onBlur={handleBlurEmail}
                 required
               />
+              {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
             </div>
             <div className="mb-2">
               <div>
@@ -55,8 +87,10 @@ export default function Login() {
                 className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
+                onBlur={handleBlurPassword}
                 required
               />
+              {passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}
             </div>
           </div>
           <Button

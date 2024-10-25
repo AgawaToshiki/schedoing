@@ -1,59 +1,91 @@
 
-export function formValidation() {
+function checkPattern() {
 
-  function checkPattern() {
-
-    function checkEmail(email: string) {
-      const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
-    
-      const regEmail = email.match(emailPattern);
-    
-      return regEmail
-    }
+  function checkEmail(email: string): boolean {
+    const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
   
-    function checkPassword(password: string) {
-      const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
-      const regPassword = password.match(passwordPattern);
-    
-      return regPassword
-    }
-
-    return {
-      checkEmail,
-      checkPassword
-    }
-  }
-
-  function loginFormValidation(email: string, password: string): boolean {
-    const { checkEmail, checkPassword } = checkPattern();
-    if(checkEmail(email) && checkPassword(password) && password.length >= 8) {
-      return true
-    }
-    return false
-  }
+    const regEmail = email.match(emailPattern);
   
-  function registerFormValidation(email: string, password: string, displayName: string): boolean {
-    const { checkEmail, checkPassword } = checkPattern();
-    if(checkEmail(email) && checkPassword(password) && displayName && password.length >= 8) {
-      return true
-    }
-    return false
+    return !!regEmail
   }
 
-  function updateEmailValidation(email: string): boolean {
-    const { checkEmail } = checkPattern();
-    if(checkEmail(email)) {
-      return true
-    }
-    return false
+  function checkPassword(password: string): boolean {
+    const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
+    const regPassword = password.match(passwordPattern);
+  
+    return !!regPassword
   }
 
   return {
-    loginFormValidation,
-    registerFormValidation,
-    updateEmailValidation
+    checkEmail,
+    checkPassword
   }
 }
+
+export function loginFormValidation(email: string, password: string): { 
+  isValid: boolean, 
+  isValidEmail: boolean, 
+  isValidPassword: boolean,
+  isCheckPasswordLength: boolean, 
+  isEmptyEmail: boolean, 
+  isEmptyPassword: boolean,
+} {
+  const { checkEmail, checkPassword } = checkPattern();
+  const isValidEmail = checkEmail(email);
+  const isValidPassword = checkPassword(password);
+  const isCheckPasswordLength = password.length >= 8;
+  const isEmptyEmail = email === "";
+  const isEmptyPassword = password === "";
+  const isValid = isValidEmail && isValidPassword && isCheckPasswordLength;
+  
+  return {
+    isValid,
+    isValidEmail,
+    isValidPassword,
+    isCheckPasswordLength,
+    isEmptyEmail,
+    isEmptyPassword
+  }
+}
+
+export function registerFormValidation(email: string, password: string, displayName: string): {
+  isValid: boolean, 
+  isValidEmail: boolean, 
+  isValidPassword: boolean,
+  isCheckPasswordLength: boolean, 
+  isEmptyEmail: boolean, 
+  isEmptyPassword: boolean,
+  isEmptyDisplayName: boolean
+} {
+  const { checkEmail, checkPassword } = checkPattern();
+  const isValidEmail = checkEmail(email);
+  const isValidPassword = checkPassword(password);
+  const isCheckPasswordLength = password.length >= 8;
+  const isEmptyEmail = email === "";
+  const isEmptyPassword = password === "";
+  const isEmptyDisplayName = displayName === "";
+  const isValid = isValidEmail && isValidPassword && isCheckPasswordLength && !isEmptyDisplayName;
+
+  return {
+    isValid,
+    isValidEmail,
+    isValidPassword,
+    isCheckPasswordLength,
+    isEmptyEmail,
+    isEmptyPassword,
+    isEmptyDisplayName
+  }
+}
+
+export function updateEmailValidation(email: string): boolean {
+  const { checkEmail } = checkPattern();
+  if(checkEmail(email)) {
+    return true
+  }
+  return false
+}
+
+
 
 export function checkSchedule(title: string, startTime: Date, endTime: Date): boolean {
   const isSetTitle = !!title;

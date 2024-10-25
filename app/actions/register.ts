@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
-import { formValidation } from '../utils/validation'
+import { registerFormValidation } from '../utils/validation'
 import { getUser, isAdminUser } from '../utils/supabase/supabaseFunctions'
 import { getCurrentUser } from '../utils/supabase/auth'
 
@@ -45,7 +45,6 @@ export async function createUser(formData: FormData) {
     throw new Error('Forbidden: Operation denied');
   }
 
-  const { registerFormValidation } = formValidation();
   const isValid = registerFormValidation(registerData.email, registerData.password, userData.displayName);
   if(!isValid) {
     return { error: true, message: "不正な入力値です" }
