@@ -3,7 +3,9 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
-import { formValidation } from '../utils/functions'
+import { formValidation } from '../utils/validation'
+import { getUser, isAdminUser } from '../utils/supabase/supabaseFunctions'
+import { getCurrentUser } from '../utils/supabase/auth'
 
 export async function createUser(formData: FormData) {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -28,6 +30,19 @@ export async function createUser(formData: FormData) {
   const userData = {
     displayName: formData.get('displayName') as string,
     role: 'user',
+  }
+
+  const authUser = await getCurrentUser();
+  if(!authUser || !authUser.id){
+    throw new Error('401:Unauthorized User');
+  }
+  const userInfo = await getUser(authUser.id);
+  if(!userInfo){
+    throw new Error('401:Unauthorized User');
+  }
+  const isAdmin = isAdminUser(userInfo);
+  if(!isAdmin) {
+    throw new Error('Forbidden: Operation denied');
   }
 
   const { registerFormValidation } = formValidation();

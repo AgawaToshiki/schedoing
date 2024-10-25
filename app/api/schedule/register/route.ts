@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { getUser, registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
+import { checkSchedule } from '@/app/utils/validation';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
@@ -17,6 +18,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
+
+    const isValidData = checkSchedule(data.title, data.startTime, data.endTime);
+    if(!isValidData) {
+      throw new APIError(400, 'Invalid schedule data');
+    }
     await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
 
     return NextResponse.json({ status: 201 });

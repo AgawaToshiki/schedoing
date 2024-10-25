@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
-import { formValidation } from '../utils/functions';
+import { formValidation } from '../utils/validation';
 
 export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");

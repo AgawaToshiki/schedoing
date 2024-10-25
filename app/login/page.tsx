@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { login } from '../actions/login'
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
-import { formValidation } from '../utils/functions';
+import { formValidation } from '../utils/validation';
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");

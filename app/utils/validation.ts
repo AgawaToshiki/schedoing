@@ -24,7 +24,6 @@ export function formValidation() {
     }
   }
 
-
   function loginFormValidation(email: string, password: string): boolean {
     const { checkEmail, checkPassword } = checkPattern();
     if(checkEmail(email) && checkPassword(password) && password.length >= 8) {
@@ -54,5 +53,11 @@ export function formValidation() {
     registerFormValidation,
     updateEmailValidation
   }
+}
+
+export function checkSchedule(title: string, startTime: Date, endTime: Date): boolean {
+  const isSetTitle = !!title;
+  const isSetTime = startTime && endTime && startTime.getTime() < endTime.getTime();
+  return isSetTitle && isSetTime;
 }
 

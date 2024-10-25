@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { signIn } from '../utils/supabase/auth'
 import { updateStatus } from '../utils/supabase/supabaseFunctions';
-import { formValidation } from '../utils/functions';
+import { formValidation } from '../utils/validation';
 import { error } from 'console';
 
 export async function login(formData: FormData) {

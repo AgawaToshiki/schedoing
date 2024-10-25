@@ -18,7 +18,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
     const isAdmin = isAdminUser(user);
     if(!isAdmin) {
-      throw new APIError(403, 'Forbidden');
+      throw new APIError(403, 'Forbidden: Operation denied');
     }
     
     const data: { id: string, role: string, displayName: string, email: string } = await req.json();

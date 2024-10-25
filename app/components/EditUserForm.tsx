@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Button from '../components/elements/button/Button';
 import Icon from '../components/elements/icon/Icon';
 import { Database } from '@/database.types';
-import { formValidation } from '../utils/functions'
+import { formValidation } from '../utils/validation'
 
 type User = Database['public']['Tables']['users']['Row'];
 
