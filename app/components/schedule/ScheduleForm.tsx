@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/button/Button';
 import Icon from '../../components/elements/icon/Icon';
+import { scheduleFormValidation } from '@/app/utils/validation';
 
 
 type Props = {
@@ -23,6 +24,7 @@ const ScheduleForm = (props: Props) => {
   const [startTime, setStartTime] = useState<Date>(props.startTime);
   const [endTime, setEndTime] = useState<Date>(props.endTime);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [titleErrorMessage, setTitleErrorMessage] = useState<string>("");
 
   const checkChangeState = (): void => {
     if(props.name === "update") {
@@ -168,6 +170,15 @@ const ScheduleForm = (props: Props) => {
     }
   }
 
+  const handleBlurTitle = () => {
+    const { isEmptyTitle } = scheduleFormValidation(title);
+    if(isEmptyTitle) {
+      setTitleErrorMessage("入力必須項目です");
+      return
+    }
+    setTitleErrorMessage("");
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -181,9 +192,11 @@ const ScheduleForm = (props: Props) => {
               placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
+              onBlur={handleBlurTitle}
               className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
               required
             />
+            {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
           </div>
           <div className="flex items-end mb-2">
             <div className="mr-2">

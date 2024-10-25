@@ -85,11 +85,21 @@ export function updateEmailValidation(email: string): boolean {
   return false
 }
 
+export function scheduleFormValidation(title: string): {
+  isEmptyTitle: boolean,
+} {
+  const isEmptyTitle = title === "";
+
+  return {
+    isEmptyTitle
+  }
+}
 
 
 export function checkSchedule(title: string, startTime: Date, endTime: Date): boolean {
-  const isSetTitle = !!title;
+  const isEmptyTitle = title === "";
   const isSetTime = startTime && endTime && startTime.getTime() < endTime.getTime();
-  return isSetTitle && isSetTime;
+
+  return !isEmptyTitle && isSetTime;
 }
 
