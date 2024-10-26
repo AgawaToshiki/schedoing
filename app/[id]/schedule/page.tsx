@@ -25,7 +25,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
     throw new Error("User does not exist");
   }
 
-  const isOwn: boolean = user.id === params.id
+  const isOwn: boolean = authUser.id === params.id
 
   return (
     <>
