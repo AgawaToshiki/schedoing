@@ -127,15 +127,8 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!props.isOwn){
-      throw new Error("Unauthorized user");
-    }
-    if(!title) {
-      throw new Error("title is null");
-    }
-    if(startTime.getTime() >= endTime.getTime()) {
-      throw new Error("Schedule time Error");
-    }
+
+    //変更がなければ以降の処理を行わない
     if(title === props.title && description === props.description && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
       return
     }
