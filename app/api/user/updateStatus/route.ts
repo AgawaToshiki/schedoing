@@ -1,6 +1,6 @@
 'use server'
 import { NextRequest, NextResponse } from "next/server";
-import { getUser, updateStatus } from "@/app/utils/supabase/supabaseFunctions";
+import { updateStatus } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
 
@@ -12,15 +12,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if(!authUser || !authUser.id){
       throw new APIError(401, 'Unauthorized User');
     }
-    const user = await getUser(authUser.id);
-    if(!user){
-      throw new APIError(401, 'Unauthorized User');
-    }
     
     const data: { id: string, status: string } = await req.json();
 
     if(!data.id) {
       throw new APIError(400, 'Invalid Request: Missing user');
+    }
+    if(authUser.id !== data.id) {
+      throw new APIError(403, 'Permission denied');
     }
     await updateStatus(data.id, data.status);
 
