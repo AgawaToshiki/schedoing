@@ -34,15 +34,15 @@ export async function createUser(formData: FormData) {
 
   const authUser = await getCurrentUser();
   if(!authUser || !authUser.id){
-    throw new Error('401:Unauthorized User');
+    throw new Error('401:Unauthorized user');
   }
   const userInfo = await getUser(authUser.id);
   if(!userInfo){
-    throw new Error('401:Unauthorized User');
+    throw new Error('404:User data not found');
   }
   const isAdmin = isAdminUser(userInfo);
   if(!isAdmin) {
-    throw new Error('Forbidden: Operation denied');
+    throw new Error('403:Permission denied');
   }
 
   const isValid = registerFormValidation(registerData.email, registerData.password, userData.displayName);
@@ -50,14 +50,14 @@ export async function createUser(formData: FormData) {
     return { error: true, message: "不正な入力値です" }
   }
 
-  const { data: { user }, error: signUpError } = await supabaseAdmin.auth.admin.createUser(registerData)
+  const { data: { user }, error: signUpError } = await supabaseAdmin.auth.admin.createUser(registerData);
 
   if (signUpError) {
     console.error(signUpError.message);
     throw new Error(`ユーザー登録エラー：${signUpError.message}`);
   }
   
-  const { error: insertError } = await supabase.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role })
+  const { error: insertError } = await supabase.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role });
 
   if (insertError) {
     console.error(insertError.message);
