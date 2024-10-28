@@ -17,13 +17,16 @@ export async function POST(req: NextRequest, res: NextResponse) {
       throw new APIError(401, 'Unauthorized User');
     }
 
-    const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
+    const data: { title: string, description: string, startTime: string, endTime: string } = await req.json();
+    const startTime = new Date(data.startTime);
+    const endTime = new Date(data.endTime);
 
-    const isValidData = checkSchedule(data.title, data.startTime, data.endTime);
+    const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {
       throw new APIError(400, 'Invalid schedule data');
     }
-    await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
+    
+    await registerSchedule(user.id, data.title, data.description, startTime, endTime);
 
     return NextResponse.json({ status: 201 });
 

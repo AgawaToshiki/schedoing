@@ -18,13 +18,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     const data: { id: string, title: string, description: string, startTime: Date, endTime: Date } = await req.json();
+    const startTime = new Date(data.startTime);
+    const endTime = new Date(data.endTime);
 
-    const isValidData = checkSchedule(data.title, data.startTime, data.endTime);
+    const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {
       throw new APIError(400, 'Invalid schedule data');
     }
 
-    await updateSchedule(data.id, data.title, data.description, data.startTime, data.endTime);
+    await updateSchedule(data.id, data.title, data.description, startTime, endTime);
 
     return NextResponse.json({ status: 201 });
   }catch (error) {
