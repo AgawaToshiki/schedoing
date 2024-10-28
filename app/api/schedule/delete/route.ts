@@ -1,7 +1,7 @@
 'use server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
-import { deleteSchedule, getUser } from '@/app/utils/supabase/supabaseFunctions';
+import { deleteSchedule, getUserWithSchedules, getUser } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
 
 
@@ -14,6 +14,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const user = await getUser(authUser.id);
     if(!user){
       throw new APIError(401, 'Unauthorized User');
+    }
+
+    const scheduleData = await getUserWithSchedules(authUser.id);
+    if(!scheduleData) {
+      throw new APIError(401, 'Unauthorized');
+    }
+    if(scheduleData.id !== authUser.id){
+      throw new APIError(403, 'Permission denied');
     }
 
     const data: { id: string } = await req.json();

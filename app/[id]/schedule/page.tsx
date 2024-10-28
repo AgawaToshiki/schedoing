@@ -1,6 +1,6 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getSchedule, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
+import { getUserWithSchedules, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
 import { getCurrentUser } from '../../utils/supabase/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/schedule/SchedulePanel';
@@ -20,7 +20,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
 
   const isAdmin = isAdminUser(user);
 
-  const data = await getSchedule(params.id);
+  const data = await getUserWithSchedules(params.id);
   if(!data){
     throw new Error("User does not exist");
   }

@@ -7,7 +7,7 @@ type Schedule = Database['public']['Tables']['schedules']['Row'];
 
 type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
   schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
- }
+}
 
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
@@ -68,8 +68,8 @@ export async function deleteUser(id: string) {
     .eq('id', id);
 }
 
-export async function getSchedule(id: string): Promise<UserWithSchedule | null> {
-  const {data, error} = await supabase
+export async function getUserWithSchedules(id: string): Promise<UserWithSchedule | null> {
+  const { data, error } = await supabase
     .from('users')
     .select(`
       id,
@@ -92,6 +92,19 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
   }
 
   return data
+}
+
+
+export async function getSchedules(id: string) {
+  const { data, error } = await supabase
+    .from('schedules')
+    .select('id,user_id,title,description,start_time,end_time')
+    .eq("user_id", id);
+    if(!data || error) {
+      console.error('Error getSchedule:', error);
+    }
+  
+    return data
 }
 
 export async function registerSchedule(userId: string, title: string, description: string, startTime: Date, endTime: Date): Promise<void> {
