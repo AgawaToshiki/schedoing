@@ -11,7 +11,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     await deleteAllSchedule();
 
   }catch (error) {
-    console.error(error);
     return NextResponse.json({ error: 'Failed to delete schedules' }, { status: 500 });
   }
 }

@@ -31,7 +31,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     return NextResponse.json({ status: 201 });
   }catch (error) {
-    console.error("RegisterSchedule Error:", error)
     if(error instanceof APIError) {
       return NextResponse.json(
         { error: error.message },

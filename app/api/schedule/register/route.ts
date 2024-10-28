@@ -15,9 +15,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const data: { title: string, description: string, startTime: string, endTime: string, paramId: string } = await req.json();
 
-
-    console.log("data:", data);
-    console.log(authUser.id);
     if(authUser.id !== data.paramId) {
       throw new APIError(403, 'Permission denied');
     }
@@ -35,7 +32,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
     return NextResponse.json({ status: 201 });
 
   }catch (error) {
-    console.error("RegisterSchedule Error:", error);
     if(error instanceof APIError) {
       return NextResponse.json(
         { error: error.message },
