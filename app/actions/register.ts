@@ -38,7 +38,7 @@ export async function createUser(formData: FormData) {
   }
   const userInfo = await getUser(authUser.id);
   if(!userInfo){
-    throw new Error('404:User data not found');
+    throw new Error('401:Unauthorized user');
   }
   const isAdmin = isAdminUser(userInfo);
   if(!isAdmin) {
@@ -47,21 +47,21 @@ export async function createUser(formData: FormData) {
 
   const isValid = registerFormValidation(registerData.email, registerData.password, userData.displayName);
   if(!isValid) {
-    return { error: true, message: "不正な入力値です" }
+    return { error: true, message: "Invalid data" }
   }
 
   const { data: { user }, error: signUpError } = await supabaseAdmin.auth.admin.createUser(registerData);
 
   if (signUpError) {
     console.error(signUpError.message);
-    throw new Error(`ユーザー登録エラー：${signUpError.message}`);
+    throw new Error(`signUpError:${signUpError.message}`);
   }
   
   const { error: insertError } = await supabase.from('users').insert({ id: user?.id, email: registerData.email, displayName: userData.displayName, role: userData.role });
 
   if (insertError) {
     console.error(insertError.message);
-    throw new Error(`ユーザー登録エラー：${insertError.message}`);
+    throw new Error(`signUpError:${insertError.message}`);
   }
 
   redirect('/user')

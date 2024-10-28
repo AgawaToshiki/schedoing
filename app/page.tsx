@@ -26,7 +26,7 @@ export default async function DashBoard() {
 
   return (
     <>
-      <Main isAdmin={isAdmin} id={user.id}>
+      <Main isAdmin={isAdmin} id={authUser.id}>
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
@@ -36,7 +36,7 @@ export default async function DashBoard() {
           <h2>DashBoard</h2>
         </div>
         <div className="flex">
-          <UserList data={data} userId={user.id}/>
+          <UserList data={data} userId={authUser.id}/>
         </div>
       </Main>
     </>

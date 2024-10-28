@@ -8,7 +8,6 @@ import { isAdminUser } from "@/app/utils/validation";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
       throw new APIError(401, 'Unauthorized user');
@@ -25,7 +24,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const data: { id: string, role: string, displayName: string, email: string } = await req.json();
 
     if(!data.id) {
-      throw new APIError(400, 'Invalid Request: Missing user');
+      throw new APIError(404, 'User data not found');
     }
     
     await updateUser(data.id, data.role, data.displayName, data.email);

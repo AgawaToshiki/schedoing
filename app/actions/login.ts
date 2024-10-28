@@ -15,15 +15,15 @@ export async function login(formData: FormData) {
 
   const { isValid } = loginFormValidation(loginData.email, loginData.password);
   if(!isValid) {
-    return { error: true, message: "不正な入力値です" }
+    return { error: true, message: "Invalid data" }
   }
   
   const result = await signIn(loginData);
   if(result.error){
-    throw new Error(`ログインエラー：${result.error.message}`);
+    throw new Error(`loginError:${result.error.message}`);
   }
   if(!result.data.user){
-    throw new Error("存在しないユーザーです");
+    throw new Error("loginError:Invalid login credentials");
   }
   await updateStatus(result.data.user.id, 'online');
 

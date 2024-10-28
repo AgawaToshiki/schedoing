@@ -30,7 +30,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id: id, status: item.status })
+        body: JSON.stringify({ id, status: item.status })
       })
 
       const data = await response.json();
