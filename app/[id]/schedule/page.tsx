@@ -1,11 +1,13 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getUserWithSchedules, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
+import { getUserWithSchedules, getUser } from '../../utils/supabase/supabaseFunctions';
+import { isAdminUser } from '@/app/utils/validation';
 import { getCurrentUser } from '../../utils/supabase/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/schedule/SchedulePanel';
 import SectionField from '../../components/layouts/SectionField';
 import RegisterSchedule from '../../components/schedule/RegisterSchedule';
+
 
 
 const Schedule = async({ params }: { params: { id: string } }) => {

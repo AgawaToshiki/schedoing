@@ -1,6 +1,7 @@
 import React from 'react'
 import { getCurrentUser } from '../utils/supabase/auth';
-import { getUser, isAdminUser } from '../utils/supabase/supabaseFunctions';
+import { getUser } from '../utils/supabase/supabaseFunctions';
+import { isAdminUser } from '../utils/validation';
 import { redirect } from 'next/navigation';
 import Main from '../components/layouts/Main';
 import RegisterUser from '../components/RegisterUser'

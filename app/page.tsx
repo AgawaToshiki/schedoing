@@ -1,5 +1,6 @@
-import { getAllUser, getUser, isAdminUser } from './utils/supabase/supabaseFunctions';
+import { getAllUser, getUser } from './utils/supabase/supabaseFunctions';
 import { getCurrentUser } from './utils/supabase/auth';
+import { isAdminUser } from './utils/validation';
 import { redirect } from 'next/navigation'
 import { Database } from '../database.types';
 import Main from './components/layouts/Main';

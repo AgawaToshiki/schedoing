@@ -1,9 +1,10 @@
 'use server'
 import { NextRequest, NextResponse } from "next/server";
 import { updateUserEmailFromAuth } from "@/app/utils/supabase/authAdmin";
-import { getUser, isAdminUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
+import { getUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
+import { isAdminUser } from "@/app/utils/validation";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {

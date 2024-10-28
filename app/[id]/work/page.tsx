@@ -1,11 +1,13 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/app/utils/supabase/auth';
-import { getAllUser, getUser, isAdminUser } from '@/app/utils/supabase/supabaseFunctions';
+import { getAllUser, getUser } from '@/app/utils/supabase/supabaseFunctions';
+import { isAdminUser } from '@/app/utils/validation';
 import Main from '../../components/layouts/Main';
 import SectionField from '../../components/layouts/SectionField';
 import EditUserButton from '../../components/EditUserButton';
 import DeleteUserButton from '../../components/DeleteUserButton';
+
 
 const page = async() => {
 

@@ -1,3 +1,8 @@
+import { Database } from '../../database.types';
+
+type User = Database['public']['Tables']['users']['Row'];
+
+
 
 function checkPattern() {
 
@@ -77,6 +82,7 @@ export function registerFormValidation(email: string, password: string, displayN
   }
 }
 
+
 export function updateEmailValidation(email: string): boolean {
   const { checkEmail } = checkPattern();
   if(checkEmail(email)) {
@@ -84,6 +90,7 @@ export function updateEmailValidation(email: string): boolean {
   }
   return false
 }
+
 
 export function scheduleFormValidation(title: string): {
   isEmptyTitle: boolean,
@@ -101,5 +108,13 @@ export function checkSchedule(title: string, startTime: Date, endTime: Date): bo
   const isSetTime = startTime && endTime && startTime.getTime() < endTime.getTime();
 
   return !isEmptyTitle && isSetTime;
+}
+
+
+export function isAdminUser(user: User | null): boolean {
+  if (user && user.role === "admin") {
+    return true;
+  }
+  return false;
 }
 

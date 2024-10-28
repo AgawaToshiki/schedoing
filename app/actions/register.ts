@@ -3,8 +3,8 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
-import { registerFormValidation } from '../utils/validation'
-import { getUser, isAdminUser } from '../utils/supabase/supabaseFunctions'
+import { isAdminUser, registerFormValidation } from '../utils/validation'
+import { getUser } from '../utils/supabase/supabaseFunctions'
 import { getCurrentUser } from '../utils/supabase/auth'
 
 export async function createUser(formData: FormData) {

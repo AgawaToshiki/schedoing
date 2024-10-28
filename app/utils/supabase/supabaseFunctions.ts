@@ -33,13 +33,6 @@ export async function getUser(id: string): Promise<User | null> {
   return user
 }
 
-export function isAdminUser(user: User | null): boolean {
-  if (user && user.role === "admin") {
-    return true;
-  }
-  return false;
-}
-
 export async function updateUser(userId: string, role: string, displayName: string, email: string): Promise<void> {
   const { error } = await supabase
     .from('users')

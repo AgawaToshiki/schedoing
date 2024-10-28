@@ -1,9 +1,10 @@
 'use server'
 import { NextRequest, NextResponse } from "next/server";
 import { deleteUserFromAuth } from "@/app/utils/supabase/authAdmin";
-import { deleteUser, getUser, isAdminUser } from "@/app/utils/supabase/supabaseFunctions";
+import { deleteUser, getUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
+import { isAdminUser } from "@/app/utils/validation";
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
