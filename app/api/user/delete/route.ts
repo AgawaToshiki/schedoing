@@ -11,11 +11,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized User');
+      throw new APIError(401, 'Unauthorized user');
     }
     const user = await getUser(authUser.id);
     if(!user){
-      throw new APIError(401, 'Unauthorized User');
+      throw new APIError(401, 'Unauthorized user');
     }
     const isAdmin = isAdminUser(user);
     if(!isAdmin) {

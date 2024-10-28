@@ -88,17 +88,18 @@ export async function getUserWithSchedules(id: string): Promise<UserWithSchedule
 }
 
 
-export async function getScheduleId(id: string): Promise<{ id: string, user_id: string } | null> {
+export async function getScheduleId(id: string): Promise<{ id: string } | null> {
   const { data, error } = await supabase
     .from('schedules')
-    .select('id,user_id')
+    .select('id')
     .eq("id", id)
     .single();
-    if(!data || error) {
-      console.error('Error getSchedule:', error);
-    }
+
+  if(!data || error) {
+    console.error('Error getSchedule:', error);
+  }
   
-    return data
+  return data
 }
 
 export async function registerSchedule(userId: string, title: string, description: string, startTime: Date, endTime: Date): Promise<void> {

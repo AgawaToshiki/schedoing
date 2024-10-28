@@ -27,7 +27,8 @@ const Schedule = async({ params }: { params: { id: string } }) => {
     throw new Error("User does not exist");
   }
 
-  const isOwn: boolean = authUser.id === params.id
+  const paramId: string = params.id;
+  const isOwn: boolean = authUser.id === paramId;
 
   return (
     <>
@@ -37,17 +38,18 @@ const Schedule = async({ params }: { params: { id: string } }) => {
             {data?.displayName}
           </div>
         )}
-        {user.id === params.id && (
+        {isOwn && (
           <div className="mb-10">
             <SectionField sectionTitle="新規スケジュール">
-              <RegisterSchedule isOwn={isOwn}/>
+              <RegisterSchedule paramId={paramId}/>
             </SectionField>
           </div>
         )}
         <SchedulePanel 
           schedulesData={data.schedules}
-          userId={params.id}
+          userId={paramId}
           isOwn={isOwn}
+          paramId={paramId}
         />
       </Main>
     </>

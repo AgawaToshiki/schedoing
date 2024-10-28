@@ -6,9 +6,10 @@ import Icon from '../../components/elements/icon/Icon';
 
 type Props = {
   id: string;
+  paramId: string;
 }
 
-const DeleteSchedule = ({ id }: Props) => {
+const DeleteSchedule = ({ id, paramId }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -26,14 +27,14 @@ const DeleteSchedule = ({ id }: Props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: id })
+        body: JSON.stringify({ id, paramId })
       })
 
       const data = await response.json();
 
       if(!response.ok){
-        console.error(data.error, data.status);
-        alert(`${data.status}:${data.error}`);
+        console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
       }
       setIsOpen(false);
     }catch(error){

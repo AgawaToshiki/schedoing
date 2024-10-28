@@ -44,10 +44,10 @@ const EditUserForm = (props: Props) => {
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if(!checkState()){
-      console.log("Validation failed")
-      return
-    }
+    // if(!checkState()){
+    //   console.log("Validation failed")
+    //   return
+    // }
 
     try {
 			const response = await fetch('../api/user/update', {
@@ -63,8 +63,8 @@ const EditUserForm = (props: Props) => {
 			const data = await response.json();
 
 			if(!response.ok) {
-				console.error(data.error, data.status);
-        alert(`${data.status}:${data.error}`);
+				console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
 			}
 
       props.setter(false);

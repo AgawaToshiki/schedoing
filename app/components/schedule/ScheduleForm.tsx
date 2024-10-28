@@ -12,7 +12,7 @@ type Props = {
   description: string;
   startTime: Date;
   endTime: Date;
-  isOwn: boolean;
+  paramId: string;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
 }
@@ -140,14 +140,14 @@ const ScheduleForm = (props: Props) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: props.id, title, description, startTime, endTime }),
+        body: JSON.stringify({ id: props.id, title, description, startTime, endTime, paramId: props.paramId }),
       })
 
       const data = await response.json();
 
       if(!response.ok){
-        console.error(data.error, data.status);
-        alert(`${data.status}:${data.error}`);
+        console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
       }
 
       if(props.setter){

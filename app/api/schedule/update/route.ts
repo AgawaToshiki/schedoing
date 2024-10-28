@@ -10,16 +10,17 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized User');
-    }
-    const user = await getUser(authUser.id);
-    if(!user){
-      throw new APIError(401, 'Unauthorized User');
+      throw new APIError(401, 'Unauthorized user');
     }
 
-    const data: { id: string, title: string, description: string, startTime: Date, endTime: Date } = await req.json();
-    const startTime = new Date(data.startTime);
-    const endTime = new Date(data.endTime);
+    const data: { id: string, title: string, description: string, startTime: string, endTime: string, paramId: string } = await req.json();
+
+    if(authUser.id !== data.paramId) {
+      throw new APIError(403, 'Permission denied');
+    }
+
+    const startTime: Date = new Date(data.startTime);
+    const endTime: Date = new Date(data.endTime);
 
     const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {

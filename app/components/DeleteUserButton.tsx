@@ -35,8 +35,8 @@ const DeleteUserButton = ({ id }: Props) => {
 			const data = await response.json();
 
 			if(!response.ok) {
-				console.error(data.error, data.status);
-				alert(`${data.status}:${data.error}`);
+				console.error(response.status, data.error);
+				alert(`${response.status}:${data.error}`);
 			}
 
 			setIsOpen(false);

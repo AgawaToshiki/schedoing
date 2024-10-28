@@ -10,7 +10,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized User');
+      throw new APIError(401, 'Unauthorized user');
     }
     
     const data: { id: string, status: string } = await req.json();

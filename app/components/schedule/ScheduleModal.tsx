@@ -10,12 +10,13 @@ type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'descripti
 
 type Props = {
   isOpen: boolean;
+  paramId: string;
   isOwn: boolean;
   schedule: Schedule;
   setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ScheduleModal = ({ isOpen, isOwn, schedule, setter }: Props) => {
+const ScheduleModal = ({ isOpen, paramId, isOwn, schedule, setter }: Props) => {
 
   const scheduleStartTime = new Date(schedule.start_time);
   const scheduleEndTime = new Date(schedule.end_time);
@@ -27,11 +28,11 @@ const ScheduleModal = ({ isOpen, isOwn, schedule, setter }: Props) => {
         {isOwn ? (
           <ScheduleForm
             id={schedule.id}
+            paramId={paramId}
             title={schedule.title} 
             description={schedule.description}
             startTime={scheduleStartTime} 
             endTime={scheduleEndTime}
-            isOwn={isOwn}
             setter={setter}
             name="update"
           />
