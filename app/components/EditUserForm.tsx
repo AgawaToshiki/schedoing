@@ -43,12 +43,6 @@ const EditUserForm = (props: Props) => {
 
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    // if(!checkState()){
-    //   console.log("Validation failed")
-    //   return
-    // }
-
     try {
 			const response = await fetch('../api/user/update', {
 				cache: 'no-store',

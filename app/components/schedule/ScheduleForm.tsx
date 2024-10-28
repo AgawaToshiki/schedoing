@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/button/Button';
 import Icon from '../../components/elements/icon/Icon';
-import { scheduleFormValidation } from '@/app/utils/validation';
-
 
 type Props = {
   id?: string;
@@ -127,12 +125,6 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    //変更がなければ以降の処理を行わない
-    if(title === props.title && description === props.description && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
-      return
-    }
-
     try{
       const response = await fetch(`../../api/schedule/${props.name}`, {
         cache: "no-store",
@@ -164,8 +156,7 @@ const ScheduleForm = (props: Props) => {
   }
 
   const handleBlurTitle = () => {
-    const { isEmptyTitle } = scheduleFormValidation(title);
-    if(isEmptyTitle) {
+    if(title === "") {
       setTitleErrorMessage("入力必須項目です");
       return
     }
