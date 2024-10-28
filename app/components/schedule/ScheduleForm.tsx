@@ -193,7 +193,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
               onBlur={handleBlurTitle}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${titleErrorMessage && ("border-red-400")}`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}

@@ -68,7 +68,7 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 onBlur={handleBlurEmail}
@@ -84,7 +84,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 onBlur={handleBlurPassword}
