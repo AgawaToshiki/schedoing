@@ -28,22 +28,16 @@ type UpdateValidation = {
 
 
 function checkPattern() {
-
   function checkEmail(email: string): boolean {
     const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
-  
     const regEmail = email.match(emailPattern);
-  
     return !!regEmail
   }
-
   function checkPassword(password: string): boolean {
     const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
     const regPassword = password.match(passwordPattern);
-  
     return !!regPassword
   }
-
   return {
     checkEmail,
     checkPassword

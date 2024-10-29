@@ -5,6 +5,7 @@ import Button from '../components/elements/button/Button';
 import Icon from '../components/elements/icon/Icon';
 import { Database } from '@/database.types';
 import { updateValidation } from '../utils/validation'
+import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../utils/functions';
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -69,26 +70,6 @@ const EditUserForm = (props: Props) => {
 		}
   }
 
-  const handleBlurEmail = () => {
-    if(isEmptyEmail) {
-      setEmailErrorMessage("入力必須項目です");
-      return
-    }
-    if(!isValidEmail) {
-      setEmailErrorMessage("メールアドレスの形式で入力してください");
-      return
-    }
-    setEmailErrorMessage("");
-  }
-
-  const handleBlurDisplayName = () => {
-    if(isEmptyDisplayName) {
-      setDisplayNameErrorMessage("入力必須項目です")
-      return
-    }
-    setDisplayNameErrorMessage("");
-  }
-
   return (
     <>
       <form onSubmit={handleUpdateSubmit}>
@@ -120,7 +101,7 @@ const EditUserForm = (props: Props) => {
               id="editDisplayName"
               value={displayName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
-              onBlur={handleBlurDisplayName}
+							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
               className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
               required
             />
@@ -134,7 +115,7 @@ const EditUserForm = (props: Props) => {
               id="editEmail"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-              onBlur={handleBlurEmail}
+              onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
               className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
               required
             />

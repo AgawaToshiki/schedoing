@@ -4,6 +4,7 @@ import { login } from '../actions/login';
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
 import { loginValidation } from '../utils/validation';
+import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
@@ -33,34 +34,6 @@ export default function Login() {
 		}
 	}
 
-  const handleBlurEmail = () => {
-    if(isEmptyEmail) {
-      setEmailErrorMessage("入力必須項目です");
-      return
-    }
-    if(!isValidEmail) {
-      setEmailErrorMessage("メールアドレスの形式で入力してください");
-      return
-    }
-    setEmailErrorMessage("");
-  }
-
-  const handleBlurPassword = () => {
-    if(isEmptyPassword) {
-      setPasswordErrorMessage("入力必須項目です")
-      return
-    }
-    if(!isCheckPasswordLength) {
-      setPasswordErrorMessage("8文字以上で入力してください");
-      return
-    }
-    if(!isValidPassword) {
-      setPasswordErrorMessage("半角英数字と1つ以上の大文字を含めてください");
-      return
-    }
-    setPasswordErrorMessage("");
-  }
-
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
@@ -77,7 +50,7 @@ export default function Login() {
                 className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
-                onBlur={handleBlurEmail}
+                onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
                 required
               />
               {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
@@ -93,7 +66,7 @@ export default function Login() {
                 className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
-                onBlur={handleBlurPassword}
+                onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
                 required
               />
               {passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}

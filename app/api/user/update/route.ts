@@ -27,8 +27,8 @@ export async function POST(req: NextRequest, res: NextResponse) {
       throw new APIError(404, 'User data not found');
     }
 
-    const { isValid } = updateValidation(data.email, data.displayName, data.role);
-    if(!isValid) {
+    const { isValid, isSetRole } = updateValidation(data.email, data.displayName, data.role);
+    if(!isValid || !isSetRole) {
       throw new APIError(400, 'Invalid user data');
     }
     

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/button/Button';
 import Icon from '../../components/elements/icon/Icon';
+import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 
 type Props = {
   id?: string;
@@ -155,14 +156,7 @@ const ScheduleForm = (props: Props) => {
     }
   }
 
-  const handleBlurTitle = () => {
-    if(title === "") {
-      setTitleErrorMessage("入力必須項目です");
-      return
-    }
-    setTitleErrorMessage("");
-  }
-
+  
   return (
     <>
       <form onSubmit={handleSubmit}>
@@ -176,7 +170,7 @@ const ScheduleForm = (props: Props) => {
               placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-              onBlur={handleBlurTitle}
+							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
               className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${titleErrorMessage && ("border-red-400")}`}
               required
             />

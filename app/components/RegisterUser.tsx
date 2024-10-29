@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
 import { registerValidation } from '../utils/validation';
+import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
 
 export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");
@@ -39,42 +40,6 @@ export default function RegisterUser() {
 		setDisplayName("");
 	}
 
-  const handleBlurEmail = () => {
-    if(isEmptyEmail) {
-      setEmailErrorMessage("入力必須項目です");
-      return
-    }
-    if(!isValidEmail) {
-      setEmailErrorMessage("メールアドレスの形式で入力してください");
-      return
-    }
-    setEmailErrorMessage("");
-  }
-
-	const handleBlurPassword = () => {
-    if(isEmptyPassword) {
-      setPasswordErrorMessage("入力必須項目です")
-      return
-    }
-    if(!isCheckPasswordLength) {
-      setPasswordErrorMessage("8文字以上で入力してください");
-      return
-    }
-    if(!isValidPassword) {
-      setPasswordErrorMessage("半角英数字と1つ以上の大文字を含めてください");
-      return
-    }
-    setPasswordErrorMessage("");
-  }
-
-	const handleBlurDisplayName = () => {
-    if(isEmptyDisplayName) {
-      setDisplayNameErrorMessage("入力必須項目です")
-      return
-    }
-    setDisplayNameErrorMessage("");
-  }
-
   return (
     <>
     	<form action={handleRegisterSubmit}>
@@ -90,7 +55,7 @@ export default function RegisterUser() {
 							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
-							onBlur={handleBlurEmail}
+							onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
 							required
 						/>
 						{emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
@@ -106,7 +71,7 @@ export default function RegisterUser() {
 							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
-							onBlur={handleBlurPassword}
+							onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
 							required
 						/>
 						{passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}
@@ -122,7 +87,7 @@ export default function RegisterUser() {
 							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
-							onBlur={handleBlurDisplayName}
+							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
 							required
 						/>
 						{displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
