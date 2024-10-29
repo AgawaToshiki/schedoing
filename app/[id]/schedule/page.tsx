@@ -35,7 +35,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
       <Main isAdmin={isAdmin} id={user.id}>
         {!isOwn && (
           <div className="mb-6">
-            {data?.displayName}
+            {data.displayName}
           </div>
         )}
         {isOwn && (

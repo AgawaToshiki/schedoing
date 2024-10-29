@@ -18,6 +18,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
     if(!data.id) {
       throw new APIError(400, 'Invalid Request: Missing user');
     }
+    if(!data.status) {
+      throw new APIError(400, 'Invalid status');
+    }
     if(authUser.id !== data.id) {
       throw new APIError(403, 'Permission denied');
     }
