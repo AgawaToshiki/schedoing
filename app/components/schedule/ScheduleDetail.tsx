@@ -33,7 +33,7 @@ const ScheduleDetail = ({ title, description, startTime, endTime }: Props) => {
         </div>
         <div className="flex items-center gap-1.5">
           <div>備考：</div>
-          <div>{description}</div>
+          <div>{description ? description : "なし"}</div>
         </div>
       </div>
     </>

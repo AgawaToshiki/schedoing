@@ -156,7 +156,7 @@ const ScheduleForm = (props: Props) => {
     }
   }
 
-  
+
   return (
     <>
       <form onSubmit={handleSubmit}>
