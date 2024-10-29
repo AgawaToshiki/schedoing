@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import Button from '../components/elements/button/Button';
 import Icon from '../components/elements/icon/Icon';
 import { Database } from '@/database.types';
-import { updateEmailValidation } from '../utils/validation'
+import { updateValidation } from '../utils/validation'
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -21,16 +21,17 @@ const EditUserForm = (props: Props) => {
   const [role, setRole] = useState<string>(props.user.role);
   const [email, setEmail] = useState<string>(props.user.email);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
 
-  const emailValidation = updateEmailValidation(email);
+  const { isValid, isValidEmail, isEmptyEmail, isEmptyDisplayName } = updateValidation(email, displayName, role);
 
   const checkState = (): boolean => {
-    const isSetState = !!displayName && !!email;
     const hasChanged = 
       displayName !== props.user.displayName ||
       role !== props.user.role ||
       email !== props.user.email
-    return isSetState && hasChanged && emailValidation
+    return hasChanged && isValid
   }
 
   const changeDisabled = (): void => {
@@ -68,6 +69,26 @@ const EditUserForm = (props: Props) => {
 		}
   }
 
+  const handleBlurEmail = () => {
+    if(isEmptyEmail) {
+      setEmailErrorMessage("入力必須項目です");
+      return
+    }
+    if(!isValidEmail) {
+      setEmailErrorMessage("メールアドレスの形式で入力してください");
+      return
+    }
+    setEmailErrorMessage("");
+  }
+
+  const handleBlurDisplayName = () => {
+    if(isEmptyDisplayName) {
+      setDisplayNameErrorMessage("入力必須項目です")
+      return
+    }
+    setDisplayNameErrorMessage("");
+  }
+
   return (
     <>
       <form onSubmit={handleUpdateSubmit}>
@@ -99,9 +120,11 @@ const EditUserForm = (props: Props) => {
               id="editDisplayName"
               value={displayName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              onBlur={handleBlurDisplayName}
+              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
               required
             />
+            {displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
           </div>
           <div>
             <label htmlFor="editEmail">メールアドレス</label>
@@ -111,9 +134,11 @@ const EditUserForm = (props: Props) => {
               id="editEmail"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              onBlur={handleBlurEmail}
+              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
               required
             />
+            {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
           </div>
         </div>
         <div className="flex justify-end">

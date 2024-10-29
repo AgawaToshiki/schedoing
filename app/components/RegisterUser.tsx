@@ -2,19 +2,28 @@
 import { useEffect, useState } from 'react';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
-import { registerFormValidation } from '../utils/validation';
+import { registerValidation } from '../utils/validation';
 
 export default function RegisterUser() {
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
-	const [isDisabled, setDisabled] = useState<boolean>(true);
+	const [disabled, setDisabled] = useState<boolean>(true);
 	const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 	const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
 
+	const {
+		isValid,
+		isValidEmail,
+		isEmptyEmail,
+		isValidPassword,
+		isCheckPasswordLength,
+		isEmptyPassword,
+		isEmptyDisplayName
+	} = registerValidation(email, password, displayName);
+
 	useEffect(() => {
-		const { isValid } = registerFormValidation(email, password, displayName);
 		setDisabled(!isValid);
 	}, [email, password, displayName])
 
@@ -31,7 +40,6 @@ export default function RegisterUser() {
 	}
 
   const handleBlurEmail = () => {
-    const { isValidEmail, isEmptyEmail } = registerFormValidation(email, password, displayName);
     if(isEmptyEmail) {
       setEmailErrorMessage("入力必須項目です");
       return
@@ -44,7 +52,6 @@ export default function RegisterUser() {
   }
 
 	const handleBlurPassword = () => {
-    const { isValidPassword, isCheckPasswordLength, isEmptyPassword } = registerFormValidation(email, password, displayName);
     if(isEmptyPassword) {
       setPasswordErrorMessage("入力必須項目です")
       return
@@ -61,7 +68,6 @@ export default function RegisterUser() {
   }
 
 	const handleBlurDisplayName = () => {
-    const { isEmptyDisplayName } = registerFormValidation(email, password, displayName);
     if(isEmptyDisplayName) {
       setDisplayNameErrorMessage("入力必須項目です")
       return
@@ -129,7 +135,7 @@ export default function RegisterUser() {
 					attrs={
 						{
 							type: "submit",
-							disabled: isDisabled
+							disabled: disabled
 						}
 					}
 				>

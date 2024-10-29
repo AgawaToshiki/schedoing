@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { signIn } from '../utils/supabase/auth'
 import { updateStatus } from '../utils/supabase/supabaseFunctions';
-import { loginFormValidation } from '../utils/validation';
+import { loginValidation } from '../utils/validation';
 
 export async function login(formData: FormData) {
 
@@ -13,7 +13,7 @@ export async function login(formData: FormData) {
     password: formData.get('password') as string,
   }
 
-  const { isValid } = loginFormValidation(loginData.email, loginData.password);
+  const { isValid } = loginValidation(loginData.email, loginData.password);
   if(!isValid) {
     return { error: true, message: "Invalid data" }
   }

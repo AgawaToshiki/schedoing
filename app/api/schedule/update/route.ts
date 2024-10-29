@@ -1,7 +1,7 @@
 'use server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
-import { getUser, updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
+import { updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
 import { checkSchedule } from '@/app/utils/validation';
 

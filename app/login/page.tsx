@@ -3,17 +3,25 @@ import { useEffect, useState } from 'react';
 import { login } from '../actions/login';
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
-import { loginFormValidation } from '../utils/validation';
+import { loginValidation } from '../utils/validation';
 
 export default function Login() {
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const [disabled, setDisabled] = useState<boolean>(true);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 
+  const { 
+    isValid,
+    isValidEmail,
+    isEmptyEmail,
+    isValidPassword,
+    isCheckPasswordLength,
+    isEmptyPassword
+  } = loginValidation(email, password);
+
   useEffect(() => {
-    const { isValid } = loginFormValidation(email, password);
     setDisabled(!isValid);
 	}, [email, password])
 
@@ -26,7 +34,6 @@ export default function Login() {
 	}
 
   const handleBlurEmail = () => {
-    const { isValidEmail, isEmptyEmail } = loginFormValidation(email, password);
     if(isEmptyEmail) {
       setEmailErrorMessage("入力必須項目です");
       return
@@ -39,7 +46,6 @@ export default function Login() {
   }
 
   const handleBlurPassword = () => {
-    const { isValidPassword, isCheckPasswordLength, isEmptyPassword } = loginFormValidation(email, password);
     if(isEmptyPassword) {
       setPasswordErrorMessage("入力必須項目です")
       return
@@ -100,7 +106,7 @@ export default function Login() {
             attrs={
               {
                 type: "submit",
-                disabled: isDisabled,
+                disabled: disabled,
               }
             }
           >

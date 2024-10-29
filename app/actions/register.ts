@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
-import { isAdminUser, registerFormValidation } from '../utils/validation'
+import { isAdminUser, registerValidation } from '../utils/validation'
 import { getUser } from '../utils/supabase/supabaseFunctions'
 import { getCurrentUser } from '../utils/supabase/auth'
 
@@ -45,7 +45,7 @@ export async function createUser(formData: FormData) {
     throw new Error('403:Permission denied');
   }
 
-  const isValid = registerFormValidation(registerData.email, registerData.password, userData.displayName);
+  const { isValid } = registerValidation(registerData.email, registerData.password, userData.displayName);
   if(!isValid) {
     return { error: true, message: "Invalid data" }
   }

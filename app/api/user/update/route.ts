@@ -4,7 +4,7 @@ import { updateUserEmailFromAuth } from "@/app/utils/supabase/authAdmin";
 import { getUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
-import { isAdminUser } from "@/app/utils/validation";
+import { isAdminUser, updateValidation } from "@/app/utils/validation";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -25,6 +25,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
 
     if(!data.id) {
       throw new APIError(404, 'User data not found');
+    }
+
+    const { isValid } = updateValidation(data.email, data.displayName, data.role);
+    if(!isValid) {
+      throw new APIError(400, 'Invalid user data');
     }
     
     await updateUser(data.id, data.role, data.displayName, data.email);
