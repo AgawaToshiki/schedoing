@@ -24,7 +24,7 @@ const CurrentTimeBorder = () => {
         <div className='h-0 w-full'>
           <div className='w-full border-t-4 border-red-400 rounded-sm'></div>
         </div>
-        <div id="currentTimeBorder" className="block mt-[-80px]"></div>
+        <div id="currentTime" className="block mt-[-80px]"></div>
       </div>
     </>
   )
