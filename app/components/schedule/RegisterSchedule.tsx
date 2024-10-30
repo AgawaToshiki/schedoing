@@ -21,7 +21,7 @@ const RegisterSchedule = ({ paramId }: Props) => {
 
   return (
     <>
-      <div className="relative z-50 w-[300px]">
+      <div className="relative z-50 max-w-[300px] w-full">
         <ScheduleForm
           title="" 
           description=""

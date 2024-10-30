@@ -176,8 +176,8 @@ const ScheduleForm = (props: Props) => {
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
           </div>
-          <div className="flex items-end mb-2">
-            <div className="mr-2">
+          <div className="flex items-end w-full mb-2">
+            <div className="flex flex-col w-full mr-2">
               <label htmlFor={`${props.name}startTime`}>開始</label>
               <TimePicker
                 id={`${props.name}startTime`}
@@ -190,7 +190,7 @@ const ScheduleForm = (props: Props) => {
               />
             </div>
             <div className="flex items-center h-12">～</div>
-            <div className="ml-2">
+            <div className="flex flex-col w-full ml-2">
               <label htmlFor={`${props.name}endTime`}>終了</label>
               <TimePicker
                 id={`${props.name}endTime`}
