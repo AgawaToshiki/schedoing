@@ -88,7 +88,7 @@ const ScheduleForm = (props: Props) => {
       return (
         <Button
           variant="primary"
-          size="small"
+          size="medium"
           form="circle"
           attrs={
             {
