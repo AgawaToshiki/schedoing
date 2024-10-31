@@ -1,11 +1,15 @@
 'use client'
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { createUser } from '../actions/register';
 import Button from '../components/elements/button/Button';
 import { registerValidation } from '../utils/validation';
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
 
 export default function RegisterUser() {
+
+	const router = useRouter();
+	
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
 	const [displayName, setDisplayName] = useState<string>("");
@@ -29,20 +33,49 @@ export default function RegisterUser() {
 	}, [email, password, displayName])
 
 
-	const handleRegisterSubmit = async(formData: FormData) => {
-		const result = await createUser(formData);
-		if(result && result.error){
-			alert(result.message);
-			return
+	// const handleRegisterSubmit = async(formData: FormData) => {
+	// 	const result = await createUser(formData);
+	// 	if(result && result.error){
+	// 		alert(result.message);
+	// 		return
+	// 	}
+	// 	setEmail("");
+	// 	setPassword("");
+	// 	setDisplayName("");
+	// }
+
+	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const response = await fetch('../api/user/register', {
+				cache: 'no-store',
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email, password, displayName })
+			})
+
+
+			const data = await response.json();
+
+			if(!response.ok) {
+				console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
+			}
+
+			setEmail("");
+			setPassword("");
+			setDisplayName("");
+      router.refresh();
+		}catch (error) {
+			console.error("RegisterUser Error:", error)
 		}
-		setEmail("");
-		setPassword("");
-		setDisplayName("");
 	}
 
   return (
     <>
-    	<form action={handleRegisterSubmit}>
+    	<form onSubmit={handleRegisterSubmit}>
 				<div className="flex flex-col max-w-[300px] mb-6">
 					<div className="mb-2">
 						<div>

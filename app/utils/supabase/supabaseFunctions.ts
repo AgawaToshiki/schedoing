@@ -33,6 +33,16 @@ export async function getUser(id: string): Promise<User | null> {
   return user
 }
 
+export async function registerUser(userId: string, email: string, displayName: string): Promise<void> {
+  const { error } = await supabase
+  .from('users')
+  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user' });
+  if(error) {
+    console.error(error);
+    throw new Error(`signUpError:${error.message}`)
+  }
+}
+
 export async function updateUser(userId: string, role: string, displayName: string, email: string): Promise<void> {
   const { error } = await supabase
     .from('users')
@@ -81,7 +91,7 @@ export async function getUserWithSchedules(id: string): Promise<UserWithSchedule
     .single();
 
   if(!data || error) {
-    console.error('Error getSchedule:', error);
+    console.error('Error getData:', error);
   }
 
   return data
