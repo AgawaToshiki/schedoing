@@ -15,6 +15,7 @@ export async function getAllUser(): Promise<User[] | null> {
     .select('id,created_at,email,role,displayName,status,updated_at');
   if(error) {
     console.error('Error getUsers:', error);
+    throw new Error(`Error getUsers:${error.message}`);
   }
   return data
 }
@@ -25,9 +26,9 @@ export async function getUser(id: string): Promise<User | null> {
     .select('*')
     .eq('id', id)
     .single();
-  if(error || !user) {
+  if(error) {
     console.error("Error fetching user:", error);
-    return null
+    throw new Error(`Error fetching user:${error.message}`);
   }
 
   return user
