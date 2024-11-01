@@ -16,7 +16,11 @@ export async function deleteUserFromAuth(id: string) {
 			persistSession: false,
 		}
 	})
-  await supabaseAdmin.auth.admin.deleteUser(id);
+  const { error } = await supabaseAdmin.auth.admin.deleteUser(id);
+	if(error) {
+		console.error('deleteUserError:', error);
+		throw new Error(`deleteUserError:${error.message}`)
+	}
 }
 
 export async function updateUserEmailFromAuth(userId: string, email: string) {

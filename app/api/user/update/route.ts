@@ -32,8 +32,9 @@ export async function POST(req: NextRequest, res: NextResponse) {
       throw new APIError(400, 'Invalid user data');
     }
     
-    await updateUser(data.id, data.role, data.displayName, data.email);
     await updateUserEmailFromAuth(data.id, data.email);
+    await updateUser(data.id, data.role, data.displayName, data.email);
+
 
     return NextResponse.json({ status: 201 });
 

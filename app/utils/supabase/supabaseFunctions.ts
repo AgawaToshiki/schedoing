@@ -38,8 +38,8 @@ export async function registerUser(userId: string, email: string, displayName: s
   .from('users')
   .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user' });
   if(error) {
-    console.error(error);
-    throw new Error(`signUpError:${error.message}`)
+    console.error('signUpError:', error);
+    throw new Error(`signUpError:${error.message}`);
   }
 }
 
@@ -51,6 +51,7 @@ export async function updateUser(userId: string, role: string, displayName: stri
 
   if(error) {
     console.error('Error updating user:', error);
+    throw new Error(`updateUserError:${error.message}`);
   }
 }
 
@@ -61,14 +62,19 @@ export async function updateStatus(userId: string, status: string): Promise<void
     .eq('id', userId);
   if(error) {
     console.error('Error updating status:', error);
+    throw new Error(`updateStatusError:${error.message}`);
   }
 }
 
 export async function deleteUser(id: string) {
-  await supabase
+  const { error } = await supabase
     .from('users')
     .delete()
     .eq('id', id);
+    if(error) {
+      console.error('deleteUserError:', error);
+      throw new Error(`deleteUserError:${error.message}`);
+    }
 }
 
 export async function getUserWithSchedules(id: string): Promise<UserWithSchedule | null> {
@@ -90,8 +96,9 @@ export async function getUserWithSchedules(id: string): Promise<UserWithSchedule
     .eq("id", id)
     .single();
 
-  if(!data || error) {
-    console.error('Error getData:', error);
+  if(error) {
+    console.error('getDataError:', error);
+    throw new Error(`getDataError:${error.message}`);
   }
 
   return data
@@ -106,7 +113,8 @@ export async function getScheduleId(id: string): Promise<{ id: string } | null> 
     .single();
 
   if(!data || error) {
-    console.error('Error getSchedule:', error);
+    console.error('getScheduleError:', error);
+    throw new Error(`getScheduleError:${error.message}`);
   }
   
   return data
@@ -118,7 +126,8 @@ export async function registerSchedule(userId: string, title: string, descriptio
     .insert({ 'user_id': userId, 'title': title, 'description': description, 'start_time': startTime, 'end_time': endTime })
 
   if(error) {
-    console.error(error);
+    console.error('registerScheduleError:', error);
+    throw new Error(`registerScheduleError:${error.message}`);
   }
 }
 
@@ -130,7 +139,8 @@ export async function updateSchedule(id: string, title: string, description: str
     .single()
 
   if(error) {
-    console.error(error);
+    console.error('updateScheduleError:', error);
+    throw new Error(`updateScheduleError:${error.message}`);
   }
 }
 
@@ -142,7 +152,8 @@ export async function deleteSchedule(id: string): Promise<void> {
     .single()
 
   if(error) {
-    console.error(error);
+    console.error('deleteScheduleError:', error);
+    throw new Error(`deleteScheduleError:${error.message}`);
   }
 }
 
