@@ -11,10 +11,10 @@ export const signOut = async() => {
   if(!user || !user.id){
     redirect('/login')
   }
-  const { error: signOutError } = await supabase.auth.signOut();
+  const { error } = await supabase.auth.signOut();
 
-  if (signOutError) {
-    throw new Error(`signOutError:${signOutError.message}`);
+  if (error) {
+    throw new Error(`${error.status}:${error.message}`);
   }
   
   await updateStatus(user.id, 'offline');
