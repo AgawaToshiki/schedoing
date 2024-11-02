@@ -17,6 +17,7 @@ export default function Login() {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState<string>(""); 
 
   const { 
     isValid,
@@ -46,6 +47,10 @@ export default function Login() {
 			const data = await response.json();
 
 			if(!response.ok) {
+        if(response.status === 400){
+          setLoginErrorMessage("ログイン情報が正しくありません");
+          return
+        }
         alert(`ログインに失敗しました。エラー：${data.error}`);
         return
 			}
@@ -95,6 +100,7 @@ export default function Login() {
               />
               {passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}
             </div>
+            {loginErrorMessage && (<p className='pt-2 text-sm text-red-400'>{loginErrorMessage}</p>)}
           </div>
           <Button
             variant="primary"
