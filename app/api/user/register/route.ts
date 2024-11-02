@@ -9,6 +9,11 @@ import { isAdminUser, registerValidation } from "@/app/utils/validation";
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
+
+    if(req.method !== "POST"){
+      throw new APIError(405, 'Method Not Allowed');
+    }
+    
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
       throw new APIError(401, 'Unauthorized user');

@@ -9,6 +9,8 @@ type Props = {
   paramId: string;
 }
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const DeleteSchedule = ({ id, paramId }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -21,7 +23,7 @@ const DeleteSchedule = ({ id, paramId }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch('../../api/schedule/delete', {
+      const response = await fetch(`${base_url}/api/schedule/delete`, {
         cache: 'no-store',
         method: "POST",
         headers: {
@@ -38,7 +40,8 @@ const DeleteSchedule = ({ id, paramId }: Props) => {
       }
       setIsOpen(false);
     }catch(error){
-      console.error("DeleteSchedule Error:", error);
+      console.error("fetch Error:", error);
+      alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
     }
   }
 

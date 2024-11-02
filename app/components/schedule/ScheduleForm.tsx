@@ -16,6 +16,8 @@ type Props = {
   name: string;
 }
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const ScheduleForm = (props: Props) => {
 
   const [title, setTitle] = useState<string>(props.title);
@@ -127,7 +129,7 @@ const ScheduleForm = (props: Props) => {
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`../../api/schedule/${props.name}`, {
+      const response = await fetch(`${base_url}/api/schedule/${props.name}`, {
         cache: "no-store",
         method: "POST",
         headers: {
@@ -152,7 +154,8 @@ const ScheduleForm = (props: Props) => {
       setDescription("");
 
     }catch(error){
-      console.error(error);
+			console.error("fetch Error:", error);
+      alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
     }
   }
 

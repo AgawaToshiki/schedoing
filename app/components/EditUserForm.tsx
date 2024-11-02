@@ -14,6 +14,8 @@ type Props = {
   setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const EditUserForm = (props: Props) => {
 
   const router = useRouter();
@@ -46,7 +48,7 @@ const EditUserForm = (props: Props) => {
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-			const response = await fetch('../api/user/update', {
+			const response = await fetch(`${base_url}/api/user/update`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {
@@ -66,7 +68,8 @@ const EditUserForm = (props: Props) => {
       props.setter(false);
       router.refresh();
 		}catch (error) {
-			console.error("UpdateUser Error:", error)
+      console.error("fetch Error:", error);
+      alert("ユーザー更新に失敗しました。ネットワーク接続を確認してください。");
 		}
   }
 

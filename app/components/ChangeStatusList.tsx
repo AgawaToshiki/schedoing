@@ -10,6 +10,8 @@ type Props = {
   status: string;
 }
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const ChangeStatusList = ({ id, status }: Props) => {
 
   const statusList = [
@@ -24,7 +26,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
     try {
-      const response = await fetch('../api/user/updateStatus', {
+      const response = await fetch(`${base_url}/api/user/updateStatus`, {
         cache: 'no-store',
         method: "POST",
         headers: {
@@ -40,7 +42,8 @@ const ChangeStatusList = ({ id, status }: Props) => {
 				alert(`${response.status}:${data.error}`);
 			}
     } catch(error) {
-      console.error('Error updating status:', error);
+      console.error("fetch Error:", error);
+      alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
     }
     setSelectedItem(item);
   }

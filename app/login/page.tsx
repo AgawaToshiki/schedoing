@@ -1,12 +1,17 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { login } from '../actions/login';
+import { useRouter } from 'next/navigation';
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
 import { loginValidation } from '../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 export default function Login() {
+
+  const router = useRouter();
+
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -24,20 +29,39 @@ export default function Login() {
 
   useEffect(() => {
     setDisabled(!isValid);
-	}, [email, password])
+	}, [email, password]);
 
-  const handleLoginSubmit = async(formData: FormData) => {
-		const result = await login(formData);
-		if(result && result.error){
-			alert(result.message);
-			return
+  const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(`${base_url}/api/user/login`, {
+				cache: 'no-store',
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email, password })
+			})
+
+			const data = await response.json();
+
+			if(!response.ok) {
+        alert(`ログインに失敗しました。エラー：${data.error}`);
+        return
+			}
+
+      router.push('/');
+		}catch (error) {
+			console.error("fetch Error:", error);
+      alert("ログインに失敗しました。ネットワーク接続を確認してください。");
 		}
+
 	}
 
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
-        <form action={handleLoginSubmit}>
+        <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col max-w-[300px] mb-6">
             <div className="mb-2">
               <div>

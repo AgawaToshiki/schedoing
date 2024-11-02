@@ -19,6 +19,6 @@ export const signOut = async() => {
   
   await updateStatus(user.id, 'offline');
 
-  revalidatePath('/', 'layout')
-  redirect('/')
+  revalidatePath('/', 'layout');
+  redirect('/login');
 }
