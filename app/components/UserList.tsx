@@ -6,7 +6,7 @@ import { useRealtimeListener } from "../hooks/useRealtimeListener";
 type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  data: User[] | null
+  data: User[]
   userId: string
 }
 

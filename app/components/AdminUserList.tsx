@@ -5,6 +5,9 @@ import DeleteUserButton from '../components/DeleteUserButton';
 
 const AdminUserList = async() => {
 	const data = await getAllUser();
+  if(!data) {
+    throw new Error("User does not exist");
+  }
 
   return (
 		<>
@@ -43,7 +46,7 @@ const AdminUserList = async() => {
               </tr>
             </thead>
             <tbody>
-              {data?.map((user) => (
+              {data.map((user) => (
                 <tr key={user.id}>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>

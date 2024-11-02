@@ -23,6 +23,9 @@ export default async function DashBoard() {
   const isAdmin = isAdminUser(user);
 
   const data: User[] | null = await getAllUser();
+  if(!data) {
+    throw new Error("User does not exist");
+  }
 
   return (
     <>
