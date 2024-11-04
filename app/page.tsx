@@ -38,7 +38,7 @@ export default async function DashBoard() {
         <div className="mb-6">
           <h2>DashBoard</h2>
         </div>
-        <div className="flex">
+        <div className="flex flex-col w-full h-full p-6 border border-gray-200">
           <UserList data={data} userId={authUser.id}/>
         </div>
       </Main>
