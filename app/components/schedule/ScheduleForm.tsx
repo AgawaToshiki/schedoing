@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/button/Button';
 import Icon from '../../components/elements/icon/Icon';
-
+import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 
 type Props = {
   id?: string;
@@ -11,10 +11,12 @@ type Props = {
   description: string;
   startTime: Date;
   endTime: Date;
-  isOwn: boolean;
+  paramId: string;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
 }
+
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ScheduleForm = (props: Props) => {
 
@@ -23,6 +25,7 @@ const ScheduleForm = (props: Props) => {
   const [startTime, setStartTime] = useState<Date>(props.startTime);
   const [endTime, setEndTime] = useState<Date>(props.endTime);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [titleErrorMessage, setTitleErrorMessage] = useState<string>("");
 
   const checkChangeState = (): void => {
     if(props.name === "update") {
@@ -87,7 +90,7 @@ const ScheduleForm = (props: Props) => {
       return (
         <Button
           variant="primary"
-          size="small"
+          size="medium"
           form="circle"
           attrs={
             {
@@ -125,33 +128,21 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(!props.isOwn){
-      throw new Error("Unauthorized user");
-    }
-    if(!title) {
-      throw new Error("title is null");
-    }
-    if(startTime.getTime() >= endTime.getTime()) {
-      throw new Error("Schedule time Error");
-    }
-    if(title === props.title && description === props.description && startTime.getTime() === props.startTime.getTime() && endTime.getTime() === props.endTime.getTime()) {
-      return
-    }
-
     try{
-      const response = await fetch(`../../api/schedule/${props.name}`, {
+      const response = await fetch(`${base_url}/api/schedule/${props.name}`, {
         cache: "no-store",
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: props.id, title, description, startTime, endTime }),
+        body: JSON.stringify({ id: props.id, title, description, startTime, endTime, paramId: props.paramId }),
       })
 
       const data = await response.json();
 
       if(!response.ok){
-        console.error(data.error, data.status);
+        console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
       }
 
       if(props.setter){
@@ -162,10 +153,12 @@ const ScheduleForm = (props: Props) => {
       setTitle("");
       setDescription("");
 
-    }catch(err){
-      console.error(err);
+    }catch(error){
+			console.error("fetch Error:", error);
+      alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
     }
   }
+
 
   return (
     <>
@@ -180,12 +173,14 @@ const ScheduleForm = (props: Props) => {
               placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
+              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${titleErrorMessage && ("border-red-400")}`}
               required
             />
+            {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
           </div>
-          <div className="flex items-end mb-2">
-            <div className="mr-2">
+          <div className="flex items-end w-full mb-2">
+            <div className="flex flex-col w-full mr-2">
               <label htmlFor={`${props.name}startTime`}>開始</label>
               <TimePicker
                 id={`${props.name}startTime`}
@@ -198,7 +193,7 @@ const ScheduleForm = (props: Props) => {
               />
             </div>
             <div className="flex items-center h-12">～</div>
-            <div className="ml-2">
+            <div className="flex flex-col w-full ml-2">
               <label htmlFor={`${props.name}endTime`}>終了</label>
               <TimePicker
                 id={`${props.name}endTime`}

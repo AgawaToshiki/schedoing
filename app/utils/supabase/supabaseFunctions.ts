@@ -7,7 +7,7 @@ type Schedule = Database['public']['Tables']['schedules']['Row'];
 
 type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
   schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
- }
+}
 
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
@@ -15,6 +15,7 @@ export async function getAllUser(): Promise<User[] | null> {
     .select('id,created_at,email,role,displayName,status,updated_at');
   if(error) {
     console.error('Error getUsers:', error);
+    throw new Error(`Error getUsers:${error.message}`);
   }
   return data
 }
@@ -25,19 +26,22 @@ export async function getUser(id: string): Promise<User | null> {
     .select('*')
     .eq('id', id)
     .single();
-  if(error || !user) {
+  if(error) {
     console.error("Error fetching user:", error);
-    return null
+    throw new Error(`Error fetching user:${error.message}`);
   }
 
   return user
 }
 
-export function isAdminUser(user: User | null): boolean {
-  if (user && user.role === "admin") {
-    return true;
+export async function registerUser(userId: string, email: string, displayName: string): Promise<void> {
+  const { error } = await supabase
+  .from('users')
+  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user' });
+  if(error) {
+    console.error('signUpError:', error);
+    throw new Error(`signUpError:${error.message}`);
   }
-  return false;
 }
 
 export async function updateUser(userId: string, role: string, displayName: string, email: string): Promise<void> {
@@ -48,6 +52,7 @@ export async function updateUser(userId: string, role: string, displayName: stri
 
   if(error) {
     console.error('Error updating user:', error);
+    throw new Error(`updateUserError:${error.message}`);
   }
 }
 
@@ -58,18 +63,23 @@ export async function updateStatus(userId: string, status: string): Promise<void
     .eq('id', userId);
   if(error) {
     console.error('Error updating status:', error);
+    throw new Error(`updateStatusError:${error.message}`);
   }
 }
 
 export async function deleteUser(id: string) {
-  await supabase
+  const { error } = await supabase
     .from('users')
     .delete()
     .eq('id', id);
+    if(error) {
+      console.error('deleteUserError:', error);
+      throw new Error(`deleteUserError:${error.message}`);
+    }
 }
 
-export async function getSchedule(id: string): Promise<UserWithSchedule | null> {
-  const {data, error} = await supabase
+export async function getUserWithSchedules(id: string): Promise<UserWithSchedule | null> {
+  const { data, error } = await supabase
     .from('users')
     .select(`
       id,
@@ -87,10 +97,27 @@ export async function getSchedule(id: string): Promise<UserWithSchedule | null> 
     .eq("id", id)
     .single();
 
-  if(!data || error) {
-    console.error('Error getSchedule:', error);
+  if(error) {
+    console.error('getDataError:', error);
+    throw new Error(`getDataError:${error.message}`);
   }
 
+  return data
+}
+
+
+export async function getScheduleId(id: string): Promise<{ id: string } | null> {
+  const { data, error } = await supabase
+    .from('schedules')
+    .select('id')
+    .eq("id", id)
+    .single();
+
+  if(!data || error) {
+    console.error('getScheduleError:', error);
+    throw new Error(`getScheduleError:${error.message}`);
+  }
+  
   return data
 }
 
@@ -100,7 +127,8 @@ export async function registerSchedule(userId: string, title: string, descriptio
     .insert({ 'user_id': userId, 'title': title, 'description': description, 'start_time': startTime, 'end_time': endTime })
 
   if(error) {
-    console.error(error);
+    console.error('registerScheduleError:', error);
+    throw new Error(`registerScheduleError:${error.message}`);
   }
 }
 
@@ -112,7 +140,8 @@ export async function updateSchedule(id: string, title: string, description: str
     .single()
 
   if(error) {
-    console.error(error);
+    console.error('updateScheduleError:', error);
+    throw new Error(`updateScheduleError:${error.message}`);
   }
 }
 
@@ -124,7 +153,8 @@ export async function deleteSchedule(id: string): Promise<void> {
     .single()
 
   if(error) {
-    console.error(error);
+    console.error('deleteScheduleError:', error);
+    throw new Error(`deleteScheduleError:${error.message}`);
   }
 }
 

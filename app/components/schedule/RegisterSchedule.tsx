@@ -3,10 +3,10 @@ import React from 'react'
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
 type Props = {
-  isOwn: boolean;
+  paramId: string;
 }
 
-const RegisterSchedule = ({ isOwn }: Props) => {
+const RegisterSchedule = ({ paramId }: Props) => {
 
   //初期時刻を直近の15分刻みの時刻に設定
   const defaultStartDate = new Date();
@@ -21,13 +21,13 @@ const RegisterSchedule = ({ isOwn }: Props) => {
 
   return (
     <>
-      <div className="relative z-50 w-[300px]">
+      <div className="relative z-50 max-w-[300px] w-full">
         <ScheduleForm
           title="" 
           description=""
           startTime={defaultStartDate} 
           endTime={defaultEndDate}
-          isOwn={isOwn}
+          paramId={paramId}
           name="register"
         />
       </div>

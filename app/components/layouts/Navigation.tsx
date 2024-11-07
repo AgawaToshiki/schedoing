@@ -22,8 +22,8 @@ const Navigation = ({ isAdmin, id }: Props) => {
       showFlag: true,
     },
     {
-      href: `/${id}/schedule#currentTimeBorder`,
-      pathname: `/${id}/schedule`,
+      href: `/schedule/${id}#currentTime`,
+      pathname: `/schedule/${id}`,
       title: "スケジュール管理",
       icon: "schedule",
       showFlag: true
@@ -33,13 +33,6 @@ const Navigation = ({ isAdmin, id }: Props) => {
       pathname: "/user",
       title: "ユーザー管理",
       icon: "user",
-      showFlag: isAdmin
-    },
-    {
-      href: `/${id}/work`,
-      pathname: `/${id}/work`,
-      title: "勤怠管理",
-      icon: "work",
       showFlag: isAdmin
     },
     {

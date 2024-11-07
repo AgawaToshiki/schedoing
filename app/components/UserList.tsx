@@ -6,12 +6,13 @@ import { useRealtimeListener } from "../hooks/useRealtimeListener";
 type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  data: User[] | null
+  data: User[]
+  userId: string
 }
 
-const UserList = ({ data }: Props) => {
+const UserList = ({ data, userId }: Props) => {
 
-  const users = useRealtimeListener<User>({
+  const usersList = useRealtimeListener<User>({
     table: 'users',
     defaultData: data,
     isValidData: (obj: any): obj is User => {
@@ -27,13 +28,15 @@ const UserList = ({ data }: Props) => {
     }
   })
 
+  const users = usersList?.filter(item => item.id !== userId);
+
   return (
     <>
       {users?.map((user) => (
-        <Link href={`/${user.id}/schedule#currentTimeBorder`} key={user.id}>        
+        <Link href={`/schedule/${user.id}#currentTime`} key={user.id}>        
           <div className="flex items-center gap-4 mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
             <div>{user.displayName}</div>
-            <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+            <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
           </div>
         </Link>
       ))}

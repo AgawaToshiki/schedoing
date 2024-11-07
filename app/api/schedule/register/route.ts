@@ -1,22 +1,51 @@
 'use server'
-import { redirect } from 'next/navigation';
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
+import { APIError } from '@/app/utils/exceptions';
+import { checkSchedule } from '@/app/utils/validation';
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
-    const user = await getCurrentUser();
-    if(!user || !user.id){
-      redirect('/login')
+
+    if(req.method !== "POST"){
+      throw new APIError(405, 'Method Not Allowed');
     }
-    const data: { title: string, description: string, startTime: Date, endTime: Date } = await req.json();
-    await registerSchedule(user.id, data.title, data.description, data.startTime, data.endTime);
+    
+    const authUser = await getCurrentUser();
+    if(!authUser || !authUser.id){
+      throw new APIError(401, 'Unauthorized user');
+    }
+
+    const data: { title: string, description: string, startTime: string, endTime: string, paramId: string } = await req.json();
+
+    if(authUser.id !== data.paramId) {
+      throw new APIError(403, 'Permission denied');
+    }
+
+    const startTime: Date = new Date(data.startTime);
+    const endTime: Date = new Date(data.endTime);
+
+    const isValidData = checkSchedule(data.title, startTime, endTime);
+    if(!isValidData) {
+      throw new APIError(400, 'Invalid schedule data');
+    }
+    
+    await registerSchedule(authUser.id, data.title, data.description, startTime, endTime);
 
     return NextResponse.json({ status: 201 });
+
   }catch (error) {
-    console.error("RegisterSchedule Error:", error)
-    return NextResponse.json({ error: 'Internal Server Error' },{ status: 500 })
+    if(error instanceof APIError) {
+      return NextResponse.json(
+        { error: error.message },
+        { status: error.statusCode }
+      );
+    }
+    return NextResponse.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }

@@ -6,9 +6,12 @@ import Icon from '../../components/elements/icon/Icon';
 
 type Props = {
   id: string;
+  paramId: string;
 }
 
-const DeleteSchedule = ({ id }: Props) => {
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
+const DeleteSchedule = ({ id, paramId }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -20,23 +23,25 @@ const DeleteSchedule = ({ id }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch('../../api/schedule/delete', {
+      const response = await fetch(`${base_url}/api/schedule/delete`, {
         cache: 'no-store',
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: id })
+        body: JSON.stringify({ id, paramId })
       })
 
       const data = await response.json();
 
       if(!response.ok){
-        console.error(data.error, data.status);
+        console.error(response.status, data.error);
+        alert(`${response.status}:${data.error}`);
       }
       setIsOpen(false);
-    }catch(err){
-      console.error("DeleteSchedule Error:", err);
+    }catch(error){
+      console.error("fetch Error:", error);
+      alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
     }
   }
 

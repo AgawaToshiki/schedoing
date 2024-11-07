@@ -1,11 +1,13 @@
 import React from 'react'
 import { redirect } from 'next/navigation';
-import { getSchedule, getUser, isAdminUser } from '../../utils/supabase/supabaseFunctions';
+import { getUserWithSchedules, getUser } from '../../utils/supabase/supabaseFunctions';
+import { isAdminUser } from '@/app/utils/validation';
 import { getCurrentUser } from '../../utils/supabase/auth';
 import Main from '../../components/layouts/Main';
 import SchedulePanel from '../../components/schedule/SchedulePanel';
 import SectionField from '../../components/layouts/SectionField';
 import RegisterSchedule from '../../components/schedule/RegisterSchedule';
+
 
 
 const Schedule = async({ params }: { params: { id: string } }) => {
@@ -20,32 +22,34 @@ const Schedule = async({ params }: { params: { id: string } }) => {
 
   const isAdmin = isAdminUser(user);
 
-  const data = await getSchedule(params.id);
+  const data = await getUserWithSchedules(params.id);
   if(!data){
-    redirect('/login')
+    throw new Error("User does not exist");
   }
 
-  const isOwn: boolean = user.id === params.id
+  const paramId: string = params.id;
+  const isOwn: boolean = authUser.id === paramId;
 
   return (
     <>
       <Main isAdmin={isAdmin} id={user.id}>
         {!isOwn && (
           <div className="mb-6">
-            {data?.displayName}
+            {data.displayName}
           </div>
         )}
-        {user.id === params.id && (
+        {isOwn && (
           <div className="mb-10">
             <SectionField sectionTitle="新規スケジュール">
-              <RegisterSchedule isOwn={isOwn}/>
+              <RegisterSchedule paramId={paramId}/>
             </SectionField>
           </div>
         )}
         <SchedulePanel 
           schedulesData={data.schedules}
-          userId={params.id}
+          userId={paramId}
           isOwn={isOwn}
+          paramId={paramId}
         />
       </Main>
     </>

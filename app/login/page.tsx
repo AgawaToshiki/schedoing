@@ -1,26 +1,72 @@
 'use client'
 import { useEffect, useState } from 'react';
-import { login } from '../actions/login'
+import { useRouter } from 'next/navigation';
 import SectionField from '../components/layouts/SectionField';
 import Button from '../components/elements/button/Button';
-import { formValidation } from '../utils/functions';
+import { loginValidation } from '../utils/validation';
+import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
+
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Login() {
+
+  const router = useRouter();
+
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-  const [isDisabled, setDisabled] = useState<boolean>(true);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
+  const [loginErrorMessage, setLoginErrorMessage] = useState<string>(""); 
 
-  const { loginFormValidation } = formValidation();
+  const { 
+    isValid,
+    isValidEmail,
+    isEmptyEmail,
+    isValidPassword,
+    isCheckPasswordLength,
+    isEmptyPassword
+  } = loginValidation(email, password);
 
   useEffect(() => {
-    const isValid = loginFormValidation(email, password);
     setDisabled(!isValid);
-	}, [email, password])
+	}, [email, password]);
+
+  const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		try {
+			const response = await fetch(`${base_url}/api/user/login`, {
+				cache: 'no-store',
+				method: "POST",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ email, password })
+			})
+
+			const data = await response.json();
+
+			if(!response.ok) {
+        if(response.status === 400){
+          setLoginErrorMessage("ログイン情報が正しくありません");
+          return
+        }
+        alert(`ログインに失敗しました。エラー：${data.error}`);
+        return
+			}
+
+      router.push('/');
+		}catch (error) {
+			console.error("fetch Error:", error);
+      alert("ログインに失敗しました。ネットワーク接続を確認してください。");
+		}
+
+	}
 
   return (
     <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
       <SectionField sectionTitle="ログイン">
-        <form>
+        <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col max-w-[300px] mb-6">
             <div className="mb-2">
               <div>
@@ -30,11 +76,13 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
+                onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
                 required
               />
+              {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
             </div>
             <div className="mb-2">
               <div>
@@ -44,12 +92,15 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
+                onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
                 required
               />
+              {passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}
             </div>
+            {loginErrorMessage && (<p className='pt-2 text-sm text-red-400'>{loginErrorMessage}</p>)}
           </div>
           <Button
             variant="primary"
@@ -58,8 +109,7 @@ export default function Login() {
             attrs={
               {
                 type: "submit",
-                disabled: isDisabled,
-                formAction: login
+                disabled: disabled,
               }
             }
           >

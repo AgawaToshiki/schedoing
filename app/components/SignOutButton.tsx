@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { handleSignOut } from '../actions/signOut'
+import { signOut } from '../actions/signOut'
 import Button from '../components/elements/button/Button';
 import ConfirmModal from '../components/layouts/ConfirmModal';
 
@@ -34,7 +34,7 @@ const SignOutButton = () => {
           message="サインアウトしますか？"
           setter={setIsOpen}
         >
-          <form action={handleSignOut}>
+          <form action={signOut}>
             <Button
               variant="danger"
               size="medium"

@@ -5,20 +5,20 @@ import { createClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "../utils/supabase/auth";
 import { updateStatus } from '../utils/supabase/supabaseFunctions';
 
-export const handleSignOut = async() => {
-  try {
-    const supabase = createClient();
-    const user = await getCurrentUser();
-    if(!user || !user.id){
-      redirect('/login')
-    }
-    await supabase.auth.signOut();
-
-    await updateStatus(user.id, 'offline');
-
-  }catch (error) {
-    console.error("SignOut Error:", error)
+export const signOut = async() => {
+  const supabase = createClient();
+  const user = await getCurrentUser();
+  if(!user || !user.id){
+    redirect('/login')
   }
-  revalidatePath('/', 'layout')
-  redirect('/')
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error(`${error.status}:${error.message}`);
+  }
+  
+  await updateStatus(user.id, 'offline');
+
+  revalidatePath('/', 'layout');
+  redirect('/login');
 }

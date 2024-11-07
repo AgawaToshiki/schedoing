@@ -1,5 +1,6 @@
-import { getAllUser, getUser, isAdminUser } from './utils/supabase/supabaseFunctions';
+import { getAllUser, getUser } from './utils/supabase/supabaseFunctions';
 import { getCurrentUser } from './utils/supabase/auth';
+import { isAdminUser } from './utils/validation';
 import { redirect } from 'next/navigation'
 import { Database } from '../database.types';
 import Main from './components/layouts/Main';
@@ -22,10 +23,13 @@ export default async function DashBoard() {
   const isAdmin = isAdminUser(user);
 
   const data: User[] | null = await getAllUser();
+  if(!data) {
+    throw new Error("User does not exist");
+  }
 
   return (
     <>
-      <Main isAdmin={isAdmin} id={user.id}>
+      <Main isAdmin={isAdmin} id={authUser.id}>
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
@@ -34,8 +38,8 @@ export default async function DashBoard() {
         <div className="mb-6">
           <h2>DashBoard</h2>
         </div>
-        <div className="flex">
-          <UserList data={data}/>
+        <div className="flex flex-col w-full h-full p-6 border border-gray-200">
+          <UserList data={data} userId={authUser.id}/>
         </div>
       </Main>
     </>

@@ -39,7 +39,9 @@ const Button = ({ onClick, variant, size, form, className, attrs, children }: Pr
     circle: "rounded-full",
   }
 
-  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${formStyle[form]} ${className}`;
+  const optionStyle = className ? className : "";
+
+  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${formStyle[form]} ${optionStyle}`;
 
   return (
     <>

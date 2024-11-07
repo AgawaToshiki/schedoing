@@ -2,19 +2,30 @@
 
 import { createClient } from '@/utils/supabase/server'
 import { User } from "@supabase/supabase-js";
+import { APIError } from '@/app/utils/exceptions';
 
 
 export async function getCurrentUser(): Promise<User | null> {
   const supabase = createClient();
   const { data: { user }, error } = await supabase.auth.getUser();
-	if (error || !user) {
-		return null
+  if(error) {
+    if(error.status){
+      throw new APIError(error.status, `${error.message}`);
+    }
+    throw new Error(error.message);
 	}
   return user
 }
 
-export async function signIn(loginData: { email: string, password: string }) {
+export async function signIn(email: string, password: string): Promise<User | null> {
   const supabase = createClient();
-  const { data, error } = await supabase.auth.signInWithPassword(loginData);
-  return { data, error }
+  const loginData = { email, password };
+  const { data: { user }, error } = await supabase.auth.signInWithPassword(loginData);
+  if(error) {
+    if(error.status){
+      throw new APIError(error.status, `${error.message}`);
+    }
+    throw new Error(error.message);
+	}
+  return user
 }

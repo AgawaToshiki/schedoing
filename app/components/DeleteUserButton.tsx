@@ -9,6 +9,8 @@ type Props = {
   id: string;
 }
 
+const base_url = process.env.NEXT_PUBLIC_BASE_URL;
+
 const DeleteUserButton = ({ id }: Props) => {
 
 	const router = useRouter();
@@ -23,25 +25,27 @@ const DeleteUserButton = ({ id }: Props) => {
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch('../api/user/delete', {
+			const response = await fetch(`${base_url}/api/user/delete`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ id: id })
+				body: JSON.stringify({ id })
 			})
 
 			const data = await response.json();
 
 			if(!response.ok) {
-				console.error(data.error, data.status);
+				console.error(response.status, data.error);
+				alert(`${response.status}:${data.error}`);
 			}
 
 			setIsOpen(false);
       router.refresh();
 		}catch (error) {
-			console.error("DeleteUser Error:", error)
+			console.error("fetch Error:", error);
+      alert("ユーザー削除に失敗しました。ネットワーク接続を確認してください。");
 		}
 	}
 

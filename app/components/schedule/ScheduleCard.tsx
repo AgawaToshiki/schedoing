@@ -9,11 +9,12 @@ type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
+  paramId: string;
   isOwn: boolean;
   schedule: Schedule;
 }
 
-const ScheduleCard = ({ isOwn, schedule }: Props) => {
+const ScheduleCard = ({ paramId, isOwn, schedule }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   
@@ -57,13 +58,14 @@ const ScheduleCard = ({ isOwn, schedule }: Props) => {
           <div className="ml-2">{formatEndTime}</div>
         </div>
         {isOwn && (
-          <DeleteSchedule id={schedule.id} />
+          <DeleteSchedule id={schedule.id} paramId={paramId} />
         )}
       </div>
       {isOpen && (
         <ScheduleModal
           isOpen={isOpen}
           isOwn={isOwn}
+          paramId={paramId}
           setter={setIsOpen}
           schedule={schedule}
         />

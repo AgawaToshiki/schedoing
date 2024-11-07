@@ -1,58 +1,31 @@
+import React from "react"
 
-export function formValidation() {
-
-  function checkPattern() {
-
-    function checkEmail(email: string) {
-      const emailPattern = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@+[a-zA-Z0-9-]+\.+[a-zA-Z0-9-]+$/;
-    
-      const regEmail = email.match(emailPattern);
-    
-      return regEmail
-    }
-  
-    function checkPassword(password: string) {
-      const passwordPattern = /^(?=.*[A-Z])[0-9a-zA-Z]*$/;
-      const regPassword = password.match(passwordPattern);
-    
-      return regPassword
-    }
-
-    return {
-      checkEmail,
-      checkPassword
-    }
+export function handleSetEmailErrorMessage(isValid: boolean, isEmpty: boolean, setter: React.Dispatch<React.SetStateAction<string>>) {
+  if(isEmpty) {
+    return setter("入力必須項目です");
   }
-
-
-  function loginFormValidation(email: string, password: string): boolean {
-    const { checkEmail, checkPassword } = checkPattern();
-    if(checkEmail(email) && checkPassword(password) && password.length >= 8) {
-      return true
-    }
-    return false
+  if(!isValid) {
+    return setter("メールアドレスの形式で入力してください");
   }
-  
-  function registerFormValidation(email: string, password: string, displayName: string): boolean {
-    const { checkEmail, checkPassword } = checkPattern();
-    if(checkEmail(email) && checkPassword(password) && displayName && password.length >= 8) {
-      return true
-    }
-    return false
-  }
-
-  function updateEmailValidation(email: string): boolean {
-    const { checkEmail } = checkPattern();
-    if(checkEmail(email)) {
-      return true
-    }
-    return false
-  }
-
-  return {
-    loginFormValidation,
-    registerFormValidation,
-    updateEmailValidation
-  }
+  return setter("");
 }
 
+export function handleSetPasswordErrorMessage(isValid: boolean, isEmpty: boolean, isLength: boolean, setter: React.Dispatch<React.SetStateAction<string>>) {
+  if(isEmpty) {
+    return setter("入力必須項目です");
+  }
+  if(!isLength) {
+    return setter("8文字以上で入力してください");
+  }
+  if(!isValid) {
+    return setter("半角英数字と1つ以上の大文字を含めてください");
+  }
+  return setter("");
+}
+
+export function handleSetEmptyErrorMessage(isEmpty: boolean, setter: React.Dispatch<React.SetStateAction<string>>) {
+  if(isEmpty) {
+    return setter("入力必須項目です");
+  }
+  return setter("");
+}

@@ -10,11 +10,12 @@ type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'descripti
 
 type Props = {
   userId: string;
+  paramId: string;
   isOwn: boolean;
   schedulesData: Schedule[] | null;
 }
 
-const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
+const SchedulePanel = ({ userId, paramId, isOwn, schedulesData }: Props) => {
 
   const schedulesList = useRealtimeListener<Schedule>({
     table: 'schedules',
@@ -42,7 +43,7 @@ const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />
             {schedules?.map((schedule) => (
-              <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} />
+              <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} paramId={paramId} />
             ))}
 
             {timeArray.map((index) => (
