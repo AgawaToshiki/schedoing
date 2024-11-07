@@ -157,13 +157,3 @@ export async function deleteSchedule(id: string): Promise<void> {
     throw new Error(`deleteScheduleError:${error.message}`);
   }
 }
-
-export async function deleteAllSchedule(): Promise<void> {
-  const { error } = await supabase
-    .from('schedules')
-    .delete()
-
-  if(error) {
-    console.error(error);
-  }
-}
