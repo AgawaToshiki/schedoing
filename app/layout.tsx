@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Share do | スケジュール共有アプリ"
+  title: "Schedoing | スケジュール共有アプリ"
 };
 
 export default function RootLayout({
