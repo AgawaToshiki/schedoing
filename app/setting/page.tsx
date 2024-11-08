@@ -17,6 +17,8 @@ export default async function Setting() {
   }
   const isAdmin = isAdminUser(user);
 
+  console.log(user.is_reset_schedules);
+
 
   return (
     <>
@@ -24,6 +26,7 @@ export default async function Setting() {
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="設定">
             <div>test</div>
+            {/* headressuiのswitchを利用して設定の変更を行いたい。 */}
           </SectionField>
         </div>
       </Main>

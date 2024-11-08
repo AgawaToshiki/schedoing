@@ -12,7 +12,7 @@ type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status,updated_at');
+    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules');
   if(error) {
     console.error('Error getUsers:', error);
     throw new Error(`Error getUsers:${error.message}`);
