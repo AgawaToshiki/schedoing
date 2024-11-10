@@ -131,7 +131,7 @@ const ScheduleForm = (props: Props) => {
     try{
       const response = await fetch(`${base_url}/api/schedule/${props.name}`, {
         cache: "no-store",
-        method: "POST",
+        method: props.name === "register" ? "POST" : "PATCH",
         headers: {
           'Content-Type': 'application/json',
         },

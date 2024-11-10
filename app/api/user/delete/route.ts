@@ -7,10 +7,10 @@ import { APIError } from '@/app/utils/exceptions';
 import { isAdminUser } from "@/app/utils/validation";
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function DELETE(req: NextRequest, res: NextResponse) {
   try {
 
-    if(req.method !== "POST"){
+    if(req.method !== "DELETE"){
       throw new APIError(405, 'Method Not Allowed');
     }
     

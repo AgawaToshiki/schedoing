@@ -6,10 +6,10 @@ import { APIError } from '@/app/utils/exceptions';
 import { checkSchedule } from '@/app/utils/validation';
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function PATCH(req: NextRequest, res: NextResponse) {
   try {
 
-    if(req.method !== "POST"){
+    if(req.method !== "PATCH"){
       throw new APIError(405, 'Method Not Allowed');
     }
     

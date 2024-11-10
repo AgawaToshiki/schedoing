@@ -27,7 +27,7 @@ const DeleteUserButton = ({ id }: Props) => {
 		try {
 			const response = await fetch(`${base_url}/api/user/delete`, {
 				cache: 'no-store',
-				method: "POST",
+				method: "DELETE",
 				headers: {
 					'Content-Type': 'application/json'
 				},

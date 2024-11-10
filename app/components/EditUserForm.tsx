@@ -50,7 +50,7 @@ const EditUserForm = (props: Props) => {
     try {
 			const response = await fetch(`${base_url}/api/user/update`, {
 				cache: 'no-store',
-				method: "POST",
+				method: "PATCH",
 				headers: {
 					'Content-Type': 'application/json'
 				},

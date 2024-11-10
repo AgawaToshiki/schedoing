@@ -28,7 +28,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
     try {
       const response = await fetch(`${base_url}/api/user/updateStatus`, {
         cache: 'no-store',
-        method: "POST",
+        method: "PATCH",
         headers: {
           'Content-Type': 'application/json'
         },
