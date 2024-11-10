@@ -23,13 +23,13 @@ const DeleteSchedule = ({ id, paramId }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`${base_url}/api/schedule/delete`, {
+      const response = await fetch(`${base_url}/api/schedules/${id}`, {
         cache: 'no-store',
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, paramId })
+        body: JSON.stringify({ paramId })
       })
 
       const data = await response.json();
