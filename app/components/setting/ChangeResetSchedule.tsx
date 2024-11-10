@@ -14,12 +14,32 @@ const ChangeResetSchedule = ({ id, resetFlag }: Props) => {
   const [enabled, setEnabled] = useState<boolean>(resetFlag);
 
   const handleChangeToggle = async() => {
-    try {
-      const response = fetch(`${base_url}/api/user/update/${id}`);
-    } catch {
 
+    const newResetFlag = !enabled;
+
+    try {
+      const response = await fetch(`${base_url}/api/users/${id}/reset-schedules`, {
+        cache: 'no-store',
+        method: "PATCH",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ resetFlag: newResetFlag })
+      });
+
+      const data = await response.json();
+
+      if(!response.ok) {
+				console.error(response.status, data.error);
+				alert(`${response.status}:${data.error}`);
+        return
+			}
+
+      setEnabled(newResetFlag);
+    } catch(error) {
+      console.error("fetch Error:", error);
+      alert("変更に失敗しました。ネットワーク接続を確認してください。");
     }
-    setEnabled(!enabled);
   }
 
   return (

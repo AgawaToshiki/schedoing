@@ -67,6 +67,17 @@ export async function updateStatus(userId: string, status: string): Promise<void
   }
 }
 
+export async function updateSchedulesResetFlag(userId: string, resetFlag: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('users')
+    .update({ 'is_reset_schedules': resetFlag })
+    .eq('id', userId);
+  if(error) {
+    console.error('Error updating flag:', error);
+    throw new Error(`updateFlagError:${error.message}`);
+  }
+}
+
 export async function deleteUser(id: string) {
   const { error } = await supabase
     .from('users')

@@ -35,7 +35,7 @@ export default function Login() {
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/login`, {
+			const response = await fetch(`${base_url}/api/auth/login`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {

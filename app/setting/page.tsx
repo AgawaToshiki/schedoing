@@ -18,8 +18,6 @@ export default async function Setting() {
   }
   const isAdmin = isAdminUser(user);
 
-  console.log(user.is_reset_schedules);
-
 
   return (
     <>

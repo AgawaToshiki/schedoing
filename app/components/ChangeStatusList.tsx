@@ -26,13 +26,13 @@ const ChangeStatusList = ({ id, status }: Props) => {
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
     try {
-      const response = await fetch(`${base_url}/api/user/updateStatus`, {
+      const response = await fetch(`${base_url}/api/users/${id}/status`, {
         cache: 'no-store',
         method: "PATCH",
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, status: item.status })
+        body: JSON.stringify({ status: item.status })
       })
 
       const data = await response.json();
@@ -40,12 +40,14 @@ const ChangeStatusList = ({ id, status }: Props) => {
       if(!response.ok) {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
+        return
 			}
+
+      setSelectedItem(item);
     } catch(error) {
       console.error("fetch Error:", error);
       alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
     }
-    setSelectedItem(item);
   }
 
   return (

@@ -21,6 +21,12 @@ export async function PATCH(
     }
 
     if(!params.scheduleId) {
+      throw new APIError(400, 'BadRequest');
+    }
+
+    const scheduleData = await getScheduleId(params.scheduleId);
+
+    if(!scheduleData) {
       throw new APIError(404, 'Schedule not found');
     }
 
@@ -40,7 +46,7 @@ export async function PATCH(
 
     await updateSchedule(params.scheduleId, data.title, data.description, startTime, endTime);
 
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json({ status: 200 });
   }catch (error) {
     if(error instanceof APIError) {
       return NextResponse.json(
@@ -87,7 +93,7 @@ export async function DELETE(
 
     await deleteSchedule(params.scheduleId);
 
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json({ status: 200 });
   }catch (error) {
     if(error instanceof APIError) {
       return NextResponse.json(

@@ -6,7 +6,7 @@ import { APIError } from '@/app/utils/exceptions';
 import { loginValidation } from "@/app/utils/validation";
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
 
     if(req.method !== "POST"){
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
     await updateStatus(user.id, 'online');
   
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json({ status: 200 });
 
   }catch (error) {
     if(error instanceof APIError) {

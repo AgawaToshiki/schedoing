@@ -37,7 +37,7 @@ export default function RegisterUser() {
 	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/register`, {
+			const response = await fetch(`${base_url}/api/users`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {

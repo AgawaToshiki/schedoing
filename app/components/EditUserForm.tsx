@@ -48,13 +48,13 @@ const EditUserForm = (props: Props) => {
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-			const response = await fetch(`${base_url}/api/user/update`, {
+			const response = await fetch(`${base_url}/api/users/${props.user.id}`, {
 				cache: 'no-store',
 				method: "PATCH",
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ id: props.user.id, role, displayName, email })
+				body: JSON.stringify({ role, displayName, email })
 			})
 
 

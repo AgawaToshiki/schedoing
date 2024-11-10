@@ -25,13 +25,12 @@ const DeleteUserButton = ({ id }: Props) => {
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/delete`, {
+			const response = await fetch(`${base_url}/api/users/${id}`, {
 				cache: 'no-store',
 				method: "DELETE",
 				headers: {
 					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ id })
+				}
 			})
 
 			const data = await response.json();
