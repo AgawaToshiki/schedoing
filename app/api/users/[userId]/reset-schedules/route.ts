@@ -29,8 +29,6 @@ export async function PATCH(
     }
     
     const data: { resetFlag: boolean } = await req.json();
-    console.log(data.resetFlag)
-
 
     await updateSchedulesResetFlag(params.userId, data.resetFlag);
 
