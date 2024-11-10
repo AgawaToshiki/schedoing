@@ -37,7 +37,7 @@ export async function getUser(id: string): Promise<User | null> {
 export async function registerUser(userId: string, email: string, displayName: string): Promise<void> {
   const { error } = await supabase
   .from('users')
-  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user' });
+  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user', 'is_reset_schedules': true });
   if(error) {
     console.error('signUpError:', error);
     throw new Error(`signUpError:${error.message}`);

@@ -4,6 +4,7 @@ import { isAdminUser } from '../utils/validation';
 import { redirect } from 'next/navigation'
 import Main from '../components/layouts/Main';
 import SectionField from '../components/layouts/SectionField';
+import SettingList from '../components/setting/SettingList';
 
 
 export default async function Setting() {
@@ -25,8 +26,7 @@ export default async function Setting() {
       <Main isAdmin={isAdmin} id={authUser.id}>
         <div className="flex flex-col mb-10">
           <SectionField sectionTitle="設定">
-            <div>test</div>
-            {/* headressuiのswitchを利用して設定の変更を行いたい。 */}
+            <SettingList user={user}/>
           </SectionField>
         </div>
       </Main>
