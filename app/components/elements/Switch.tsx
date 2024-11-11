@@ -14,7 +14,7 @@ const SwitchElement = ({ checked, onChange }: Props) => {
         checked={checked}
         onChange={onChange}
         name="toggle"
-        className="group inline-flex items-center h-6 w-12 cursor-pointer rounded-full bg-gray-200 data-[checked]:bg-green-500 p-1 transition-colors duration-200 ease-in-out"
+        className="group inline-flex items-center h-6 w-12 cursor-pointer rounded-full bg-gray-300 data-[checked]:bg-green-500 p-1 transition-colors duration-200 ease-in-out"
       >
         <span
           aria-hidden="true"
