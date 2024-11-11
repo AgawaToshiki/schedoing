@@ -25,6 +25,10 @@ const ChangeStatusList = ({ id, status }: Props) => {
   const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(defaultStatus);
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
+
+    const oldSelectedItem = selectedItem;
+    setSelectedItem(item);
+
     try {
       const response = await fetch(`${base_url}/api/users/${id}/status`, {
         cache: 'no-store',
@@ -40,13 +44,14 @@ const ChangeStatusList = ({ id, status }: Props) => {
       if(!response.ok) {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
+        setSelectedItem(oldSelectedItem);
         return
 			}
 
-      setSelectedItem(item);
     } catch(error) {
       console.error("fetch Error:", error);
       alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
+      setSelectedItem(oldSelectedItem);
     }
   }
 
