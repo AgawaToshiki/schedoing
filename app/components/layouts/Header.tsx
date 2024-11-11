@@ -13,7 +13,7 @@ const Header = ({ isAdmin, id }: Props) => {
     <header className="sticky top-0 h-screen bg-blue-400">
       <div className="flex flex-col w-[275px] h-full overflow-y-auto">
         <div className="sticky top-0 p-6 bg-blue-400">
-          <h1 className="text-2xl">Schedoing</h1>
+          <h1 className="text-2xl select-none">Schedoing</h1>
         </div>
         <div className="px-6">
           <Navigation isAdmin={isAdmin} id={id} />

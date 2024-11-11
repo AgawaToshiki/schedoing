@@ -51,7 +51,7 @@ const SwitchFlagElement = ({ id, title, name, flag }: Props) => {
   return (
     <>
       <div className="flex items-center gap-1.5">
-        <div className="cursor-default select-none">{title}</div>
+        <div className="select-none">{title}</div>
         <Switch checked={enabled} onChange={handleChangeToggle} />
       </div>
     </>
