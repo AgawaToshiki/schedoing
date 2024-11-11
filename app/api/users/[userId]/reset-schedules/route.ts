@@ -28,9 +28,9 @@ export async function PATCH(
       throw new APIError(403, 'Permission denied');
     }
     
-    const data: { resetFlag: boolean } = await req.json();
+    const data: { flag: boolean } = await req.json();
 
-    await updateSchedulesResetFlag(params.userId, data.resetFlag);
+    await updateSchedulesResetFlag(params.userId, data.flag);
 
     return NextResponse.json({ status: 200 });
 
