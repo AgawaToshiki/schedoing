@@ -2,7 +2,7 @@
 import React from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { useState } from 'react'
-import Icon from '../components/elements/icon/Icon'
+import Icon from '../components/elements/Icon'
 
 
 type Props = {
@@ -25,14 +25,18 @@ const ChangeStatusList = ({ id, status }: Props) => {
   const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(defaultStatus);
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
+
+    const oldSelectedItem = selectedItem;
+    setSelectedItem(item);
+
     try {
-      const response = await fetch(`${base_url}/api/user/updateStatus`, {
+      const response = await fetch(`${base_url}/api/users/${id}/status`, {
         cache: 'no-store',
-        method: "POST",
+        method: "PATCH",
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ id, status: item.status })
+        body: JSON.stringify({ status: item.status })
       })
 
       const data = await response.json();
@@ -40,12 +44,15 @@ const ChangeStatusList = ({ id, status }: Props) => {
       if(!response.ok) {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
+        setSelectedItem(oldSelectedItem);
+        return
 			}
+
     } catch(error) {
       console.error("fetch Error:", error);
       alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
+      setSelectedItem(oldSelectedItem);
     }
-    setSelectedItem(item);
   }
 
   return (

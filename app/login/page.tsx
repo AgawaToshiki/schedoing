@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SectionField from '../components/layouts/SectionField';
-import Button from '../components/elements/button/Button';
+import Button from '../components/elements/Button';
 import { loginValidation } from '../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
 
@@ -35,7 +35,7 @@ export default function Login() {
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/login`, {
+			const response = await fetch(`${base_url}/api/auth/login`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {

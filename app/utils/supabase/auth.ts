@@ -29,3 +29,12 @@ export async function signIn(email: string, password: string): Promise<User | nu
 	}
   return user
 }
+
+export async function signOut(): Promise<void> {
+  const supabase = createClient();
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error(`${error.status}:${error.message}`);
+  }
+}

@@ -1,7 +1,7 @@
 'use client'
 import React from 'react'
 import Modal from '../../components/layouts/Modal';
-import Button from '../../components/elements/button/Button';
+import Button from '../../components/elements/Button';
 
 type Props = {
   isOpen: boolean;

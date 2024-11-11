@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import ConfirmModal from '../../components/layouts/ConfirmModal';
-import Button from '../../components/elements/button/Button';
-import Icon from '../../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 
 type Props = {
   id: string;
@@ -23,13 +23,13 @@ const DeleteSchedule = ({ id, paramId }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`${base_url}/api/schedule/delete`, {
+      const response = await fetch(`${base_url}/api/schedules/${id}`, {
         cache: 'no-store',
-        method: "POST",
+        method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id, paramId })
+        body: JSON.stringify({ paramId })
       })
 
       const data = await response.json();

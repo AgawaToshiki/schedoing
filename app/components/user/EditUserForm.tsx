@@ -1,11 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import Button from '../components/elements/button/Button';
-import Icon from '../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 import { Database } from '@/database.types';
-import { updateValidation } from '../utils/validation'
-import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../utils/functions';
+import { updateValidation } from '../../utils/validation'
+import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../../utils/functions';
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -48,13 +48,13 @@ const EditUserForm = (props: Props) => {
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-			const response = await fetch(`${base_url}/api/user/update`, {
+			const response = await fetch(`${base_url}/api/users/${props.user.id}`, {
 				cache: 'no-store',
-				method: "POST",
+				method: "PATCH",
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ id: props.user.id, role, displayName, email })
+				body: JSON.stringify({ role, displayName, email })
 			})
 
 

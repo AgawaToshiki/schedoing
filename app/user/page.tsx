@@ -4,8 +4,8 @@ import { getUser } from '../utils/supabase/supabaseFunctions';
 import { isAdminUser } from '../utils/validation';
 import { redirect } from 'next/navigation';
 import Main from '../components/layouts/Main';
-import RegisterUser from '../components/RegisterUser'
-import AdminUserList from '../components/AdminUserList'
+import RegisterUser from '../components/user/RegisterUser'
+import AdminUserList from '../components/user/AdminUserList'
 import SectionField from '../components/layouts/SectionField';
 
 

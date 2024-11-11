@@ -1,7 +1,7 @@
 import React from 'react'
-import { getAllUser } from '../utils/supabase/supabaseFunctions';
-import EditUserButton from '../components/EditUserButton';
-import DeleteUserButton from '../components/DeleteUserButton';
+import { getAllUser } from '../../utils/supabase/supabaseFunctions';
+import EditUserElement from './EditUser';
+import DeleteUserElement from './DeleteUser';
 
 const AdminUserList = async() => {
 	const data = await getAllUser();
@@ -57,8 +57,8 @@ const AdminUserList = async() => {
                   after:absolute after:z-10 after:top-[-1px] after:left-[-1px] after:border-l after:w-full after:h-full
                   ">
                     <div className="relative z-50 flex justify-center items-center gap-2">
-                      <EditUserButton user={user} />
-                      <DeleteUserButton id={user.id} />
+                      <EditUserElement user={user} />
+                      <DeleteUserElement id={user.id} />
                     </div>
                   </td>
                 </tr>

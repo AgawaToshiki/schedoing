@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
-import Button from '../components/elements/button/Button';
-import ConfirmModal from '../components/layouts/ConfirmModal';
+import Button from '../../components/elements/Button';
+import ConfirmModal from '../../components/layouts/ConfirmModal';
 
 
 type Props = {
@@ -25,13 +25,12 @@ const DeleteUserButton = ({ id }: Props) => {
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/delete`, {
+			const response = await fetch(`${base_url}/api/users/${id}`, {
 				cache: 'no-store',
-				method: "POST",
+				method: "DELETE",
 				headers: {
 					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ id })
+				}
 			})
 
 			const data = await response.json();

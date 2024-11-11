@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from '../components/elements/button/Button';
-import { registerValidation } from '../utils/validation';
-import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
+import Button from '../../components/elements/Button';
+import { registerValidation } from '../../utils/validation';
+import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -37,7 +37,7 @@ export default function RegisterUser() {
 	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/user/register`, {
+			const response = await fetch(`${base_url}/api/users`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {

@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
-import Button from '../../components/elements/button/Button';
-import Icon from '../../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 
 type Props = {
@@ -129,20 +129,39 @@ const ScheduleForm = (props: Props) => {
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`${base_url}/api/schedule/${props.name}`, {
-        cache: "no-store",
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: props.id, title, description, startTime, endTime, paramId: props.paramId }),
-      })
+      if(props.name === "register") {
+        const response = await fetch(`${base_url}/api/schedules`, {
+          cache: "no-store",
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, description, startTime, endTime, paramId: props.paramId }),
+        })
+        const data = await response.json();
 
-      const data = await response.json();
+        if(!response.ok){
+          console.error(response.status, data.error);
+          alert(`${response.status}:${data.error}`);
+        }
+      }
 
-      if(!response.ok){
-        console.error(response.status, data.error);
-        alert(`${response.status}:${data.error}`);
+      if(props.name === "update") {
+        const response = await fetch(`${base_url}/api/schedules/${props.id}`, {
+          cache: "no-store",
+          method: "PATCH",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ title, description, startTime, endTime, paramId: props.paramId }),
+        })
+  
+        const data = await response.json();
+  
+        if(!response.ok){
+          console.error(response.status, data.error);
+          alert(`${response.status}:${data.error}`);
+        }
       }
 
       if(props.setter){

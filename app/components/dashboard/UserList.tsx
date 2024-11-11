@@ -1,7 +1,7 @@
 'use client'
-import { Database } from "../../database.types";
+import { Database } from "../../../database.types";
 import Link from "next/link";
-import { useRealtimeListener } from "../hooks/useRealtimeListener";
+import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 
 type User = Database['public']['Tables']['users']['Row'];
 

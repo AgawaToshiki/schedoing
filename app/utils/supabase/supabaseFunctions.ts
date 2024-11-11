@@ -12,7 +12,7 @@ type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
 export async function getAllUser(): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status,updated_at');
+    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules');
   if(error) {
     console.error('Error getUsers:', error);
     throw new Error(`Error getUsers:${error.message}`);
@@ -37,7 +37,7 @@ export async function getUser(id: string): Promise<User | null> {
 export async function registerUser(userId: string, email: string, displayName: string): Promise<void> {
   const { error } = await supabase
   .from('users')
-  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user' });
+  .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user', 'is_reset_schedules': true });
   if(error) {
     console.error('signUpError:', error);
     throw new Error(`signUpError:${error.message}`);
@@ -64,6 +64,17 @@ export async function updateStatus(userId: string, status: string): Promise<void
   if(error) {
     console.error('Error updating status:', error);
     throw new Error(`updateStatusError:${error.message}`);
+  }
+}
+
+export async function updateSchedulesResetFlag(userId: string, resetFlag: boolean): Promise<void> {
+  const { error } = await supabase
+    .from('users')
+    .update({ 'is_reset_schedules': resetFlag })
+    .eq('id', userId);
+  if(error) {
+    console.error('Error updating flag:', error);
+    throw new Error(`updateFlagError:${error.message}`);
   }
 }
 

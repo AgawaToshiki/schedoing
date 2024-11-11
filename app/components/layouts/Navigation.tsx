@@ -2,7 +2,7 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import Icon from '../../components/elements/icon/Icon';
+import Icon from '../../components/elements/Icon';
 
 type Props = {
   isAdmin: boolean;

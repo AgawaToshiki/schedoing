@@ -1,6 +1,6 @@
 import React from 'react';
-import { Database } from '../../database.types';
-import ChangeStatusList from '../components/ChangeStatusList';
+import { Database } from '../../../database.types';
+import ChangeStatusList from '../../components/ChangeStatusList';
 
 
 type User = Database['public']['Tables']['users']['Row'];

@@ -6,7 +6,7 @@ import { APIError } from '@/app/utils/exceptions';
 import { checkSchedule } from '@/app/utils/validation';
 
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
 
     if(req.method !== "POST"){
