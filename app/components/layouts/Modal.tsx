@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dialog, DialogPanel, DialogTitle, DialogBackdrop } from '@headlessui/react';
-import Button from '../../components/elements/button/Button';
-import Icon from '../../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 
 type Props = {
   isOpen: boolean;

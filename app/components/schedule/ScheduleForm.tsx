@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
-import Button from '../../components/elements/button/Button';
-import Icon from '../../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 
 type Props = {

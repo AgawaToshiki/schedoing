@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
-import Button from '../components/elements/button/Button';
-import ConfirmModal from '../components/layouts/ConfirmModal';
+import Button from '../../components/elements/Button';
+import ConfirmModal from '../../components/layouts/ConfirmModal';
 
 
 type Props = {

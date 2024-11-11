@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 import ConfirmModal from '../../components/layouts/ConfirmModal';
-import Button from '../../components/elements/button/Button';
-import Icon from '../../components/elements/icon/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 
 type Props = {
   id: string;

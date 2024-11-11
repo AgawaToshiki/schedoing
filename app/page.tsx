@@ -4,8 +4,8 @@ import { isAdminUser } from './utils/validation';
 import { redirect } from 'next/navigation'
 import { Database } from '../database.types';
 import Main from './components/layouts/Main';
-import UserList from "./components/UserList";
-import MyStatus from './components/MyStatus';
+import UserList from "./components/dashboard/UserList";
+import MyStatus from './components/dashboard/MyStatus';
 import SectionField from './components/layouts/SectionField';
 
 

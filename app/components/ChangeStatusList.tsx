@@ -2,7 +2,7 @@
 import React from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import { useState } from 'react'
-import Icon from '../components/elements/icon/Icon'
+import Icon from '../components/elements/Icon'
 
 
 type Props = {

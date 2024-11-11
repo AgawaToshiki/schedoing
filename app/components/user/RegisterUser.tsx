@@ -1,9 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Button from '../components/elements/button/Button';
-import { registerValidation } from '../utils/validation';
-import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
+import Button from '../../components/elements/Button';
+import { registerValidation } from '../../utils/validation';
+import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 

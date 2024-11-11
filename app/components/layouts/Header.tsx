@@ -1,5 +1,5 @@
 import React from 'react';
-import SignOutButton from '../../components/SignOutButton';
+import SignOutButton from '../SignOut';
 import Navigation from '../../components/layouts/Navigation';
 
 type Props = {
