@@ -7,14 +7,14 @@ type Props = {
   id: string;
   title: string;
   name: string;
-  flag: boolean;
+  defaultFlag: boolean;
 }
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-const SwitchFlagElement = ({ id, title, name, flag }: Props) => {
+const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
 
-  const [enabled, setEnabled] = useState<boolean>(flag);
+  const [enabled, setEnabled] = useState<boolean>(defaultFlag);
 
   const handleChangeToggle = async() => {
 
@@ -50,7 +50,7 @@ const SwitchFlagElement = ({ id, title, name, flag }: Props) => {
 
   return (
     <>
-      <div className="flex items-center gap-1.5">
+      <div className="flex items-center justify-between">
         <div className="select-none">{title}</div>
         <Switch checked={enabled} onChange={handleChangeToggle} />
       </div>
