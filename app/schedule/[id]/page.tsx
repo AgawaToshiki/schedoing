@@ -39,7 +39,7 @@ const Schedule = async({ params }: { params: { id: string } }) => {
           </div>
         )}
         {isOwn && (
-          <div className="mb-10">
+          <div className="mb-6">
             <SectionField sectionTitle="新規スケジュール">
               <RegisterSchedule paramId={paramId}/>
             </SectionField>

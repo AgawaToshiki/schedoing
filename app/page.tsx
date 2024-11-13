@@ -11,6 +11,7 @@ import SectionField from './components/layouts/SectionField';
 
 type User = Database['public']['Tables']['users']['Row'];
 
+
 export default async function DashBoard() {
   const authUser = await getCurrentUser();
   if(!authUser || !authUser.id){
@@ -30,15 +31,15 @@ export default async function DashBoard() {
   return (
     <>
       <Main isAdmin={isAdmin} id={authUser.id}>
-        <div className="flex flex-col mb-10">
+        <div className="flex flex-col mb-6">
           <SectionField sectionTitle="マイステータス">
             <MyStatus user={user}/>
           </SectionField>
         </div>
-        <div className="mb-6">
+        <div className="mt-6">
           <h2>DashBoard</h2>
         </div>
-        <div className="flex flex-col w-full h-full p-6 border border-gray-200">
+        <div className="p-6">
           <UserList data={data} userId={authUser.id}/>
         </div>
       </Main>
