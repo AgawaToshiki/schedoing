@@ -17,7 +17,6 @@ export default function Error({
       <div className="w-full min-h-screen p-6 bg-blue-100">
         <SectionField sectionTitle="Error">
           <div>
-            <p className="mb-2">予期せぬ問題が発生しました。</p>
             <p className="mb-2">{error.message}</p>
             <BackToHomeLink />
           </div>
