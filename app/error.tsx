@@ -1,30 +1,28 @@
 'use client';
 import { useEffect } from 'react';
+import SectionField from './components/layouts/SectionField';
+import BackToHomeLink from './components/BackToHomeLink';
 
 export default function Error({
-  error,
-  reset,
+  error
 }: {
   error: Error & { digest?: string };
-  reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
     console.error(error);
   }, [error]);
 
   return (
-    <div>
-      <h2>Something went wrong!</h2>
-      <p>{error.message}</p>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
-        }
-      >
-        Try again
-      </button>
-    </div>
+    <>
+      <div className="w-full min-h-screen p-6 bg-blue-100">
+        <SectionField sectionTitle="Error">
+          <div>
+            <p className="mb-2">予期せぬ問題が発生しました。</p>
+            <p className="mb-2">{error.message}</p>
+            <BackToHomeLink />
+          </div>
+        </SectionField>
+      </div>
+    </>
   );
 }
