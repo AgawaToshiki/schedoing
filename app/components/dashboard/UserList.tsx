@@ -1,7 +1,10 @@
 'use client'
-import { Database } from "../../../database.types";
-import Link from "next/link";
+import { useState } from "react";
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import Link from "next/link";
+import { Database } from "../../../database.types";
+import SearchUser from "../../components/dashboard/SearchUser";
+
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -11,6 +14,8 @@ type Props = {
 }
 
 const UserList = ({ data, userId }: Props) => {
+
+  const [searchName, setSearchName] = useState<string>("");
 
   const usersList = useRealtimeListener<User>({
     table: 'users',
@@ -28,18 +33,36 @@ const UserList = ({ data, userId }: Props) => {
     }
   })
 
-  const users = usersList?.filter(item => item.id !== userId);
+  const filterUserList = usersList?.filter(item => item.id !== userId && item.displayName.includes(searchName));
+  const users = filterUserList?.sort((a, b) => {
+    if(a.status !== 'offline' && b.status === 'offline') {
+      return -1;
+    }
+    if(a.status === 'offline' && b.status !== 'offline') {
+      return 1;
+    }
+    return 0
+  });
 
   return (
-    <>
-      {users?.map((user) => (
-        <Link href={`/schedule/${user.id}#currentTime`} key={user.id}>        
-          <div className="flex items-center gap-4 mx-4 p-6 border border-gray-200 rounded-md shadow-md bg-white">
-            <div>{user.displayName}</div>
-            <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
-          </div>
-        </Link>
-      ))}
+    <>       
+      <div className="mb-6">
+        <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
+      </div>
+      <div className="flex flex-wrap gap-2 mx-auto">
+        {users?.map((user) => (
+            <Link 
+              href={`/schedule/${user.id}#currentTime`}
+              key={user.id}
+              className="w-[300px]"
+            >        
+              <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
+                <div>{user.displayName}</div>
+                <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+              </div>
+            </Link>
+          ))}
+      </div>
     </>
   )
 }
