@@ -22,7 +22,7 @@ export default async function Setting() {
   return (
     <>
       <Main isAdmin={isAdmin} id={authUser.id}>
-        <div className="flex flex-col mb-10">
+        <div className="flex flex-col">
           <SectionField sectionTitle="設定">
             <SettingList user={user}/>
           </SectionField>

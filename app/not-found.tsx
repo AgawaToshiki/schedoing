@@ -1,11 +1,20 @@
-import Link from 'next/link'
+'use client'
+import SectionField from './components/layouts/SectionField';
+import BackToHomeLink from './components/BackToHomeLink';
  
-export default function NotFound() {
+export default async function NotFound() {
+
   return (
-    <div>
-      <h2>Not Found</h2>
-      <p>Could not find requested resource</p>
-      <Link href="/">Return Home</Link>
-    </div>
+    <>
+      <div className="w-full min-h-screen p-6 bg-blue-100">
+        <SectionField sectionTitle="404 Not Found">
+          <div>
+            <p className="mb-2">ページが見つかりませんでした。</p>
+            <BackToHomeLink />
+          </div>
+        </SectionField>
+      </div>
+    </>
+
   )
 }

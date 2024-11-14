@@ -14,8 +14,8 @@ export async function getAllUser(): Promise<User[] | null> {
     .from('users')
     .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules');
   if(error) {
-    console.error('Error getUsers:', error);
-    throw new Error(`Error getUsers:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
   return data
 }
@@ -27,8 +27,8 @@ export async function getUser(id: string): Promise<User | null> {
     .eq('id', id)
     .single();
   if(error) {
-    console.error("Error fetching user:", error);
-    throw new Error(`Error fetching user:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
 
   return user
@@ -39,8 +39,8 @@ export async function registerUser(userId: string, email: string, displayName: s
   .from('users')
   .insert({ 'id': userId, 'email': email, 'displayName': displayName, 'role': 'user', 'is_reset_schedules': true });
   if(error) {
-    console.error('signUpError:', error);
-    throw new Error(`signUpError:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
 }
 
@@ -51,8 +51,8 @@ export async function updateUser(userId: string, role: string, displayName: stri
     .eq('id', userId);
 
   if(error) {
-    console.error('Error updating user:', error);
-    throw new Error(`updateUserError:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
 }
 
@@ -62,8 +62,8 @@ export async function updateStatus(userId: string, status: string): Promise<void
     .update({ 'status': status })
     .eq('id', userId);
   if(error) {
-    console.error('Error updating status:', error);
-    throw new Error(`updateStatusError:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
 }
 
@@ -73,7 +73,7 @@ export async function updateSchedulesResetFlag(userId: string, resetFlag: boolea
     .update({ 'is_reset_schedules': resetFlag })
     .eq('id', userId);
   if(error) {
-    console.error('Error updating flag:', error);
+    console.error(error);
     throw new Error(`updateFlagError:${error.message}`);
   }
 }
@@ -84,8 +84,8 @@ export async function deleteUser(id: string) {
     .delete()
     .eq('id', id);
     if(error) {
-      console.error('deleteUserError:', error);
-      throw new Error(`deleteUserError:${error.message}`);
+      console.error(error);
+      throw new Error(error.message);
     }
 }
 
@@ -109,8 +109,8 @@ export async function getUserWithSchedules(id: string): Promise<UserWithSchedule
     .single();
 
   if(error) {
-    console.error('getDataError:', error);
-    throw new Error(`getDataError:${error.message}`);
+    console.error(error);
+    throw new Error(error.message);
   }
 
   return data
@@ -126,7 +126,7 @@ export async function getScheduleId(id: string): Promise<{ id: string } | null> 
 
   if(!data || error) {
     console.error('getScheduleError:', error);
-    throw new Error(`getScheduleError:${error.message}`);
+    throw new Error(error.message);
   }
   
   return data
@@ -139,7 +139,7 @@ export async function registerSchedule(userId: string, title: string, descriptio
 
   if(error) {
     console.error('registerScheduleError:', error);
-    throw new Error(`registerScheduleError:${error.message}`);
+    throw new Error(error.message);
   }
 }
 
@@ -152,7 +152,7 @@ export async function updateSchedule(id: string, title: string, description: str
 
   if(error) {
     console.error('updateScheduleError:', error);
-    throw new Error(`updateScheduleError:${error.message}`);
+    throw new Error(error.message);
   }
 }
 
@@ -165,6 +165,6 @@ export async function deleteSchedule(id: string): Promise<void> {
 
   if(error) {
     console.error('deleteScheduleError:', error);
-    throw new Error(`deleteScheduleError:${error.message}`);
+    throw new Error(error.message);
   }
 }
