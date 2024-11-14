@@ -44,12 +44,18 @@ const UserList = ({ data, userId }: Props) => {
     return 0
   });
 
+
   return (
     <>       
       <div className="mb-6">
         <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
       </div>
       <div className="flex flex-wrap gap-2 mx-auto">
+        {users?.length === 0 && (
+          searchName !== "" ? 
+          (<div>検索にヒットするユーザーが見つかりません。</div>) :
+          (<div>ユーザーが登録されていません。</div>)
+        )}
         {users?.map((user) => (
             <Link 
               href={`/schedule/${user.id}#currentTime`}
