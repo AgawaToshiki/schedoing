@@ -2,14 +2,10 @@ import { getAllUser, getUser } from './utils/supabase/supabaseFunctions';
 import { getCurrentUser } from './utils/supabase/auth';
 import { isAdminUser } from './utils/validation';
 import { redirect } from 'next/navigation'
-import { Database } from '../database.types';
 import Main from './components/layouts/Main';
 import UserList from "./components/dashboard/UserList";
 import MyStatus from './components/dashboard/MyStatus';
 import SectionField from './components/layouts/SectionField';
-
-
-type User = Database['public']['Tables']['users']['Row'];
 
 
 export default async function DashBoard() {
@@ -23,7 +19,7 @@ export default async function DashBoard() {
   }
   const isAdmin = isAdminUser(user);
 
-  const data: User[] | null = await getAllUser();
+  const data = await getAllUser();
   if(!data) {
     throw new Error("User does not exist");
   }
