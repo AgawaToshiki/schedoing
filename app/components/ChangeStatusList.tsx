@@ -1,7 +1,7 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import { useState } from 'react'
 import Icon from '../components/elements/Icon'
 
 
@@ -13,6 +13,8 @@ type Props = {
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ChangeStatusList = ({ id, status }: Props) => {
+
+  const router = useRouter();
 
   const statusList = [
     { id: 1, status: 'online', name: 'オンライン', style: 'bg-green-400' },
@@ -47,6 +49,8 @@ const ChangeStatusList = ({ id, status }: Props) => {
         setSelectedItem(oldSelectedItem);
         return
 			}
+
+      router.refresh();
 
     } catch(error) {
       console.error("fetch Error:", error);

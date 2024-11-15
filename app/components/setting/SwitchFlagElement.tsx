@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Switch from '../../components/elements/Switch';
 
 
@@ -13,6 +14,8 @@ type Props = {
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
+
+  const router = useRouter();
 
   const [enabled, setEnabled] = useState<boolean>(defaultFlag);
 
@@ -40,6 +43,8 @@ const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
         setEnabled(!newFlag);
         return
 			}
+
+      router.refresh();
 
     } catch(error) {
       console.error("fetch Error:", error);
