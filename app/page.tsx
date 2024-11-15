@@ -37,10 +37,12 @@ export default async function DashBoard() {
           </SectionField>
         </div>
         <div className="mt-6">
-          <h2>DashBoard</h2>
-        </div>
-        <div className="p-6">
-          <UserList data={data} userId={authUser.id}/>
+          <div className="mb-6">
+            <h2>DashBoard</h2>
+          </div>
+          <div className="p-6">
+            <UserList data={data} userId={authUser.id}/>
+          </div>
         </div>
       </Main>
     </>
