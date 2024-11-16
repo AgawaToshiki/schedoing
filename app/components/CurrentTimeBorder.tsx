@@ -10,7 +10,7 @@ const CurrentTimeBorder = () => {
     const currentTime = hours * 60 + minutes;
     return currentTime
   }
-  const [currentTimeHeight, setCurrentTimeHeight] = useState<number>(0);
+  const [currentTimeHeight, setCurrentTimeHeight] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentTimeHeight(getCurrentTime());
@@ -24,12 +24,15 @@ const CurrentTimeBorder = () => {
 
   return (
     <>
-      <div className="absolute z-40 w-full" style={{top:`${currentTimeHeight}px`}}>
-        <div className='h-0 w-full'>
-          <div className='w-full border-t-4 border-red-400 rounded-sm'></div>
+      {currentTimeHeight && (
+        <div className="absolute z-40 w-full" style={{top:`${currentTimeHeight}px`}}>
+          <div className='h-0 w-full'>
+            <div className='w-full border-t-4 border-red-400 rounded-sm'></div>
+          </div>
+          <div id="currentTime" className="block mt-[-80px]"></div>
         </div>
-        <div id="currentTime" className="block mt-[-80px]"></div>
-      </div>
+      )}
+
     </>
   )
 }
