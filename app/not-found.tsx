@@ -2,7 +2,7 @@
 import SectionField from './components/layouts/SectionField';
 import BackToHomeLink from './components/BackToHomeLink';
  
-export default async function NotFound() {
+export default function NotFound() {
 
   return (
     <>
