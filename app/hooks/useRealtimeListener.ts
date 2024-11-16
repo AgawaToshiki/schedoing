@@ -52,7 +52,7 @@ export const useRealtimeListener = <T extends { [key: string]: any }>({ table, d
 
   useEffect(() => {
     listenData();
-  }, [data])
+  }, [])
   
   return data
 }
