@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useInterval } from '../hooks/useInterval';
 
 const CurrentTimeBorder = () => {
@@ -10,11 +10,11 @@ const CurrentTimeBorder = () => {
     const currentTime = hours * 60 + minutes;
     return currentTime
   }
-  const [currentTimeHeight, setCurrentTimeHeight] = useState<number | null>(null);
+  const [currentTimeHeight, setCurrentTimeHeight] = useState<number>(getCurrentTime());
 
-  useEffect(() => {
-    setCurrentTimeHeight(getCurrentTime());
-  }, [])
+  // useEffect(() => {
+  //   setCurrentTimeHeight(getCurrentTime());
+  // }, [])
 
   const getCurrentTimeHeight = () => {
     setCurrentTimeHeight(getCurrentTime());

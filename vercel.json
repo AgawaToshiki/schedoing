@@ -1,0 +1,3 @@
+{
+  "buildCommand": "TZ='Asia/Tokyo' next build"
+}
