@@ -17,7 +17,6 @@ type Props = {
 }
 
 const ScheduleModal = ({ isOpen, paramId, isOwn, schedule, setter }: Props) => {
-
   const scheduleStartTime = new Date(schedule.start_time);
   const scheduleEndTime = new Date(schedule.end_time);
 

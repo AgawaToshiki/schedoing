@@ -1,9 +1,9 @@
 'use client'
 import React, { useState } from 'react'
 import { Database } from '@/database.types';
-import { format } from "date-fns";
 import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
+import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
@@ -17,35 +17,10 @@ type Props = {
 const ScheduleCard = ({ paramId, isOwn, schedule }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const [style, setStyle] = useState<{ height: number | null, top: number | null }>({ height: null, top: null });
-
-
-  // useEffect(() => {
-  //   const calculateHeight = (startTime: string, endTime: string): { startMinutes: number, result: number } => {
-  //     const getTotalMinutes = (timestamp: string): number => {
-  //       const getDate = new Date(timestamp);
-  //       console.log('timestamp:', timestamp);
-  //       console.log('getDate:',getDate)
-  //       const hours = getDate.getHours();
-  //       const minutes = getDate.getMinutes();
-  //       return hours * 60 + minutes;
-  //     };
-  //     const startMinutes = getTotalMinutes(startTime);
-  //     const endMinutes = getTotalMinutes(endTime);
-  //     const result = endMinutes - startMinutes;
-  //     return {
-  //       startMinutes,
-  //       result,
-  //     };
-  //   };
-
-  //   const { startMinutes, result: height } = calculateHeight(schedule.start_time, schedule.end_time);
-  //   setStyle({ height, top: startMinutes });
-  // }, [schedule.start_time, schedule.end_time]);
 
   const calculateHeight = (startTime: string, endTime: string): { startMinutes: number, result: number } => {
     const getTotalMinutes = (timestamp: string): number => {
-      const getDate = new Date(timestamp);
+      const getDate = toZonedTime(new Date(timestamp), 'Asia/Tokyo');
       const hours = getDate.getHours();
       const minutes = getDate.getMinutes();
       return hours * 60 + minutes;
@@ -61,13 +36,12 @@ const ScheduleCard = ({ paramId, isOwn, schedule }: Props) => {
 
   const { startMinutes, result: height } = calculateHeight(schedule.start_time, schedule.end_time);
 
-  const formatStartTime = format(schedule.start_time, "H:mm");
-  const formatEndTime = format(schedule.end_time, "H:mm");
+  const formatStartTime = formatInTimeZone(new Date(schedule.start_time), 'Asia/Tokyo', 'H:mm');
+  const formatEndTime = formatInTimeZone(new Date(schedule.end_time), 'Asia/Tokyo', 'H:mm');
 
   const handleOpenModal = (): void => {
     setIsOpen(true);
   }
-
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { format } from "date-fns";
+import { formatInTimeZone } from 'date-fns-tz';
 
 type Props = {
   title: string;
@@ -8,9 +8,8 @@ type Props = {
   endTime: Date;
 }
 const ScheduleDetail = ({ title, description, startTime, endTime }: Props) => {
-
-  const formatStartTime = format(startTime, "H:mm");
-  const formatEndTime = format(endTime, "H:mm");
+  const formatStartTime = formatInTimeZone(new Date(startTime), 'Asia/Tokyo', 'H:mm');
+  const formatEndTime = formatInTimeZone(new Date(endTime), 'Asia/Tokyo', 'H:mm');
 
   return (
     <>
