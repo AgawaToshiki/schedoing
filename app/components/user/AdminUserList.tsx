@@ -1,16 +1,30 @@
-import React from 'react'
-import { getAllUser } from '../../utils/supabase/supabaseFunctions';
-import EditUserElement from './EditUser';
-import DeleteUserElement from './DeleteUser';
+"use client"
+import React, { useState } from 'react'
+import EditUserElement from '../../components/user/EditUser';
+import DeleteUserElement from '../../components/user/DeleteUser';
+import { Database } from "../../../database.types";
+import SearchUser from '../../components/SearchUser';
+import SortUser from '../../components/SortUser';
 
-const AdminUserList = async() => {
-	const data = await getAllUser();
-  if(!data) {
-    throw new Error("User does not exist");
-  }
+type User = Database['public']['Tables']['users']['Row'];
+
+type Props = {
+  data: User[];
+}
+
+const AdminUserList = ({ data }: Props) => {
+
+  const [searchName, setSearchName] = useState<string>("");
+  const [role, setRole] = useState<string>("");
+  
+  const users = data?.filter(item => item.displayName.includes(searchName));
 
   return (
 		<>
+      <div className="flex gap-4 mb-6">
+        <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
+        <SortUser value={role} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)} />
+      </div>
       <div className="w-full h-full overflow-x-auto flex bg-white">
         <div className="relative flex-grow h-full overflow-y-auto scrollbar">
           <table className="absolute w-full h-full border border-collapse">
@@ -46,7 +60,7 @@ const AdminUserList = async() => {
               </tr>
             </thead>
             <tbody>
-              {data.map((user) => (
+              {users.map((user) => (
                 <tr key={user.id}>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
                   <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>

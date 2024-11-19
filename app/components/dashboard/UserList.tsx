@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 import Link from "next/link";
 import { Database } from "../../../database.types";
-import SearchUser from "../../components/dashboard/SearchUser";
+import SearchUser from '../../components/SearchUser';
 
 
 type User = Database['public']['Tables']['users']['Row'];
