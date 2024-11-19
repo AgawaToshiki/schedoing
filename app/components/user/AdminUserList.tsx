@@ -12,7 +12,7 @@ const AdminUserList = async() => {
   return (
 		<>
       <div className="w-full h-full overflow-x-auto flex bg-white">
-        <div className="relative flex-grow h-full overflow-y-auto">
+        <div className="relative flex-grow h-full overflow-y-auto scrollbar">
           <table className="absolute w-full h-full border border-collapse">
             <thead>
               <tr>

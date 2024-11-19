@@ -39,7 +39,7 @@ const SchedulePanel = ({ userId, paramId, isOwn, schedulesData }: Props) => {
   return (
     <>
       <div className="w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white">
-        <div className="relative h-full overflow-y-scroll">
+        <div className="relative h-full overflow-y-scroll scrollbar">
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />
             {schedules?.map((schedule) => (
