@@ -48,7 +48,7 @@ const UserList = ({ data, userId }: Props) => {
   return (
     <>    
       <div className="mb-6">
-        <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
+        <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
       </div>
       {users?.length === 0 && (
           searchName !== "" ? 

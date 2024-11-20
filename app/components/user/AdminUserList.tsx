@@ -22,7 +22,7 @@ const AdminUserList = ({ data }: Props) => {
   return (
 		<>
       <div className="flex gap-4 mb-6">
-        <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
+        <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
         <SortUser value={role} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)} />
       </div>
       <div className="w-full h-full overflow-x-auto flex bg-white">
