@@ -4,7 +4,7 @@ import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
 import { Database } from "../../../database.types";
 import SearchUser from '../../components/SearchUser';
-import SortUser from '../../components/SortUser';
+import FilterUser from '../../components/user/FilterUser';
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -15,15 +15,14 @@ type Props = {
 const AdminUserList = ({ data }: Props) => {
 
   const [searchName, setSearchName] = useState<string>("");
-  const [role, setRole] = useState<string>("");
   
   const users = data?.filter(item => item.displayName.includes(searchName));
 
   return (
 		<>
-      <div className="flex gap-4 mb-6">
+      <div className="flex items-center gap-4 mb-6">
         <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
-        <SortUser value={role} onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)} />
+        <FilterUser />
       </div>
       <div className="w-full h-full overflow-x-auto flex bg-white">
         <div className="relative flex-grow h-full overflow-y-auto scrollbar">
