@@ -18,7 +18,7 @@ const SearchUser = ({ is_set, onChange }: Props) => {
           className="w-[300px] border border-gray-200 shadow-md text-base block p-1 h-12"
         />
         {!is_set && (
-          <div className="absolute top-4 right-6 pointer-events-none">
+          <div className="absolute top-4 right-4 pointer-events-none">
             <Icon icon="search" size={20} color="#a3a9b4" />
           </div>
         )}
