@@ -1,13 +1,18 @@
 import React from 'react';
-import Button from '../elements/Button';
-import Icon from '../elements/Icon';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 
-const FilterUser = () => {
+type Props = {
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const FilterUser = ({ onClick }: Props) => {
 
   return (
     <>
       <div>
         <Button
+          onClick={onClick}
           variant="primary"
           size="medium"
           form="square"

@@ -1,10 +1,12 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
 import { Database } from "../../../database.types";
 import SearchUser from '../../components/SearchUser';
 import FilterUser from '../../components/user/FilterUser';
+import Modal from '../../components/layouts/Modal';
+import FilterUserForm from '../../components/user/FilterUserForm';
 
 type User = Database['public']['Tables']['users']['Row'];
 
@@ -15,14 +17,33 @@ type Props = {
 const AdminUserList = ({ data }: Props) => {
 
   const [searchName, setSearchName] = useState<string>("");
+  const [filterRole, setFilterRole] = useState<string>("");
+  const [filterCreateTime, setFilterCreateTime] = useState<string>("");
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [isOpen, setOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if(filterRole || filterCreateTime){
+      setDisabled(false);
+    }
+  }, [filterRole, filterCreateTime])
   
   const users = data?.filter(item => item.displayName.includes(searchName));
+
+  const handleFilter = () => {
+    setDisabled(true);
+  }
+
+  const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setOpen(true);
+  }
 
   return (
 		<>
       <div className="flex items-center gap-4 mb-6">
         <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
-        <FilterUser />
+        <FilterUser onClick={handleOpenModal}/>
       </div>
       <div className="w-full h-full overflow-x-auto flex bg-white">
         <div className="relative flex-grow h-full overflow-y-auto scrollbar">
@@ -80,6 +101,20 @@ const AdminUserList = ({ data }: Props) => {
           </table>
         </div>
       </div>
+      <Modal isOpen={isOpen} setter={setOpen} title="絞り込み・並び替え">
+        <FilterUserForm
+          onClick={handleFilter}
+          filter={{
+            role: filterRole,
+            createTime: filterCreateTime
+          }}
+          setter={{
+            role: setFilterRole,
+            createTime: setFilterCreateTime
+          }}
+          disabled={disabled}
+        />
+      </Modal>
 		</>
   )
 }
