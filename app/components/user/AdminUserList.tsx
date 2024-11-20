@@ -30,8 +30,7 @@ const AdminUserList = ({ data }: Props) => {
   
   const users = data?.filter(item => item.displayName.includes(searchName));
 
-  const handleFilter = () => {
-    setDisabled(true);
+  const handleFilter = (role: string, createTime: string) => {
   }
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {

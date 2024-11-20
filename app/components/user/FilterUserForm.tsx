@@ -1,10 +1,10 @@
 'use client'
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '../../components/elements/Button';
 
 
 type Props = {
-  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: (role: string, createTime: string) => void;
   filter: {
     role: string;
     createTime: string;
@@ -17,6 +17,8 @@ type Props = {
 }
 
 const FilterUserForm = ({ onClick, filter, setter, disabled }: Props) => {
+  const [role, setRole] = useState<string>("");
+  const [createTime, setCreateTime] = useState<string>("");
 
   const handleChangeRole = (e: React.ChangeEvent<HTMLInputElement>) => {
     setter.role(e.target.value);
@@ -25,6 +27,10 @@ const FilterUserForm = ({ onClick, filter, setter, disabled }: Props) => {
   const handleChangeCreateTime = (e: React.ChangeEvent<HTMLInputElement>) => {
     setter.createTime(e.target.value);
   }
+
+const handleFilter = () => {
+  onClick(role, createTime);
+}
 
   return (
     <>
@@ -109,21 +115,21 @@ const FilterUserForm = ({ onClick, filter, setter, disabled }: Props) => {
         </div>
       </div>
       <div className="flex justify-end">
-          <Button
-            onClick={onClick}
-            variant="primary"
-            size="medium"
-            form="square"
-            attrs={
-              {
-                type: "button",
-                disabled: disabled
-              }
+        <Button
+          onClick={handleFilter}
+          variant="primary"
+          size="medium"
+          form="square"
+          attrs={
+            {
+              type: "button",
+              disabled: disabled
             }
-          >
-            適用する
-          </Button>
-        </div>
+          }
+        >
+          適用する
+        </Button>
+      </div>
     </>
   )
 }
