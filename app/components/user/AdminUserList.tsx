@@ -25,10 +25,12 @@ const AdminUserList = ({ data }: Props) => {
     role: "",
     createTime: ""
   });
+  const [filterFlag, setFilterFlag] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleFilter = (role: string, createTime: string) => {
+  const handleFilter = (role: string, createTime: string, flag: boolean) => {
     setFilterItem({ role: role, createTime: createTime });
+    setFilterFlag(flag);
     setIsOpen(false);
   }
 
@@ -75,8 +77,14 @@ const AdminUserList = ({ data }: Props) => {
   return (
 		<>
       <div className="flex items-center gap-4 mb-6">
-        <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
-        <FilterUser onClick={handleOpenModal}/>
+        <SearchUser
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
+          is_set={!!searchName} 
+        />
+        <FilterUser
+          onClick={handleOpenModal}
+          filterFlag={filterFlag}
+        />
       </div>
       {!!users?.length && (
         <div className="w-full h-full overflow-x-auto flex bg-white">
@@ -151,7 +159,6 @@ const AdminUserList = ({ data }: Props) => {
             role: filterItem.role,
             createTime: filterItem.createTime
           }}
-          setter={setIsOpen}
         />
       </Modal>
 		</>

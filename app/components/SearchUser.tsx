@@ -2,11 +2,11 @@ import React from 'react';
 import Icon from '../components/elements/Icon'
 
 type Props = {
-  is_set: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  is_set: boolean;
 }
 
-const SearchUser = ({ is_set, onChange }: Props) => {
+const SearchUser = ({ onChange, is_set }: Props) => {
 
   return (
     <>

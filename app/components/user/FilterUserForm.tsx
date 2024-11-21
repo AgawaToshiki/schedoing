@@ -4,15 +4,14 @@ import Button from '../../components/elements/Button';
 
 
 type Props = {
-  onClick: (role: string, createTime: string) => void;
+  onClick: (role: string, createTime: string, flag: boolean) => void;
   defaultFilter: {
     role: string;
     createTime: string;
   }
-  setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FilterUserForm = ({ onClick, defaultFilter, setter }: Props) => {
+const FilterUserForm = ({ onClick, defaultFilter }: Props) => {
   const [role, setRole] = useState<string>(defaultFilter.role);
   const [createTime, setCreateTime] = useState<string>(defaultFilter.createTime);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -31,12 +30,12 @@ const FilterUserForm = ({ onClick, defaultFilter, setter }: Props) => {
     setCreateTime(e.target.value);
   }
 
-  const handleSetFilter = () => {
-    onClick(role, createTime);
+  const handleFilter = () => {
+    onClick(role, createTime, true);
   }
 
   const handleResetFilter = () => {
-    onClick("", "");
+    onClick("", "", false);
   }
 
   return (
@@ -134,7 +133,7 @@ const FilterUserForm = ({ onClick, defaultFilter, setter }: Props) => {
           リセット
         </Button>
         <Button
-          onClick={handleSetFilter}
+          onClick={handleFilter}
           variant="primary"
           size="medium"
           form="square"
