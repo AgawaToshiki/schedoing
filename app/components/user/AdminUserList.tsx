@@ -6,7 +6,7 @@ import { Database } from "../../../database.types";
 import SearchUser from '../../components/SearchUser';
 import FilterUser from '../../components/user/FilterUser';
 import Modal from '../../components/layouts/Modal';
-import FilterUserForm from '../../components/user/FilterUserForm';
+import FilterUserField from '../../components/user/FilterUserField';
 import { toZonedTime } from 'date-fns-tz';
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -153,7 +153,7 @@ const AdminUserList = ({ data }: Props) => {
       )}
 
       <Modal isOpen={isOpen} setter={setIsOpen} title="絞り込み・並び替え">
-        <FilterUserForm
+        <FilterUserField
           onClick={handleFilter}
           defaultFilter={{
             role: filterItem.role,
