@@ -20,7 +20,7 @@ const Button = ({ onClick, variant, size, form, className, attrs, children }: Pr
 
   const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50"
 
-  const baseStyle = `flex justify-center items-center font-semibold border transition duration-200 ease-in-out hover:brightness-90 ${disabledStyle}`;
+  const baseStyle = `flex justify-center items-center font-semibold border transition duration-200 ease-in-out hover:brightness-90 select-none ${disabledStyle}`;
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white",
