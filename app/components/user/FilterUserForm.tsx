@@ -1,31 +1,33 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../components/elements/Button';
 
 
 type Props = {
   onClick: (role: string, createTime: string) => void;
-  filter: {
-    role: string;
+  defaultFilter: {
+    role: string,
     createTime: string;
   }
-  setter: {
-    role: React.Dispatch<React.SetStateAction<string>>;
-    createTime: React.Dispatch<React.SetStateAction<string>>;
-  },
-  disabled: boolean;
 }
 
-const FilterUserForm = ({ onClick, filter, setter, disabled }: Props) => {
-  const [role, setRole] = useState<string>("");
-  const [createTime, setCreateTime] = useState<string>("");
+const FilterUserForm = ({ onClick, defaultFilter }: Props) => {
+  const [role, setRole] = useState<string>(defaultFilter.role);
+  const [createTime, setCreateTime] = useState<string>(defaultFilter.createTime);
+  const [disabled, setDisabled] = useState<boolean>(true);
+
+  useEffect(() => {
+    if(role || createTime){
+      setDisabled(false);
+    }
+  }, [role, createTime])
 
   const handleChangeRole = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setter.role(e.target.value);
+    setRole(e.target.value);
   }
 
   const handleChangeCreateTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setter.createTime(e.target.value);
+    setCreateTime(e.target.value);
   }
 
 const handleFilter = () => {
@@ -44,13 +46,13 @@ const handleFilter = () => {
                 id="admin"
                 name="role"
                 value="admin"
-                checked={filter.role === "admin"}
+                checked={role === "admin"}
                 onChange={handleChangeRole}
                 className="hidden peer"
               />
               <label
                 htmlFor="admin"
-                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer"
+                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
                 admin
               </label>
@@ -61,13 +63,13 @@ const handleFilter = () => {
                 id="user"
                 name="role"
                 value="user"
-                checked={filter.role === "user"}
+                checked={role === "user"}
                 onChange={handleChangeRole}
                 className="hidden peer"
               />
               <label
                 htmlFor="user"
-                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer"
+                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
                 user
               </label>
@@ -83,13 +85,13 @@ const handleFilter = () => {
                 id="asc"
                 name="create_time"
                 value="asc"
-                checked={filter.createTime === "asc"}
+                checked={createTime === "asc"}
                 onChange={handleChangeCreateTime}
                 className="hidden peer"
               />
               <label
                 htmlFor="asc"
-                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer"
+                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
                 昇順
               </label>
@@ -100,13 +102,13 @@ const handleFilter = () => {
                 id="desc"
                 name="create_time"
                 value="desc"
-                checked={filter.createTime === "desc"}
+                checked={createTime === "desc"}
                 onChange={handleChangeCreateTime}
                 className="hidden peer"
               />
               <label
                 htmlFor="desc"
-                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer"
+                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
                 降順
               </label>

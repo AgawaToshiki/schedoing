@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
 import { Database } from "../../../database.types";
@@ -17,26 +17,40 @@ type Props = {
 const AdminUserList = ({ data }: Props) => {
 
   const [searchName, setSearchName] = useState<string>("");
-  const [filterRole, setFilterRole] = useState<string>("");
-  const [filterCreateTime, setFilterCreateTime] = useState<string>("");
-  const [disabled, setDisabled] = useState<boolean>(true);
-  const [isOpen, setOpen] = useState<boolean>(false);
-
-  useEffect(() => {
-    if(filterRole || filterCreateTime){
-      setDisabled(false);
-    }
-  }, [filterRole, filterCreateTime])
-  
-  const users = data?.filter(item => item.displayName.includes(searchName));
+  const [filterItem, setFilterItem] = useState<{
+    role: string,
+    createTime: string
+  }>({
+    role: "",
+    createTime: ""
+  });
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleFilter = (role: string, createTime: string) => {
+    setFilterItem({ role: role, createTime: createTime });
+    setIsOpen(false)
   }
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setOpen(true);
+    setIsOpen(true);
   }
+
+  const filterUsers = (data: User[]) => {
+    const users = data.filter(item => {
+      const searchByDisplayName = item.displayName.includes(searchName);
+      const roleFilter = !filterItem.role || item.role === filterItem.role;
+      return searchByDisplayName && roleFilter;
+    });
+
+    if(filterItem.role || filterItem.createTime){
+      //権限と時間でフィルターをかける処理
+    }
+    return users
+  }
+
+  const users = filterUsers(data);
+  // const users = data.filter(item => item.displayName.includes(searchName)).filter(item => item.role === filterItem.role);
 
   return (
 		<>
@@ -100,18 +114,13 @@ const AdminUserList = ({ data }: Props) => {
           </table>
         </div>
       </div>
-      <Modal isOpen={isOpen} setter={setOpen} title="絞り込み・並び替え">
+      <Modal isOpen={isOpen} setter={setIsOpen} title="絞り込み・並び替え">
         <FilterUserForm
           onClick={handleFilter}
-          filter={{
-            role: filterRole,
-            createTime: filterCreateTime
+          defaultFilter={{
+            role: filterItem.role,
+            createTime: filterItem.createTime
           }}
-          setter={{
-            role: setFilterRole,
-            createTime: setFilterCreateTime
-          }}
-          disabled={disabled}
         />
       </Modal>
 		</>
