@@ -6,12 +6,13 @@ import Button from '../../components/elements/Button';
 type Props = {
   onClick: (role: string, createTime: string) => void;
   defaultFilter: {
-    role: string,
+    role: string;
     createTime: string;
   }
+  setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FilterUserForm = ({ onClick, defaultFilter }: Props) => {
+const FilterUserForm = ({ onClick, defaultFilter, setter }: Props) => {
   const [role, setRole] = useState<string>(defaultFilter.role);
   const [createTime, setCreateTime] = useState<string>(defaultFilter.createTime);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -30,9 +31,13 @@ const FilterUserForm = ({ onClick, defaultFilter }: Props) => {
     setCreateTime(e.target.value);
   }
 
-const handleFilter = () => {
-  onClick(role, createTime);
-}
+  const handleSetFilter = () => {
+    onClick(role, createTime);
+  }
+
+  const handleResetFilter = () => {
+    onClick("", "");
+  }
 
   return (
     <>
@@ -93,7 +98,7 @@ const handleFilter = () => {
                 htmlFor="asc"
                 className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
-                昇順
+                古い順
               </label>
             </div>
             <div className="flex items-center">
@@ -110,15 +115,26 @@ const handleFilter = () => {
                 htmlFor="desc"
                 className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
               >
-                降順
+                新しい順
               </label>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex justify-end">
+      <div className="flex gap-4 justify-end items-center">
+        <Button 
+          onClick={handleResetFilter}
+          variant="secondary"
+          size="medium"
+          form="square"
+          attrs={
+            { type: "button" }
+          }
+        >
+          リセット
+        </Button>
         <Button
-          onClick={handleFilter}
+          onClick={handleSetFilter}
           variant="primary"
           size="medium"
           form="square"

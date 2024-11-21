@@ -4,7 +4,7 @@ type variant = "primary" | "secondary" | "danger";
 
 type size = "small" | "medium" | "large";
 
-type form = "square" | "circle"
+type form = "square" | "circle";
 
 type Props = {
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
