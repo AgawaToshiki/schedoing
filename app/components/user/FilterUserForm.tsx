@@ -42,7 +42,7 @@ const FilterUserForm = ({ onClick, defaultFilter }: Props) => {
     <>
       <div className="flex flex-col">
         <div className="flex flex-col mb-6">
-          <p className="mb-2 border-b-2 border-gray-600">役職</p>
+          <p className="mb-2 border-b-2 border-gray-600">権限</p>
           <div className="flex items-center gap-2">
             <div className="flex items-center">
               <input
