@@ -122,7 +122,7 @@ const AdminUserList = ({ data }: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {users?.map((user) => (
+                {users.map((user) => (
                   <tr key={user.id}>
                     <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
                     <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
