@@ -11,7 +11,7 @@ type Props = {
   user: User;
 }
 
-const EditUserButton = ({ user }: Props) => {
+const EditUser = ({ user }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -43,4 +43,4 @@ const EditUserButton = ({ user }: Props) => {
   )
 }
 
-export default EditUserButton
+export default EditUser

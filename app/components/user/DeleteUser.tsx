@@ -11,7 +11,7 @@ type Props = {
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-const DeleteUserButton = ({ id }: Props) => {
+const DeleteUser = ({ id }: Props) => {
 
 	const router = useRouter();
 
@@ -86,4 +86,4 @@ const DeleteUserButton = ({ id }: Props) => {
   )
 }
 
-export default DeleteUserButton
+export default DeleteUser

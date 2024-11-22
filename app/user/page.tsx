@@ -1,6 +1,6 @@
 import React from 'react'
 import { getCurrentUser } from '../utils/supabase/auth';
-import { getUser } from '../utils/supabase/supabaseFunctions';
+import { getAllUser, getUser } from '../utils/supabase/supabaseFunctions';
 import { isAdminUser } from '../utils/validation';
 import { redirect } from 'next/navigation';
 import Main from '../components/layouts/Main';
@@ -23,8 +23,13 @@ const User = async() => {
 		redirect('/')
 	}
 
-		return (
-    <>
+	const data = await getAllUser();
+  if(!data) {
+    throw new Error("User does not exist");
+  }
+
+	return (
+		<>
 			<Main isAdmin={isAdmin} id={user.id}>
 				<div className="mb-6">
 					<SectionField sectionTitle="新規ユーザー登録">
@@ -32,11 +37,11 @@ const User = async() => {
 					</SectionField>
 				</div>
 				<SectionField sectionTitle="ユーザー一覧">
-					<AdminUserList />
+					<AdminUserList data={data} />
 				</SectionField>
 			</Main>
-    </>
-  )
+		</>
+	)
 }
 
 export default User

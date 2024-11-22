@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 import Link from "next/link";
 import { Database } from "../../../database.types";
-import SearchUser from "../../components/dashboard/SearchUser";
+import SearchUser from '../../components/SearchUser';
 
 
 type User = Database['public']['Tables']['users']['Row'];
@@ -48,7 +48,7 @@ const UserList = ({ data, userId }: Props) => {
   return (
     <>    
       <div className="mb-6">
-        <SearchUser onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
+        <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
       </div>
       {users?.length === 0 && (
           searchName !== "" ? 
