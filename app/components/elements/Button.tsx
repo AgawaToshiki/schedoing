@@ -18,9 +18,7 @@ type Props = {
 
 const Button = ({ onClick, variant, size, form, className, attrs, children }: Props) => {
 
-  const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50"
-
-  const baseStyle = `flex justify-center items-center font-semibold border transition duration-200 ease-in-out hover:brightness-90 select-none ${disabledStyle}`;
+  const baseStyle = `flex justify-center items-center font-semibold border transition duration-200 ease-in-out hover:brightness-90 select-none`;
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white",
@@ -39,9 +37,11 @@ const Button = ({ onClick, variant, size, form, className, attrs, children }: Pr
     circle: "rounded-full",
   }
 
+  const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50";
+
   const optionStyle = className ? className : "";
 
-  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${formStyle[form]} ${optionStyle}`;
+  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${formStyle[form]} ${attrs.disabled !== undefined && disabledStyle} ${optionStyle}`;
 
   return (
     <>
