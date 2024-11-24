@@ -18,9 +18,9 @@ export async function POST(req: NextRequest) {
       throw new APIError(401, 'Unauthorized user');
     }
 
-    const data: { title: string, description: string, startTime: string, endTime: string, paramId: string } = await req.json();
+    const data: { title: string, description: string, startTime: string, endTime: string, userId: string } = await req.json();
 
-    if(authUser.id !== data.paramId) {
+    if(authUser.id !== data.userId) {
       throw new APIError(403, 'Permission denied');
     }
 

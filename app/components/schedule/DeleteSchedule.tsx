@@ -5,13 +5,13 @@ import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 
 type Props = {
-  id: string;
-  paramId: string;
+  scheduleId: string;
+  userId: string;
 }
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-const DeleteSchedule = ({ id, paramId }: Props) => {
+const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -23,13 +23,13 @@ const DeleteSchedule = ({ id, paramId }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`${base_url}/api/schedules/${id}`, {
+      const response = await fetch(`${base_url}/api/schedules/${scheduleId}`, {
         cache: 'no-store',
         method: "DELETE",
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ paramId })
+        body: JSON.stringify({ userId })
       })
 
       const data = await response.json();
