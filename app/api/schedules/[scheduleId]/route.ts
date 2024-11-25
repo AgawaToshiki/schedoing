@@ -79,9 +79,9 @@ export async function DELETE(
       throw new APIError(404, 'Schedule not found');
     }
 
-    const data: { paramId: string } = await req.json();
+    const data: { userId: string } = await req.json();
 
-    if(authUser.id !== data.paramId) {
+    if(authUser.id !== data.userId) {
       throw new APIError(403, 'Permission denied');
     }
 

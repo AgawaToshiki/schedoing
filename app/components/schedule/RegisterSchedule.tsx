@@ -3,10 +3,10 @@ import React from 'react'
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
 type Props = {
-  paramId: string;
+  userId: string;
 }
 
-const RegisterSchedule = ({ paramId }: Props) => {
+const RegisterSchedule = ({ userId }: Props) => {
 
   //初期時刻を直近の15分刻みの時刻に設定
   const defaultStartDate = new Date();
@@ -27,7 +27,7 @@ const RegisterSchedule = ({ paramId }: Props) => {
           description=""
           startTime={defaultStartDate} 
           endTime={defaultEndDate}
-          paramId={paramId}
+          userId={userId}
           name="register"
         />
       </div>

@@ -6,11 +6,6 @@ import { redirect } from 'next/navigation';
 import { getUser } from '@/app/utils/supabase/supabaseFunctions';
 import { isAdminUser } from '@/app/utils/validation';
 
-// type Props = {
-//   isAdmin: boolean;
-//   id: string;
-// }
-
 const Header = async() => {
   const authUser = await getCurrentUser();
   if(!authUser || !authUser.id){
