@@ -6,12 +6,12 @@ import Icon from '../../components/elements/Icon';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 
 type Props = {
-  id?: string;
+  scheduleId?: string;
   title: string;
   description: string;
   startTime: Date;
   endTime: Date;
-  paramId: string;
+  userId: string;
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
 }
@@ -136,7 +136,7 @@ const ScheduleForm = (props: Props) => {
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ title, description, startTime, endTime, paramId: props.paramId }),
+          body: JSON.stringify({ title, description, startTime, endTime, userId: props.userId }),
         })
         const data = await response.json();
 
@@ -147,13 +147,13 @@ const ScheduleForm = (props: Props) => {
       }
 
       if(props.name === "update") {
-        const response = await fetch(`${base_url}/api/schedules/${props.id}`, {
+        const response = await fetch(`${base_url}/api/schedules/${props.scheduleId}`, {
           cache: "no-store",
           method: "PATCH",
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ title, description, startTime, endTime, paramId: props.paramId }),
+          body: JSON.stringify({ title, description, startTime, endTime, userId: props.userId }),
         })
   
         const data = await response.json();

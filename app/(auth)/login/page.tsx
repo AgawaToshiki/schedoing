@@ -1,10 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SectionField from '../components/layouts/SectionField';
-import Button from '../components/elements/Button';
-import { loginValidation } from '../utils/validation';
-import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../utils/functions';
+import SectionField from '../../components/layouts/SectionField';
+import Button from '../../components/elements/Button';
+import { loginValidation } from '../../utils/validation';
+import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 

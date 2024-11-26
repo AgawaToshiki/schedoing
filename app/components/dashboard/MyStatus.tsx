@@ -1,15 +1,19 @@
 import React from 'react';
-import { Database } from '../../../database.types';
 import ChangeStatusList from '../../components/ChangeStatusList';
+import { getUser } from '@/app/utils/supabase/supabaseFunctions';
+import { redirect } from 'next/navigation';
 
-
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  user: User;
+  userId: string;
 }
 
-const MyStatus = ({ user }: Props) => {
+const MyStatus = async({ userId }: Props) => {
+  const user = await getUser(userId);
+  if(!user){
+    redirect('/login')
+  }
+  
   return (
     <>
       <div>ユーザー名：{user.displayName}</div>

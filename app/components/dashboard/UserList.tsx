@@ -51,15 +51,15 @@ const UserList = ({ data, userId }: Props) => {
         <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
       </div>
       {users?.length === 0 && (
-          searchName !== "" ? 
-          (<div>検索にヒットするユーザーが見つかりません。</div>) :
-          (
-            <div>
-              <div>ユーザーが登録されていません。</div>
-              <div>新規ユーザーを追加してください。</div>
-            </div>
-          )
-        )}
+        searchName !== "" ? 
+        (<div>検索にヒットするユーザーが見つかりません。</div>) :
+        (
+          <div>
+            <div>ユーザーが登録されていません。</div>
+            <div>新規ユーザーを追加してください。</div>
+          </div>
+        )
+      )}
       <div className="flex flex-wrap gap-2 mx-auto">
         {users?.map((user) => (
             <Link 

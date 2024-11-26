@@ -45,7 +45,7 @@ const FilterUserField = ({ onClick, defaultFilter }: Props) => {
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRole(e.target.value)}
         />
         <SelectRadioElement
-          title="追加日時"
+          title="登録日時"
           name="create_time"
           selected={createTime}
           valueList={[
