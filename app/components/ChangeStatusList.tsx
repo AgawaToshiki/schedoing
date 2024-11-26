@@ -1,24 +1,19 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import Icon from '../components/elements/Icon'
 import { supabase } from '../lib/supabase'
 import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
-import Icon from '../components/elements/Icon'
+import { getUser } from '../utils/supabase/supabaseFunctions';
 
 
 type Props = {
   id: string;
-  status: string;
 }
 
 const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
-const ChangeStatusList = ({ id, status }: Props) => {
-
-  const router = useRouter();
-
-
+const ChangeStatusList = ({ id }: Props) => {
 
   const statusList = [
     { id: 1, status: 'online', name: 'オンライン', style: 'bg-green-400' },
@@ -26,30 +21,39 @@ const ChangeStatusList = ({ id, status }: Props) => {
     { id: 3, status: 'busy', name: '取り込み中', style: 'bg-red-400' },
   ]
 
-  const defaultStatus = statusList.find(item => item.status === status) || statusList[0];
+  const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(statusList[0]);
 
-  const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(defaultStatus);
+  useEffect(() => {
+    (async () => {
+      const data = await getUser(id);
+      if(data){
+        const item = statusList.find(item => item.status === data.status) || statusList[0];
+        setSelectedItem(item);
+      }
+    })()
 
-  // useEffect(() => {
-  //   supabase
-  //   .channel('users')
-  //   .on('postgres_changes', {
-  //     event: 'UPDATE',
-  //     schema: 'public',
-  //     table: 'users',
-  //     filter: `id=eq.${id}`
-  //   },
-  //   (payload: RealtimePostgresUpdatePayload<{ [key: string]: string }>) => {
-  //     const updatedStatus = payload.new.status;
-  //     const updatedItem = statusList.find(item => item.status === updatedStatus);
-  //     console.log(updatedItem)
-  //     if (updatedItem) {
-  //       setSelectedItem(updatedItem);
-  //     }
-  //   }
-  //   )
-  //   .subscribe();
-  // }, [selectedItem])
+    const channel = supabase
+    .channel('users')
+    .on('postgres_changes', {
+      event: 'UPDATE',
+      schema: 'public',
+      table: 'users',
+      filter: `id=eq.${id}`
+    },
+    (payload: RealtimePostgresUpdatePayload<{ [key: string]: string }>) => {
+      const updatedStatus = payload.new.status;
+      const updatedItem = statusList.find(item => item.status === updatedStatus);
+      if (updatedItem) {
+        setSelectedItem(updatedItem);
+      }
+    }
+    )
+    .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    }
+  }, [])
 
 
 
@@ -76,8 +80,6 @@ const ChangeStatusList = ({ id, status }: Props) => {
         setSelectedItem(oldSelectedItem);
         return
 			}
-      
-      router.refresh();
 
     } catch(error) {
       console.error("fetch Error:", error);

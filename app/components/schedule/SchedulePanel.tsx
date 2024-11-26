@@ -1,12 +1,10 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Database } from '../../../database.types';
-import CurrentTimeBorder from '../../components/CurrentTimeBorder';
 import ScheduleCard from '../../components/schedule/ScheduleCard';
-import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import CurrentTimeBorder from '../../components/CurrentTimeBorder';
 import { getUserWithSchedules } from '@/app/utils/supabase/supabaseFunctions';
-import { supabase } from '../../lib/supabase'
-import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
+import { useRealtimeListener } from "../../hooks/useRealtimeListener";
 
 type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
@@ -15,17 +13,6 @@ type Props = {
   userId: string;
   isOwn: boolean;
   schedulesData: Schedule[] | null;
-}
-
-const isValidData = (obj: any): obj is Schedule => {
-  return (
-    typeof obj.user_id === 'string' &&
-    typeof obj.id === 'string' &&
-    typeof obj.title === 'string' &&
-    typeof obj.description === 'string' &&
-    obj.start_time instanceof Date &&
-    obj.end_time instanceof Date
-  );
 }
 
 const SchedulePanel = ({ userId, isOwn }: Props) => {
@@ -40,63 +27,27 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
       }
     })()
 
-    const channel = supabase
-      .channel('schedules')
-      .on('postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'schedules',
-        },
-        (payload: RealtimePostgresChangesPayload<Schedule>) => {
-          setSchedules((currentData): Schedule[] | null => {
-            if(!currentData){
-              if(isValidData(payload.new)){
-                return [payload.new]
-              }
-              return null
-            }
-            switch(payload.eventType) {
-              case 'INSERT':
-                return [...currentData, payload.new]
-              case 'UPDATE':
-                return currentData.map((item) => (
-                  item.id === payload.new.id ? { ...item, ...payload.new } : item
-                ))
-              case 'DELETE':
-                return currentData.filter((item) => item.id !== payload.old.id)
-              default:
-                return currentData
-            }
-          })
-        }
-      )
-      .subscribe()
-      return () => {
-        channel.unsubscribe();
+    const channel = useRealtimeListener<Schedule>({
+      table: 'schedules',
+      setter: setSchedules,
+      isValidData: (obj: any): obj is Schedule => {
+        return (
+          typeof obj.user_id === 'string' &&
+          typeof obj.id === 'string' &&
+          typeof obj.title === 'string' &&
+          typeof obj.description === 'string' &&
+          obj.start_time instanceof Date &&
+          obj.end_time instanceof Date
+        );
       }
+    })
+
+    return () => {
+      channel.unsubscribe();
+    }
   }, [])
 
   const filterSchedules = schedules?.filter(item => item.user_id === userId);
-
-
-  // const schedulesList = useRealtimeListener<Schedule>({
-  //   table: 'schedules',
-  //   defaultData: schedules,
-  //   isValidData: (obj: any): obj is Schedule => {
-  //     return (
-  //       typeof obj.user_id === 'string' &&
-  //       typeof obj.id === 'string' &&
-  //       typeof obj.title === 'string' &&
-  //       typeof obj.description === 'string' &&
-  //       obj.start_time instanceof Date &&
-  //       obj.end_time instanceof Date
-  //     );
-  //   }
-  // })
-
-  // const schedules = schedulesList?.filter(item => item.user_id === userId);
-
 
   const timeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
 

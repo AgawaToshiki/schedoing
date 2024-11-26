@@ -19,7 +19,7 @@ const MyStatus = async({ userId }: Props) => {
       <div>ユーザー名：{user.displayName}</div>
         <div className="flex items-center gap-1.5">
           <div>状態：</div>
-          <ChangeStatusList id={user.id} status={user.status}/>
+          <ChangeStatusList id={user.id}/>
         </div>
     </>
   )
