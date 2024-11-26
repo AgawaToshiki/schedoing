@@ -1,9 +1,12 @@
+import React, { Suspense } from 'react';
+import { redirect } from 'next/navigation';
 import { getAllUser } from '../utils/supabase/supabaseFunctions';
 import { getCurrentUser } from '../utils/supabase/auth';
-import { redirect } from 'next/navigation'
 import UserList from "../components/dashboard/UserList";
 import MyStatus from '../components/dashboard/MyStatus';
 import SectionField from '../components/layouts/SectionField';
+import Loading from '../components/layouts/Loading';
+
 
 
 export default async function DashBoard() {
@@ -12,9 +15,16 @@ export default async function DashBoard() {
 		redirect('/login')
 	}
 
-  const data = await getAllUser();
-  if(!data) {
-    throw new Error("User does not exist");
+  const GetUserList = async() => {
+    const data = await getAllUser();
+    if(!data) {
+      throw new Error("User does not exist");
+    }
+    return (
+      <>
+        <UserList data={data} userId={authUser.id}/>
+      </>
+    )
   }
 
   return (
@@ -29,7 +39,9 @@ export default async function DashBoard() {
           <h2>DashBoard</h2>
         </div>
         <div className="p-6">
-          <UserList data={data} userId={authUser.id}/>
+          <Suspense fallback={<Loading />}>
+            <GetUserList />
+          </Suspense>
         </div>
       </div>
     </>

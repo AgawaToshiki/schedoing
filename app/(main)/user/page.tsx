@@ -4,25 +4,9 @@ import { getAllUser, getUser } from '../../utils/supabase/supabaseFunctions';
 import RegisterUser from '../../components/user/RegisterUser'
 import AdminUserList from '../../components/user/AdminUserList'
 import SectionField from '../../components/layouts/SectionField';
+import Loading from '../../components/layouts/Loading';
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { isAdminUser } from '@/app/utils/validation';
-import Loading from '@/app/loading';
-
-
-const UserList = async() => {
-	const data = await getAllUser();
-	if(!data) {
-		throw new Error("User does not exist");
-	}
-
-	return (
-		<>
-			<SectionField sectionTitle="ユーザー一覧">
-				<AdminUserList data={data} />
-			</SectionField>
-		</>
-	)
-}
 
 
 const User = async() => {
@@ -40,10 +24,18 @@ const User = async() => {
 		redirect('/')
 	}
 
-	const data = await getAllUser();
-  if(!data) {
-    throw new Error("User does not exist");
-  }
+	const GetUserList = async() => {
+
+		const data = await getAllUser();
+		if(!data) {
+			throw new Error("User does not exist");
+		}
+		return (
+			<>
+				<AdminUserList data={data} />
+			</>
+		)
+	}
 
 	return (
 		<>
@@ -52,12 +44,11 @@ const User = async() => {
 					<RegisterUser />
 				</SectionField>
 			</div>
-			{/* <SectionField sectionTitle="ユーザー一覧">
-				<AdminUserList data={data} />
-			</SectionField> */}
-			<Suspense fallback={<Loading />}>
-				<UserList />
-			</Suspense>
+			<SectionField sectionTitle="ユーザー一覧">
+				<Suspense fallback={<Loading />}>
+					<GetUserList />
+				</Suspense>
+			</SectionField>
 		</>
 	)
 }
