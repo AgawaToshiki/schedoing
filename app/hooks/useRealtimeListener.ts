@@ -9,7 +9,7 @@ type RealTimeListenerOptions<T extends { [key: string]: any }> = {
 }
 
 export const useRealtimeListener = <T extends { [key: string]: any }>({ table, defaultData, isValidData,}: RealTimeListenerOptions<T>): T[] | null => {
-
+//propsでsetterを渡してsetだけこっちで行う形がいいかも
   const [data, setData] = useState<T[] | null>(defaultData);
 
   const listenData = async() => {

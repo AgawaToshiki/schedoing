@@ -1,7 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
+import { supabase } from '../lib/supabase'
+import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
 import Icon from '../components/elements/Icon'
 
 
@@ -16,6 +18,8 @@ const ChangeStatusList = ({ id, status }: Props) => {
 
   const router = useRouter();
 
+
+
   const statusList = [
     { id: 1, status: 'online', name: 'オンライン', style: 'bg-green-400' },
     { id: 2, status: 'leave', name: '退席中', style: 'bg-yellow-400' },
@@ -25,6 +29,29 @@ const ChangeStatusList = ({ id, status }: Props) => {
   const defaultStatus = statusList.find(item => item.status === status) || statusList[0];
 
   const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(defaultStatus);
+
+  // useEffect(() => {
+  //   supabase
+  //   .channel('users')
+  //   .on('postgres_changes', {
+  //     event: 'UPDATE',
+  //     schema: 'public',
+  //     table: 'users',
+  //     filter: `id=eq.${id}`
+  //   },
+  //   (payload: RealtimePostgresUpdatePayload<{ [key: string]: string }>) => {
+  //     const updatedStatus = payload.new.status;
+  //     const updatedItem = statusList.find(item => item.status === updatedStatus);
+  //     console.log(updatedItem)
+  //     if (updatedItem) {
+  //       setSelectedItem(updatedItem);
+  //     }
+  //   }
+  //   )
+  //   .subscribe();
+  // }, [selectedItem])
+
+
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
 
@@ -49,7 +76,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
         setSelectedItem(oldSelectedItem);
         return
 			}
-
+      
       router.refresh();
 
     } catch(error) {
