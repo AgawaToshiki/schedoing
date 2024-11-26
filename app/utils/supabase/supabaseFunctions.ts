@@ -1,18 +1,18 @@
-import { Database } from '../../../database.types';
 import { supabase } from '../../lib/supabase';
+import { Query, User, UserWithSchedule } from '../../types'
 
 
-type User = Database['public']['Tables']['users']['Row'];
-type Schedule = Database['public']['Tables']['schedules']['Row'];
-
-type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
-  schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
+const initialQuery: Query = {
+  searchName: "",
+  filterRole: ""
 }
 
-export async function getAllUser(): Promise<User[] | null> {
+export async function getAllUser(query: Query = initialQuery): Promise<User[] | null> {
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules');
+    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules')
+    .ilike('displayName', `%${query.searchName}%`)
+    // .eq('role', (query.filterRole ? `${query.filterRole}` : "*"))
   if(error) {
     console.error(error);
     throw new Error(error.message);

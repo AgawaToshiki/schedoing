@@ -3,11 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
-import { Database } from '@/database.types';
 import { updateValidation } from '../../utils/validation'
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../../utils/functions';
+import { User } from '../../types';
 
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
   user: User;

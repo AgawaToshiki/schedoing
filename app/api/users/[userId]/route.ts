@@ -5,9 +5,7 @@ import { deleteUser, getUser, updateUser } from "@/app/utils/supabase/supabaseFu
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
 import { isAdminUser, updateValidation } from "@/app/utils/validation";
-import { Database } from '@/database.types';
-
-type User = Database['public']['Tables']['users']['Row'];
+import { User } from '../../../types';
 
 
 const checkData = async(userId: string): Promise<User> => {

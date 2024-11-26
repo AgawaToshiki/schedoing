@@ -1,13 +1,11 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Database } from '../../../database.types';
 import ScheduleCard from '../../components/schedule/ScheduleCard';
 import CurrentTimeBorder from '../../components/CurrentTimeBorder';
 import { getUserWithSchedules } from '@/app/utils/supabase/supabaseFunctions';
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import { Schedule } from '../../types';
 
-type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
   userId: string;

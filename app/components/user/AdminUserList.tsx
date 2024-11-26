@@ -2,14 +2,13 @@
 import React, { useState } from 'react'
 import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
-import { Database } from "../../../database.types";
 import SearchUser from '../../components/SearchUser';
 import FilterUser from '../../components/user/FilterUser';
 import Modal from '../../components/layouts/Modal';
 import FilterUserField from '../../components/user/FilterUserField';
 import { toZonedTime } from 'date-fns-tz';
+import { User } from '../../types';
 
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
   data: User[];

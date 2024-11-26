@@ -1,30 +1,4 @@
-import { Database } from '../../database.types';
-
-type User = Database['public']['Tables']['users']['Row'];
-type LoginValidation = {
-  isValid: boolean;
-  isValidEmail: boolean;
-  isEmptyEmail: boolean;
-  isValidPassword: boolean;
-  isCheckPasswordLength: boolean;
-  isEmptyPassword: boolean;
-}
-type RegisterValidation = {
-  isValid: boolean;
-  isValidEmail: boolean;
-  isEmptyEmail: boolean;
-  isValidPassword: boolean;
-  isCheckPasswordLength: boolean;
-  isEmptyPassword: boolean;
-  isEmptyDisplayName: boolean;
-}
-type UpdateValidation = {
-  isValid: boolean;
-  isValidEmail: boolean;
-  isEmptyEmail: boolean;
-  isEmptyDisplayName: boolean;
-  isSetRole: boolean;
-}
+import { User, LoginValidation, RegisterValidation, UpdateValidation } from '../types';
 
 
 function checkPattern() {

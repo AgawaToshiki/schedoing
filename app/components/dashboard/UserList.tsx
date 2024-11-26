@@ -1,15 +1,12 @@
 'use client'
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Database } from "../../../database.types";
 import SearchUser from '../../components/SearchUser';
 import Loading from '../../components/layouts/Loading';
 import { getAllUser } from "@/app/utils/supabase/supabaseFunctions";
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import { User } from '../../types';
 
-
-
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
   userId: string

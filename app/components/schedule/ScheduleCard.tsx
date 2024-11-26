@@ -1,12 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import { Database } from '@/database.types';
 import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
 import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
-
-type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
+import { Schedule } from '../../types';
 
 type Props = {
   userId: string;
