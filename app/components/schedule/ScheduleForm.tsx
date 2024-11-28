@@ -4,6 +4,7 @@ import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
+import { BASE_URL } from '../../constants/paths';
 
 type Props = {
   scheduleId?: string;
@@ -15,8 +16,6 @@ type Props = {
   setter?: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
 }
-
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ScheduleForm = (props: Props) => {
 
@@ -130,7 +129,7 @@ const ScheduleForm = (props: Props) => {
     e.preventDefault();
     try{
       if(props.name === "register") {
-        const response = await fetch(`${base_url}/api/schedules`, {
+        const response = await fetch(`${BASE_URL}/api/schedules`, {
           cache: "no-store",
           method: "POST",
           headers: {
@@ -147,7 +146,7 @@ const ScheduleForm = (props: Props) => {
       }
 
       if(props.name === "update") {
-        const response = await fetch(`${base_url}/api/schedules/${props.scheduleId}`, {
+        const response = await fetch(`${BASE_URL}/api/schedules/${props.scheduleId}`, {
           cache: "no-store",
           method: "PATCH",
           headers: {
@@ -193,7 +192,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${titleErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${titleErrorMessage && ("border-red-400")}`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
@@ -233,7 +232,7 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
             />
           </div>
         </div>

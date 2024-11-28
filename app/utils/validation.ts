@@ -1,4 +1,4 @@
-import { User, LoginValidation, RegisterValidation, UpdateValidation } from '../types';
+import { LoginValidation, RegisterValidation, UpdateValidation } from '../types';
 
 
 function checkPattern() {
@@ -82,12 +82,3 @@ export function checkSchedule(title: string, startTime: Date, endTime: Date): bo
 
   return !isEmptyTitle && isSetTime;
 }
-
-
-export function isAdminUser(user: User | null): boolean {
-  if (user && user.role === "admin") {
-    return true;
-  }
-  return false;
-}
-

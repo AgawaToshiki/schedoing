@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../components/elements/Button';
 import ConfirmModal from '../components/layouts/ConfirmModal';
+import { BASE_URL } from '../constants/paths';
 
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SignOutButton = () => {
 
@@ -21,7 +21,7 @@ const SignOutButton = () => {
   const handleSignOutSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/auth/signout`, {
+			const response = await fetch(`${BASE_URL}/api/auth/signout`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {

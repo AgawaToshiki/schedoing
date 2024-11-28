@@ -2,17 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../../components/elements/Button';
 import SelectRadioElement from '../../components/user/SelectRadioElement';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 
 
 type Props = {
-  onClick: (role: string, createTime: string, flag: boolean) => void;
   defaultFilter: {
     role: string;
     createTime: string;
   }
+  setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FilterUserField = ({ onClick, defaultFilter }: Props) => {
+const FilterUserField = ({ defaultFilter, setter }: Props) => {
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+
   const [role, setRole] = useState<string>(defaultFilter.role);
   const [createTime, setCreateTime] = useState<string>(defaultFilter.createTime);
   const [disabled, setDisabled] = useState<boolean>(true);
@@ -24,11 +30,23 @@ const FilterUserField = ({ onClick, defaultFilter }: Props) => {
   }, [role, createTime])
 
   const handleFilter = () => {
-    onClick(role, createTime, true);
+    const params = new URLSearchParams(searchParams);
+    if(role){
+      params.set('role', role);
+    }
+    if(createTime){
+      params.set('create_time', createTime);
+    }
+    router.push(`${pathname}?${params.toString()}`)
+    setter(false);
   }
 
   const handleResetFilter = () => {
-    onClick("", "", false);
+    const params = new URLSearchParams(searchParams);
+    params.delete('role');
+    params.delete('create_time');
+    router.push(`${pathname}?${params.toString()}`);
+    setter(false);
   }
 
   return (

@@ -5,13 +5,12 @@ import Icon from '../components/elements/Icon'
 import { supabase } from '../lib/supabase'
 import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
 import { getUser } from '../utils/supabase/supabaseFunctions';
+import { BASE_URL } from '../constants/paths';
 
 
 type Props = {
   id: string;
 }
-
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const ChangeStatusList = ({ id }: Props) => {
 
@@ -63,7 +62,7 @@ const ChangeStatusList = ({ id }: Props) => {
     setSelectedItem(item);
 
     try {
-      const response = await fetch(`${base_url}/api/users/${id}/status`, {
+      const response = await fetch(`${BASE_URL}/api/users/${id}/status`, {
         cache: 'no-store',
         method: "PATCH",
         headers: {

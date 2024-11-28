@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import { BASE_URL } from '../../constants/paths';
 
 type Props = {
   scheduleId: string;
   userId: string;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
@@ -23,7 +23,7 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try{
-      const response = await fetch(`${base_url}/api/schedules/${scheduleId}`, {
+      const response = await fetch(`${BASE_URL}/api/schedules/${scheduleId}`, {
         cache: 'no-store',
         method: "DELETE",
         headers: {

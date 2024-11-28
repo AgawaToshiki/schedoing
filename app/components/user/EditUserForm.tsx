@@ -6,6 +6,7 @@ import Icon from '../../components/elements/Icon';
 import { updateValidation } from '../../utils/validation'
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../../utils/functions';
 import { User } from '../../types';
+import { BASE_URL } from '../../constants/paths';
 
 
 type Props = {
@@ -13,7 +14,6 @@ type Props = {
   setter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const EditUserForm = (props: Props) => {
 
@@ -47,7 +47,7 @@ const EditUserForm = (props: Props) => {
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-			const response = await fetch(`${base_url}/api/users/${props.user.id}`, {
+			const response = await fetch(`${BASE_URL}/api/users/${props.user.id}`, {
 				cache: 'no-store',
 				method: "PATCH",
 				headers: {
@@ -84,7 +84,7 @@ const EditUserForm = (props: Props) => {
                 id="editRole"
                 value={role}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
-                className="w-full border border-gray-200 shadow-md text-base block p-1 h-12 appearance-none"
+                className="w-full border border-gray-200 shadow-md text-base block px-2 h-12 appearance-none"
                 required
               >
                 <option value="admin">admin</option>
@@ -104,7 +104,7 @@ const EditUserForm = (props: Props) => {
               value={displayName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
               required
             />
             {displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
@@ -118,7 +118,7 @@ const EditUserForm = (props: Props) => {
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
               required
             />
             {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}

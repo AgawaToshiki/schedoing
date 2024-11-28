@@ -10,8 +10,9 @@ type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
 export type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 export type Query ={
-  searchName: string;
-  filterRole: 'user' | 'admin' | "";
+  search: string;
+  role: 'user' | 'admin' | "";
+  create_time: 'asc' | 'desc' | "";
 }
 
 export type LoginValidation = {

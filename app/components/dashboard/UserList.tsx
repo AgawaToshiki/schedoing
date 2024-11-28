@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import SearchUser from '../../components/SearchUser';
+import SearchUser from '../../components/dashboard/SearchUser';
 import Loading from '../../components/layouts/Loading';
 import { getAllUser } from "@/app/utils/supabase/supabaseFunctions";
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";

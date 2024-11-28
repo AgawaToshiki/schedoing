@@ -1,5 +1,5 @@
 import React from 'react';
-import Icon from '../components/elements/Icon'
+import Icon from '../../components/elements/Icon'
 
 type Props = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -15,7 +15,7 @@ const SearchUser = ({ onChange, is_set }: Props) => {
           type="text"
           onChange={onChange}
           placeholder="ユーザー名で検索"
-          className="w-[300px] border border-gray-200 shadow-md text-base block p-1 h-12"
+          className="w-[300px] border border-gray-200 shadow-md text-base block px-2 h-12"
         />
         {!is_set && (
           <div className="absolute top-4 right-4 pointer-events-none">

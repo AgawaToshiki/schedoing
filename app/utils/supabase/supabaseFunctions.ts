@@ -3,16 +3,39 @@ import { Query, User, UserWithSchedule } from '../../types'
 
 
 const initialQuery: Query = {
-  searchName: "",
-  filterRole: ""
+  search: "",
+  role: "",
+  create_time: ""
 }
 
 export async function getAllUser(query: Query = initialQuery): Promise<User[] | null> {
+
+  const order = () => {
+    if(query.create_time === 'asc'){
+      return {
+        sort: 'created_at',
+        ascending: true
+      }
+    }
+    if(query.create_time === 'desc'){
+      return {
+        sort: 'created_at',
+        ascending: false
+      }
+    }
+    return {
+      sort: 'updated_at',
+      ascending: false
+    }
+  }
   const { data, error } = await supabase
     .from('users')
     .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules')
-    .ilike('displayName', `%${query.searchName}%`)
-    // .eq('role', (query.filterRole ? `${query.filterRole}` : "*"))
+    .ilike('displayName', query.search ? `%${query.search}%` : '%%')
+    .or(query.role ? `role.eq.${query.role}` : 'role.neq.null')
+    .order(order().sort, {
+      ascending: order().ascending
+    })
   if(error) {
     console.error(error);
     throw new Error(error.message);

@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import ConfirmModal from '../../components/layouts/ConfirmModal';
+import { BASE_URL } from '../../constants/paths';
 
 
 type Props = {
   id: string;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const DeleteUser = ({ id }: Props) => {
 
@@ -25,7 +25,7 @@ const DeleteUser = ({ id }: Props) => {
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/users/${id}`, {
+			const response = await fetch(`${BASE_URL}/api/users/${id}`, {
 				cache: 'no-store',
 				method: "DELETE",
 				headers: {

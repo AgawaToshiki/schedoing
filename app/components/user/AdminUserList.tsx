@@ -1,91 +1,28 @@
-"use client"
-import React, { useState } from 'react'
+import React from 'react'
 import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
-import SearchUser from '../../components/SearchUser';
+import SearchUser from '../../components/user/SearchUser';
 import FilterUser from '../../components/user/FilterUser';
-import Modal from '../../components/layouts/Modal';
-import FilterUserField from '../../components/user/FilterUserField';
-import { toZonedTime } from 'date-fns-tz';
-import { User } from '../../types';
-
+import { getAllUser } from '@/app/utils/supabase/supabaseFunctions';
+import { Query } from '@/app/types';
 
 type Props = {
-  data: User[];
+  query: Query;
 }
 
-const AdminUserList = ({ data }: Props) => {
-
-  const [searchName, setSearchName] = useState<string>("");
-  const [filterItem, setFilterItem] = useState<{
-    role: string,
-    createTime: string
-  }>({
-    role: "",
-    createTime: ""
-  });
-  const [filterFlag, setFilterFlag] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const handleFilter = (role: string, createTime: string, flag: boolean) => {
-    setFilterItem({ role: role, createTime: createTime });
-    setFilterFlag(flag);
-    setIsOpen(false);
+const AdminUserList = async({ query }: Props) => {
+  const data = await getAllUser(query);
+  if(!data) {
+    throw new Error("User does not exist");
   }
-
-  const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsOpen(true);
-  }
-
-  const filterUsers = (data: User[]) => {
-    const users = data.filter(item => {
-      const searchByDisplayName = item.displayName.includes(searchName);
-      const roleFilter = !filterItem.role || item.role === filterItem.role;
-      return searchByDisplayName && roleFilter;
-    });
-
-    if(!filterItem.createTime) {
-      return users
-    }
-
-    const time = (timestamp: string) => {
-      return toZonedTime(new Date(timestamp), 'Asia/Tokyo').getTime();
-    }
-
-    const sortUsersByCreateTime = users.sort((a, b) => {
-      if(time(a.created_at) < time(b.created_at)) {
-        return -1;
-      }
-      if(time(a.created_at) > time(b.created_at)) {
-        return 1;
-      }
-      return 0
-    })
-
-    if(filterItem.createTime === 'asc') {
-      return sortUsersByCreateTime
-    }
-    if(filterItem.createTime === 'desc') {
-      return sortUsersByCreateTime.reverse();
-    }
-  }
-
-  const users = filterUsers(data);
 
   return (
 		<>
       <div className="flex items-center gap-4 mb-6">
-        <SearchUser
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)}
-          is_set={!!searchName} 
-        />
-        <FilterUser
-          onClick={handleOpenModal}
-          filterFlag={filterFlag}
-        />
+        <SearchUser query={query.search}/>
+        <FilterUser query={{ role: query.role, create_time: query.create_time }}/>
       </div>
-      {!!users?.length && (
+      {!!data?.length && (
         <div className="w-full h-full overflow-x-auto flex bg-white">
           <div className="relative flex-grow h-full overflow-y-auto scrollbar">
             <table className="absolute w-full h-full border border-collapse">
@@ -121,7 +58,7 @@ const AdminUserList = ({ data }: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
+                {data.map((user) => (
                   <tr key={user.id}>
                     <td className="px-4 py-2 border whitespace-nowrap">{user.role}</td>
                     <td className="px-4 py-2 border whitespace-nowrap">{user.displayName}</td>
@@ -143,23 +80,12 @@ const AdminUserList = ({ data }: Props) => {
           </div>
         </div>
       )}
-      
-      {users?.length === 0 && (
+      {data?.length === 0 && (
         <div>
           <div>ユーザーが見つかりません。</div>
           <div>検索ワードやフィルターの条件を確認してください。</div>
         </div>
       )}
-
-      <Modal isOpen={isOpen} setter={setIsOpen} title="絞り込み・並び替え">
-        <FilterUserField
-          onClick={handleFilter}
-          defaultFilter={{
-            role: filterItem.role,
-            createTime: filterItem.createTime
-          }}
-        />
-      </Modal>
 		</>
   )
 }

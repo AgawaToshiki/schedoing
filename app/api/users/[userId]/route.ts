@@ -4,7 +4,8 @@ import { deleteUserFromAuth, updateUserEmailFromAuth } from "@/app/utils/supabas
 import { deleteUser, getUser, updateUser } from "@/app/utils/supabase/supabaseFunctions";
 import { getCurrentUser } from "@/app/utils/supabase/auth";
 import { APIError } from '@/app/utils/exceptions';
-import { isAdminUser, updateValidation } from "@/app/utils/validation";
+import { updateValidation } from "@/app/utils/validation";
+import { isAdminUser } from "@/app/utils/functions";
 import { User } from '../../../types';
 
 

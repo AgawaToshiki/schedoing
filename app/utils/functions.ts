@@ -1,4 +1,5 @@
 import React from "react"
+import { User } from '../types';
 
 export function handleSetEmailErrorMessage(isValid: boolean, isEmpty: boolean, setter: React.Dispatch<React.SetStateAction<string>>) {
   if(isEmpty) {
@@ -28,4 +29,11 @@ export function handleSetEmptyErrorMessage(isEmpty: boolean, setter: React.Dispa
     return setter("入力必須項目です");
   }
   return setter("");
+}
+
+export function isAdminUser(user: User | null): boolean {
+  if (user && user.role === "admin") {
+    return true;
+  }
+  return false;
 }

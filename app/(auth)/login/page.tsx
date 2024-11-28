@@ -5,8 +5,8 @@ import SectionField from '../../components/layouts/SectionField';
 import Button from '../../components/elements/Button';
 import { loginValidation } from '../../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
+import { BASE_URL } from '../../constants/paths';
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Login() {
 
@@ -35,7 +35,7 @@ export default function Login() {
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		try {
-			const response = await fetch(`${base_url}/api/auth/login`, {
+			const response = await fetch(`${BASE_URL}/api/auth/login`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {
@@ -76,7 +76,7 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
+                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
@@ -92,7 +92,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
+                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${passwordErrorMessage && ("border-red-400")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
