@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { supabase } from '../lib/supabase'
 import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 
@@ -10,7 +10,8 @@ type RealTimeListenerOptions<T extends { [key: string]: any }> = {
 
 export const useRealtimeListener = <T extends { [key: string]: any }>({ table, setter, isValidData,}: RealTimeListenerOptions<T>) => {
 
-  const channel = supabase
+  useEffect(() => {
+    const channel = supabase
     .channel(table)
     .on('postgres_changes',
       { 
@@ -43,5 +44,9 @@ export const useRealtimeListener = <T extends { [key: string]: any }>({ table, s
     )
     .subscribe()
 
-  return channel
+    return () => {
+      channel.unsubscribe();
+    }
+
+  }, [])
 }

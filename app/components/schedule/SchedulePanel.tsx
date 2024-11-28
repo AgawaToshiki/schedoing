@@ -24,26 +24,22 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
         setSchedules(data.schedules);
       }
     })()
-
-    const channel = useRealtimeListener<Schedule>({
-      table: 'schedules',
-      setter: setSchedules,
-      isValidData: (obj: any): obj is Schedule => {
-        return (
-          typeof obj.user_id === 'string' &&
-          typeof obj.id === 'string' &&
-          typeof obj.title === 'string' &&
-          typeof obj.description === 'string' &&
-          obj.start_time instanceof Date &&
-          obj.end_time instanceof Date
-        );
-      }
-    })
-
-    return () => {
-      channel.unsubscribe();
-    }
   }, [])
+
+  useRealtimeListener<Schedule>({
+    table: 'schedules',
+    setter: setSchedules,
+    isValidData: (obj: any): obj is Schedule => {
+      return (
+        typeof obj.user_id === 'string' &&
+        typeof obj.id === 'string' &&
+        typeof obj.title === 'string' &&
+        typeof obj.description === 'string' &&
+        obj.start_time instanceof Date &&
+        obj.end_time instanceof Date
+      );
+    }
+  })
 
   const filterSchedules = schedules?.filter(item => item.user_id === userId);
 

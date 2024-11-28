@@ -34,27 +34,23 @@ const UserList = ({ userId }: Props) => {
     };
 
     fetchUsers();
-
-    const channel = useRealtimeListener<User>({
-      table: 'users',
-      setter: setUsers,
-      isValidData: (obj: any): obj is User => {
-        return (
-          typeof obj.created_at === 'string' &&
-          typeof obj.displayName === 'string' &&
-          typeof obj.email === 'string' &&
-          typeof obj.title === 'string' &&
-          typeof obj.id === 'string' &&
-          typeof obj.role === 'string' &&
-          typeof obj.status === 'string'
-        );
-      }
-    })
-
-    return () => {
-      channel.unsubscribe();
-    }
   }, [])
+
+  useRealtimeListener<User>({
+    table: 'users',
+    setter: setUsers,
+    isValidData: (obj: any): obj is User => {
+      return (
+        typeof obj.created_at === 'string' &&
+        typeof obj.displayName === 'string' &&
+        typeof obj.email === 'string' &&
+        typeof obj.title === 'string' &&
+        typeof obj.id === 'string' &&
+        typeof obj.role === 'string' &&
+        typeof obj.status === 'string'
+      );
+    }
+  })
 
   const filterUsers = users?.filter(item => item.id !== userId && item.displayName.includes(searchName));
   const resultUsers = filterUsers?.sort((a, b) => {
