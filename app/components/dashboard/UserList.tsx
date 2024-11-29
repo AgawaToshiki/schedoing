@@ -69,7 +69,7 @@ const UserList = ({ userId }: Props) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div>
+        <div className="flex flex-col w-full h-full">
           <div className="mb-6">
             <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
           </div>
@@ -83,19 +83,23 @@ const UserList = ({ userId }: Props) => {
               </div>
             )
           )}
-          <div className="flex flex-wrap gap-2 mx-auto">
-            {resultUsers?.map((user) => (
-              <Link 
-                href={`/schedule/${user.id}#currentTime`}
-                key={user.id}
-                className="w-[300px]"
-              >        
-                <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
-                  <div>{user.displayName}</div>
-                  <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
-                </div>
-                </Link>
-              ))}
+          <div className="relative w-full h-full overflow-y-auto scrollbar">
+            <div className="absolute w-full h-full">
+              <div className="flex flex-wrap gap-2 mx-auto">
+                {resultUsers?.map((user) => (
+                  <Link 
+                    href={`/schedule/${user.id}#currentTime`}
+                    key={user.id}
+                    className="w-[300px]"
+                  >        
+                    <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
+                      <div>{user.displayName}</div>
+                      <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+                    </div>
+                    </Link>
+                  ))}
+              </div>
+            </div>
           </div>
         </div>
       )}
