@@ -1,7 +1,7 @@
 import React from 'react';
+import { redirect } from 'next/navigation';
 import ChangeStatusList from '../../components/ChangeStatusList';
 import { getUser } from '@/app/utils/supabase/supabaseFunctions';
-import { redirect } from 'next/navigation';
 
 
 type Props = {
