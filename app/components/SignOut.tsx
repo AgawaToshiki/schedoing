@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../components/elements/Button';
 import ConfirmModal from '../components/layouts/ConfirmModal';
@@ -13,6 +13,8 @@ const SignOutButton = () => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const processing = useRef<boolean>(false);
+
 	const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(true);
@@ -20,6 +22,10 @@ const SignOutButton = () => {
 
   const handleSignOutSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
 		try {
 			const response = await fetch(`${BASE_URL}/api/auth/signout`, {
 				cache: 'no-store',
@@ -33,13 +39,16 @@ const SignOutButton = () => {
 
 			if(!response.ok) {
         alert(`サインアウト処理に失敗しました。エラー：${data.error}`);
+        processing.current = false;
         return
 			}
 
       router.push('/login');
+      processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("サインアウト処理に失敗しました。ネットワーク接続を確認してください。");
+      processing.current = false;
 		}
 
   }

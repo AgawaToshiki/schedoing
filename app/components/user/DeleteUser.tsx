@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import ConfirmModal from '../../components/layouts/ConfirmModal';
@@ -17,6 +17,8 @@ const DeleteUser = ({ id }: Props) => {
 
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 
+	const processing = useRef<boolean>(false);
+
 	const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(true);
@@ -24,6 +26,10 @@ const DeleteUser = ({ id }: Props) => {
 
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if(processing.current) {
+			return
+		}
+		processing.current = true;
 		try {
 			const response = await fetch(`${BASE_URL}/api/users/${id}`, {
 				cache: 'no-store',
@@ -38,13 +44,16 @@ const DeleteUser = ({ id }: Props) => {
 			if(!response.ok) {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
+				processing.current = false;
 			}
 
 			setIsOpen(false);
       router.refresh();
+			processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ユーザー削除に失敗しました。ネットワーク接続を確認してください。");
+			processing.current = false;
 		}
 	}
 

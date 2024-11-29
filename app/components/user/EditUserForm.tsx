@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
@@ -26,6 +26,8 @@ const EditUserForm = (props: Props) => {
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
 
+  const processing = useRef<boolean>(false);
+
   const { isValid, isValidEmail, isEmptyEmail, isEmptyDisplayName } = updateValidation(email, displayName, role);
 
   const checkState = (): boolean => {
@@ -46,6 +48,10 @@ const EditUserForm = (props: Props) => {
 
   const handleUpdateSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
     try {
 			const response = await fetch(`${BASE_URL}/api/users/${props.user.id}`, {
 				cache: 'no-store',
@@ -62,13 +68,16 @@ const EditUserForm = (props: Props) => {
 			if(!response.ok) {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
+        processing.current = false;
 			}
 
       props.setter(false);
       router.refresh();
+      processing.current = false;
 		}catch (error) {
       console.error("fetch Error:", error);
       alert("ユーザー更新に失敗しました。ネットワーク接続を確認してください。");
+      processing.current = false;
 		}
   }
 

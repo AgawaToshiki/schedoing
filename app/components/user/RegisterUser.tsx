@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import { registerValidation } from '../../utils/validation';
@@ -19,6 +19,8 @@ export default function RegisterUser() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 	const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
 
+	const processing = useRef<boolean>(false);
+
 	const {
 		isValid,
 		isValidEmail,
@@ -36,6 +38,11 @@ export default function RegisterUser() {
 
 	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if(processing.current) {
+			return
+		}
+		processing.current = true;
+
 		try {
 			const response = await fetch(`${BASE_URL}/api/users`, {
 				cache: 'no-store',
@@ -52,15 +59,19 @@ export default function RegisterUser() {
 			if(!response.ok) {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
+				processing.current = false;
 			}
 
 			setEmail("");
 			setPassword("");
 			setDisplayName("");
+
       router.refresh();
+			processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ユーザー登録に失敗しました。ネットワーク接続を確認してください。");
+			processing.current = false;
 		}
 	}
 

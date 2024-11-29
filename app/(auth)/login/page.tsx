@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SectionField from '../../components/layouts/SectionField';
 import Button from '../../components/elements/Button';
@@ -19,6 +19,8 @@ export default function Login() {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
   const [loginErrorMessage, setLoginErrorMessage] = useState<string>(""); 
 
+  const processing = useRef<boolean>(false);
+
   const { 
     isValid,
     isValidEmail,
@@ -34,6 +36,10 @@ export default function Login() {
 
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
 		try {
 			const response = await fetch(`${BASE_URL}/api/auth/login`, {
 				cache: 'no-store',
@@ -49,16 +55,19 @@ export default function Login() {
 			if(!response.ok) {
         if(response.status === 400){
           setLoginErrorMessage("ログイン情報が正しくありません");
+          processing.current = false;
           return
         }
         alert(`ログインに失敗しました。エラー：${data.error}`);
+        processing.current = false;
         return
 			}
-
       router.push('/');
+      processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ログインに失敗しました。ネットワーク接続を確認してください。");
+      processing.current = false;
 		}
 
 	}

@@ -1,9 +1,10 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
+import { toZonedTime } from 'date-fns-tz';
 import { BASE_URL } from '../../constants/paths';
 
 type Props = {
@@ -19,12 +20,17 @@ type Props = {
 
 const ScheduleForm = (props: Props) => {
 
+  const defaultStartDate = toZonedTime(new Date(props.startTime), 'Asia/Tokyo');
+  const defaultEndDate = toZonedTime(new Date(props.endTime), 'Asia/Tokyo');
+
   const [title, setTitle] = useState<string>(props.title);
   const [description, setDescription] = useState<string>(props.description);
-  const [startTime, setStartTime] = useState<Date>(props.startTime);
-  const [endTime, setEndTime] = useState<Date>(props.endTime);
+  const [startTime, setStartTime] = useState<Date>(defaultStartDate);
+  const [endTime, setEndTime] = useState<Date>(defaultEndDate);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [titleErrorMessage, setTitleErrorMessage] = useState<string>("");
+
+  const processing = useRef<boolean>(false);
 
   const checkChangeState = (): void => {
     if(props.name === "update") {
@@ -127,6 +133,10 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
     try{
       if(props.name === "register") {
         const response = await fetch(`${BASE_URL}/api/schedules`, {
@@ -142,6 +152,7 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
+          processing.current = false;
         }
       }
 
@@ -160,6 +171,7 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
+          processing.current = false;
         }
       }
 
@@ -170,10 +182,11 @@ const ScheduleForm = (props: Props) => {
       setEndTime(props.endTime);
       setTitle("");
       setDescription("");
-
+      processing.current = false;
     }catch(error){
 			console.error("fetch Error:", error);
       alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
+      processing.current = false;
     }
   }
 

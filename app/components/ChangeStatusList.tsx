@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
 import Icon from '../components/elements/Icon'
 import { supabase } from '../lib/supabase'
@@ -21,6 +21,8 @@ const ChangeStatusList = ({ id }: Props) => {
   ]
 
   const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(statusList[0]);
+
+  const processing = useRef<boolean>(false);
 
   useEffect(() => {
     (async () => {
@@ -57,7 +59,10 @@ const ChangeStatusList = ({ id }: Props) => {
 
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
-
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
     const oldSelectedItem = selectedItem;
     setSelectedItem(item);
 
@@ -77,13 +82,15 @@ const ChangeStatusList = ({ id }: Props) => {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
         setSelectedItem(oldSelectedItem);
+        processing.current = false;
         return
 			}
-
+      processing.current = false;
     } catch(error) {
       console.error("fetch Error:", error);
       alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
       setSelectedItem(oldSelectedItem);
+      processing.current = true;
     }
   }
 
