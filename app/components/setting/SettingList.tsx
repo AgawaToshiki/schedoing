@@ -1,8 +1,7 @@
 import React from 'react'
-import { Database } from "../../../database.types";
 import SwitchFlagElement from '../../components/setting/SwitchFlagElement';
+import { User } from '../../types';
 
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
   user: User;

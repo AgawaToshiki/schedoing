@@ -1,12 +1,11 @@
 'use client'
-import React from 'react'
-import { Database } from '../../../database.types';
-import CurrentTimeBorder from '../../components/CurrentTimeBorder';
+import React, { useEffect, useState } from 'react'
 import ScheduleCard from '../../components/schedule/ScheduleCard';
+import CurrentTimeBorder from '../../components/CurrentTimeBorder';
+import { getUserWithSchedules } from '@/app/utils/supabase/supabaseFunctions';
 import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import { Schedule } from '../../types';
 
-type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
 
 type Props = {
   userId: string;
@@ -14,11 +13,22 @@ type Props = {
   schedulesData: Schedule[] | null;
 }
 
-const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
+const SchedulePanel = ({ userId, isOwn }: Props) => {
 
-  const schedulesList = useRealtimeListener<Schedule>({
+  const [schedules, setSchedules] = useState<Schedule[] | null>(null);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getUserWithSchedules(userId);
+      if(data){
+        setSchedules(data.schedules);
+      }
+    })()
+  }, [])
+
+  useRealtimeListener<Schedule>({
     table: 'schedules',
-    defaultData: schedulesData,
+    setter: setSchedules,
     isValidData: (obj: any): obj is Schedule => {
       return (
         typeof obj.user_id === 'string' &&
@@ -31,7 +41,7 @@ const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
     }
   })
 
-  const schedules = schedulesList?.filter(item => item.user_id === userId);
+  const filterSchedules = schedules?.filter(item => item.user_id === userId);
 
   const timeArray = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24];
 
@@ -41,7 +51,7 @@ const SchedulePanel = ({ userId, isOwn, schedulesData }: Props) => {
         <div className="relative h-full overflow-y-scroll scrollbar">
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />
-            {schedules?.map((schedule) => (
+            {filterSchedules?.map((schedule) => (
               <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} userId={userId} />
             ))}
 

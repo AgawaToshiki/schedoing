@@ -1,19 +1,21 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import { BASE_URL } from '../../constants/paths';
 
 type Props = {
   scheduleId: string;
   userId: string;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const processing = useRef<boolean>(false);
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -22,8 +24,12 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(processing.current) {
+      return
+    }
+    processing.current = true;
     try{
-      const response = await fetch(`${base_url}/api/schedules/${scheduleId}`, {
+      const response = await fetch(`${BASE_URL}/api/schedules/${scheduleId}`, {
         cache: 'no-store',
         method: "DELETE",
         headers: {
@@ -37,11 +43,14 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
       if(!response.ok){
         console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
+        processing.current = false;
       }
       setIsOpen(false);
+      processing.current = false;
     }catch(error){
       console.error("fetch Error:", error);
       alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
+      processing.current = false;
     }
   }
 

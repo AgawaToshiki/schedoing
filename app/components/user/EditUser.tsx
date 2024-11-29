@@ -1,11 +1,10 @@
 'use client'
 import React, { useState } from 'react'
-import { Database } from '@/database.types';
 import Button from '../../components/elements/Button';
 import Modal from '../../components/layouts/Modal';
 import EditUserForm from '../../components/user/EditUserForm';
+import { User } from '../../types';
 
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
   user: User;

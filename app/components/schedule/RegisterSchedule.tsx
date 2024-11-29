@@ -1,4 +1,3 @@
-'use server'
 import React from 'react'
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
@@ -18,6 +17,7 @@ const RegisterSchedule = ({ userId }: Props) => {
   //デフォルト終了時刻は開始時刻+15分
   const defaultEndDate = new Date(defaultStartDate.getTime());
   defaultEndDate.setMinutes(defaultStartDate.getMinutes() + 15);
+
 
   return (
     <>

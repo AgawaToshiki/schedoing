@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Switch from '../../components/elements/Switch';
+import { BASE_URL } from '../../constants/paths';
 
 
 type Props = {
@@ -11,7 +12,6 @@ type Props = {
   defaultFlag: boolean;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
 
@@ -26,7 +26,7 @@ const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
     setEnabled(newFlag);
 
     try {
-      const response = await fetch(`${base_url}/api/users/${id}/${name}`, {
+      const response = await fetch(`${BASE_URL}/api/users/${id}/${name}`, {
         cache: 'no-store',
         method: "PATCH",
         headers: {

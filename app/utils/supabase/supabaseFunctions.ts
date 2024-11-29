@@ -1,18 +1,41 @@
-import { Database } from '../../../database.types';
 import { supabase } from '../../lib/supabase';
+import { Query, User, UserWithSchedule } from '../../types'
 
 
-type User = Database['public']['Tables']['users']['Row'];
-type Schedule = Database['public']['Tables']['schedules']['Row'];
-
-type UserWithSchedule = Pick<User, 'id' | 'displayName' | 'role'> & {
-  schedules: Pick<Schedule, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>[] | null
+const initialQuery: Query = {
+  search: "",
+  role: "",
+  create_time: ""
 }
 
-export async function getAllUser(): Promise<User[] | null> {
+export async function getAllUser(query: Query = initialQuery): Promise<User[] | null> {
+
+  const order = () => {
+    if(query.create_time === 'asc'){
+      return {
+        sort: 'created_at',
+        ascending: true
+      }
+    }
+    if(query.create_time === 'desc'){
+      return {
+        sort: 'created_at',
+        ascending: false
+      }
+    }
+    return {
+      sort: 'updated_at',
+      ascending: false
+    }
+  }
   const { data, error } = await supabase
     .from('users')
-    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules');
+    .select('id,created_at,email,role,displayName,status,updated_at,is_reset_schedules')
+    .ilike('displayName', query.search ? `%${query.search}%` : '%%')
+    .or(query.role ? `role.eq.${query.role}` : 'role.neq.null')
+    .order(order().sort, {
+      ascending: order().ascending
+    })
   if(error) {
     console.error(error);
     throw new Error(error.message);

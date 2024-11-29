@@ -4,7 +4,7 @@ import Navigation from '../../components/layouts/Navigation';
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { redirect } from 'next/navigation';
 import { getUser } from '@/app/utils/supabase/supabaseFunctions';
-import { isAdminUser } from '@/app/utils/validation';
+import { isAdminUser } from "@/app/utils/functions";
 
 const Header = async() => {
   const authUser = await getCurrentUser();

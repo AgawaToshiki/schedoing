@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SectionField from '../../components/layouts/SectionField';
 import Button from '../../components/elements/Button';
+import Ellipses from '../../components/elements/Ellipses';
 import { loginValidation } from '../../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
+import { BASE_URL } from '../../constants/paths';
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function Login() {
 
@@ -17,7 +18,8 @@ export default function Login() {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
-  const [loginErrorMessage, setLoginErrorMessage] = useState<string>(""); 
+  const [loginErrorMessage, setLoginErrorMessage] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const { 
     isValid,
@@ -34,8 +36,12 @@ export default function Login() {
 
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+    if(isProcessing) {
+      return
+    }
+    setIsProcessing(true);
 		try {
-			const response = await fetch(`${base_url}/api/auth/login`, {
+			const response = await fetch(`${BASE_URL}/api/auth/login`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {
@@ -49,16 +55,19 @@ export default function Login() {
 			if(!response.ok) {
         if(response.status === 400){
           setLoginErrorMessage("ログイン情報が正しくありません");
+          setIsProcessing(false);
           return
         }
         alert(`ログインに失敗しました。エラー：${data.error}`);
+        setIsProcessing(false);
         return
 			}
-
       router.push('/');
+      setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ログインに失敗しました。ネットワーク接続を確認してください。");
+      setIsProcessing(false);
 		}
 
 	}
@@ -76,7 +85,7 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
+                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
@@ -92,7 +101,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
+                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${passwordErrorMessage && ("border-red-400")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
@@ -113,7 +122,11 @@ export default function Login() {
               }
             }
           >
-            ログイン
+            {isProcessing ? (
+              <Ellipses>ログイン中</Ellipses>
+            ) : (
+              "ログイン"
+            )}
           </Button>
         </form>
       </SectionField>

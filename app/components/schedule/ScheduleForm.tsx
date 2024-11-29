@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import Ellipses from '../../components/elements/Ellipses';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
+import { toZonedTime } from 'date-fns-tz';
+import { BASE_URL } from '../../constants/paths';
 
 type Props = {
   scheduleId?: string;
@@ -16,16 +19,18 @@ type Props = {
   name: string;
 }
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
-
 const ScheduleForm = (props: Props) => {
+
+  const defaultStartDate = toZonedTime(new Date(props.startTime), 'Asia/Tokyo');
+  const defaultEndDate = toZonedTime(new Date(props.endTime), 'Asia/Tokyo');
 
   const [title, setTitle] = useState<string>(props.title);
   const [description, setDescription] = useState<string>(props.description);
-  const [startTime, setStartTime] = useState<Date>(props.startTime);
-  const [endTime, setEndTime] = useState<Date>(props.endTime);
+  const [startTime, setStartTime] = useState<Date>(defaultStartDate);
+  const [endTime, setEndTime] = useState<Date>(defaultEndDate);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [titleErrorMessage, setTitleErrorMessage] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const checkChangeState = (): void => {
     if(props.name === "update") {
@@ -40,7 +45,6 @@ const ScheduleForm = (props: Props) => {
       setDisabled(title === props.title);
     }
   }
-
 
   useEffect(() => {
     checkChangeState();
@@ -118,7 +122,11 @@ const ScheduleForm = (props: Props) => {
               }
             }
           >
-            更新する
+            {isProcessing ? (
+              <Ellipses>更新中</Ellipses>
+            ) : (
+              "更新する"
+            )}
           </Button>
         </div>
       )
@@ -128,9 +136,13 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if(isProcessing) {
+      return
+    }
+    setIsProcessing(true);
     try{
       if(props.name === "register") {
-        const response = await fetch(`${base_url}/api/schedules`, {
+        const response = await fetch(`${BASE_URL}/api/schedules`, {
           cache: "no-store",
           method: "POST",
           headers: {
@@ -143,11 +155,12 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
+          setIsProcessing(false);
         }
       }
 
       if(props.name === "update") {
-        const response = await fetch(`${base_url}/api/schedules/${props.scheduleId}`, {
+        const response = await fetch(`${BASE_URL}/api/schedules/${props.scheduleId}`, {
           cache: "no-store",
           method: "PATCH",
           headers: {
@@ -161,6 +174,7 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
+          setIsProcessing(false);
         }
       }
 
@@ -171,10 +185,11 @@ const ScheduleForm = (props: Props) => {
       setEndTime(props.endTime);
       setTitle("");
       setDescription("");
-
+      setIsProcessing(false);
     }catch(error){
 			console.error("fetch Error:", error);
       alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
+      setIsProcessing(false);
     }
   }
 
@@ -193,7 +208,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${titleErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${titleErrorMessage && ("border-red-400")}`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
@@ -233,7 +248,7 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+              className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
             />
           </div>
         </div>

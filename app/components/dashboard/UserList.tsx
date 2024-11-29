@@ -1,25 +1,44 @@
 'use client'
-import { useState } from "react";
-import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Database } from "../../../database.types";
-import SearchUser from '../../components/SearchUser';
+import SearchUser from '../../components/dashboard/SearchUser';
+import Loading from '../../components/layouts/Loading';
+import { getAllUser } from "@/app/utils/supabase/supabaseFunctions";
+import { useRealtimeListener } from "../../hooks/useRealtimeListener";
+import { User } from '../../types';
 
-
-type User = Database['public']['Tables']['users']['Row'];
 
 type Props = {
-  data: User[]
   userId: string
 }
 
-const UserList = ({ data, userId }: Props) => {
+const UserList = ({ userId }: Props) => {
 
+  const [users, setUsers] = useState<User[] | null>(null);
   const [searchName, setSearchName] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const usersList = useRealtimeListener<User>({
+  useEffect(() => {
+
+    const fetchUsers = async () => {
+      try {
+        const data = await getAllUser();
+        if(data){
+          setUsers(data);
+        }
+      } catch (error) {
+        console.error("ユーザー取得エラー:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [])
+
+  useRealtimeListener<User>({
     table: 'users',
-    defaultData: data,
+    setter: setUsers,
     isValidData: (obj: any): obj is User => {
       return (
         typeof obj.created_at === 'string' &&
@@ -33,8 +52,8 @@ const UserList = ({ data, userId }: Props) => {
     }
   })
 
-  const filterUserList = usersList?.filter(item => item.id !== userId && item.displayName.includes(searchName));
-  const users = filterUserList?.sort((a, b) => {
+  const filterUsers = users?.filter(item => item.id !== userId && item.displayName.includes(searchName));
+  const resultUsers = filterUsers?.sort((a, b) => {
     if(a.status !== 'offline' && b.status === 'offline') {
       return -1;
     }
@@ -47,33 +66,43 @@ const UserList = ({ data, userId }: Props) => {
 
   return (
     <>    
-      <div className="mb-6">
-        <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
-      </div>
-      {users?.length === 0 && (
-        searchName !== "" ? 
-        (<div>検索にヒットするユーザーが見つかりません。</div>) :
-        (
-          <div>
-            <div>ユーザーが登録されていません。</div>
-            <div>新規ユーザーを追加してください。</div>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="flex flex-col w-full h-full">
+          <div className="mb-6">
+            <SearchUser is_set={!!searchName} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchName(e.target.value)} />
           </div>
-        )
-      )}
-      <div className="flex flex-wrap gap-2 mx-auto">
-        {users?.map((user) => (
-            <Link 
-              href={`/schedule/${user.id}#currentTime`}
-              key={user.id}
-              className="w-[300px]"
-            >        
-              <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
-                <div>{user.displayName}</div>
-                <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+          {resultUsers?.length === 0 && (
+            searchName !== "" ? 
+            (<div>検索にヒットするユーザーが見つかりません。</div>) :
+            (
+              <div>
+                <div>ユーザーが登録されていません。</div>
+                <div>新規ユーザーを追加してください。</div>
               </div>
-            </Link>
-          ))}
-      </div>
+            )
+          )}
+          <div className="relative w-full h-full overflow-y-auto scrollbar">
+            <div className="absolute w-full h-full">
+              <div className="flex flex-wrap gap-2 mx-auto">
+                {resultUsers?.map((user) => (
+                  <Link 
+                    href={`/schedule/${user.id}#currentTime`}
+                    key={user.id}
+                    className="w-[300px]"
+                  >        
+                    <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
+                      <div>{user.displayName}</div>
+                      <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
+                    </div>
+                    </Link>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -1,11 +1,8 @@
 import React from 'react'
-import { Database } from '@/database.types';
 import Modal from '../layouts/Modal';
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 import ScheduleDetail from '../../components/schedule/ScheduleDetail';
-
-type ScheduleByDatabase = Database['public']['Tables']['schedules']['Row'];
-type Schedule = Pick<ScheduleByDatabase, 'user_id' | 'id' | 'title' | 'description' | 'start_time' | 'end_time'>
+import { Schedule } from '../../types';
 
 
 type Props = {

@@ -2,10 +2,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
+import Ellipses from '../../components/elements/Ellipses';
 import { registerValidation } from '../../utils/validation';
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
+import { BASE_URL } from '../../constants/paths';
 
-const base_url = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function RegisterUser() {
 
@@ -18,6 +19,7 @@ export default function RegisterUser() {
 	const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 	const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
+	const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
 	const {
 		isValid,
@@ -36,8 +38,12 @@ export default function RegisterUser() {
 
 	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		if(isProcessing) {
+			return
+		}
+		setIsProcessing(true);
 		try {
-			const response = await fetch(`${base_url}/api/users`, {
+			const response = await fetch(`${BASE_URL}/api/users`, {
 				cache: 'no-store',
 				method: "POST",
 				headers: {
@@ -52,15 +58,19 @@ export default function RegisterUser() {
 			if(!response.ok) {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
+				setIsProcessing(false);
 			}
 
 			setEmail("");
 			setPassword("");
 			setDisplayName("");
+
       router.refresh();
+			setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ユーザー登録に失敗しました。ネットワーク接続を確認してください。");
+			setIsProcessing(false);
 		}
 	}
 
@@ -76,7 +86,7 @@ export default function RegisterUser() {
 							id="email"
 							name="email"
 							type="email"
-							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${emailErrorMessage && ("border-red-400")}`}
+							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
 							onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
@@ -92,7 +102,7 @@ export default function RegisterUser() {
 							id="password"
 							name="password"
 							type="password"
-							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${passwordErrorMessage && ("border-red-400")}`}
+							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${passwordErrorMessage && ("border-red-400")}`}
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
 							onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
@@ -108,7 +118,7 @@ export default function RegisterUser() {
 							id="displayName"
 							name="displayName"
 							type="text"
-							className={`w-full border border-gray-200 shadow-md text-base block p-1 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
+							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
@@ -128,7 +138,11 @@ export default function RegisterUser() {
 						}
 					}
 				>
-					登録
+					{isProcessing ? (
+						<Ellipses>登録中</Ellipses>
+					) : (
+						"登録する"
+					)}
 				</Button>
     	</form>
     </>
