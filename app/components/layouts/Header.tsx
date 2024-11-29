@@ -19,14 +19,14 @@ const Header = async() => {
 
   return (
     <header className="sticky top-0 h-screen bg-blue-400">
-      <div className="flex flex-col w-[275px] h-full overflow-y-auto scrollbar">
+      <div className="flex flex-col sm:w-[275px] h-full overflow-y-auto scrollbar">
         <div className="sticky top-0 p-6 bg-blue-400">
-          <h1 className="text-2xl select-none">Schedoing</h1>
+          <h1 className="text-2xl select-none max-sm:hidden">Schedoing</h1>
         </div>
-        <div className="px-6">
+        <div className="px-6 max-sm:px-0">
           <Navigation isAdmin={isAdmin} id={user.id} />
         </div>
-        <div className="sticky bottom-0 p-6 mt-auto bg-blue-400">
+        <div className="sticky bottom-0 p-6 mt-auto bg-blue-400 max-sm:p-0">
           <SignOutButton />
         </div>
       </div>
