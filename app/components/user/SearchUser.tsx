@@ -35,7 +35,7 @@ const SearchUser = ({ query = "" }: Props) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <div className="relative w-[300px]">
             <input
               type="text"

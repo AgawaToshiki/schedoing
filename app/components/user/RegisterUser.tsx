@@ -1,7 +1,8 @@
 'use client'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
+import Ellipses from '../../components/elements/Ellipses';
 import { registerValidation } from '../../utils/validation';
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 import { BASE_URL } from '../../constants/paths';
@@ -18,8 +19,7 @@ export default function RegisterUser() {
 	const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
 	const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
-
-	const processing = useRef<boolean>(false);
+	const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
 	const {
 		isValid,
@@ -38,11 +38,10 @@ export default function RegisterUser() {
 
 	const handleRegisterSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if(processing.current) {
+		if(isProcessing) {
 			return
 		}
-		processing.current = true;
-
+		setIsProcessing(true);
 		try {
 			const response = await fetch(`${BASE_URL}/api/users`, {
 				cache: 'no-store',
@@ -59,7 +58,7 @@ export default function RegisterUser() {
 			if(!response.ok) {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
-				processing.current = false;
+				setIsProcessing(false);
 			}
 
 			setEmail("");
@@ -67,11 +66,11 @@ export default function RegisterUser() {
 			setDisplayName("");
 
       router.refresh();
-			processing.current = false;
+			setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ユーザー登録に失敗しました。ネットワーク接続を確認してください。");
-			processing.current = false;
+			setIsProcessing(false);
 		}
 	}
 
@@ -139,7 +138,11 @@ export default function RegisterUser() {
 						}
 					}
 				>
-					登録
+					{isProcessing ? (
+						<Ellipses>登録中</Ellipses>
+					) : (
+						"登録する"
+					)}
 				</Button>
     	</form>
     </>

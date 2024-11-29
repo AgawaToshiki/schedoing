@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SectionField from '../../components/layouts/SectionField';
 import Button from '../../components/elements/Button';
+import Ellipses from '../../components/elements/Ellipses';
 import { loginValidation } from '../../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 import { BASE_URL } from '../../constants/paths';
@@ -17,9 +18,8 @@ export default function Login() {
   const [disabled, setDisabled] = useState<boolean>(true);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [passwordErrorMessage, setPasswordErrorMessage] = useState<string>("");
-  const [loginErrorMessage, setLoginErrorMessage] = useState<string>(""); 
-
-  const processing = useRef<boolean>(false);
+  const [loginErrorMessage, setLoginErrorMessage] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const { 
     isValid,
@@ -36,10 +36,10 @@ export default function Login() {
 
   const handleLoginSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-    if(processing.current) {
+    if(isProcessing) {
       return
     }
-    processing.current = true;
+    setIsProcessing(true);
 		try {
 			const response = await fetch(`${BASE_URL}/api/auth/login`, {
 				cache: 'no-store',
@@ -55,19 +55,19 @@ export default function Login() {
 			if(!response.ok) {
         if(response.status === 400){
           setLoginErrorMessage("ログイン情報が正しくありません");
-          processing.current = false;
+          setIsProcessing(false);
           return
         }
         alert(`ログインに失敗しました。エラー：${data.error}`);
-        processing.current = false;
+        setIsProcessing(false);
         return
 			}
       router.push('/');
-      processing.current = false;
+      setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
       alert("ログインに失敗しました。ネットワーク接続を確認してください。");
-      processing.current = false;
+      setIsProcessing(false);
 		}
 
 	}
@@ -122,7 +122,11 @@ export default function Login() {
               }
             }
           >
-            ログイン
+            {isProcessing ? (
+              <Ellipses>ログイン中</Ellipses>
+            ) : (
+              "ログイン"
+            )}
           </Button>
         </form>
       </SectionField>

@@ -1,8 +1,9 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import Ellipses from '../../components/elements/Ellipses';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 import { toZonedTime } from 'date-fns-tz';
 import { BASE_URL } from '../../constants/paths';
@@ -29,8 +30,7 @@ const ScheduleForm = (props: Props) => {
   const [endTime, setEndTime] = useState<Date>(defaultEndDate);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [titleErrorMessage, setTitleErrorMessage] = useState<string>("");
-
-  const processing = useRef<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const checkChangeState = (): void => {
     if(props.name === "update") {
@@ -45,7 +45,6 @@ const ScheduleForm = (props: Props) => {
       setDisabled(title === props.title);
     }
   }
-
 
   useEffect(() => {
     checkChangeState();
@@ -123,7 +122,11 @@ const ScheduleForm = (props: Props) => {
               }
             }
           >
-            更新する
+            {isProcessing ? (
+              <Ellipses>更新中</Ellipses>
+            ) : (
+              "更新する"
+            )}
           </Button>
         </div>
       )
@@ -133,10 +136,10 @@ const ScheduleForm = (props: Props) => {
 
   const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(processing.current) {
+    if(isProcessing) {
       return
     }
-    processing.current = true;
+    setIsProcessing(true);
     try{
       if(props.name === "register") {
         const response = await fetch(`${BASE_URL}/api/schedules`, {
@@ -152,7 +155,7 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
-          processing.current = false;
+          setIsProcessing(false);
         }
       }
 
@@ -171,7 +174,7 @@ const ScheduleForm = (props: Props) => {
         if(!response.ok){
           console.error(response.status, data.error);
           alert(`${response.status}:${data.error}`);
-          processing.current = false;
+          setIsProcessing(false);
         }
       }
 
@@ -182,11 +185,11 @@ const ScheduleForm = (props: Props) => {
       setEndTime(props.endTime);
       setTitle("");
       setDescription("");
-      processing.current = false;
+      setIsProcessing(false);
     }catch(error){
 			console.error("fetch Error:", error);
       alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
-      processing.current = false;
+      setIsProcessing(false);
     }
   }
 
