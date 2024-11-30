@@ -11,7 +11,7 @@ export default function HeaderLayout({
     <>
     <div className="flex min-h-screen">
       <Header />
-      <div className="flex flex-col w-full p-6 bg-blue-100 overflow-x-auto">
+      <div className="flex flex-col w-full p-6 bg-blue-100 overflow-x-auto max-md:p-4">
         {children}
       </div>
     </div>

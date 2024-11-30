@@ -47,7 +47,7 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
 
   return (
     <>
-      <div className="w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white">
+      <div className="w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white max-md:p-4">
         <div className="relative h-full overflow-y-scroll scrollbar">
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />

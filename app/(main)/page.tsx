@@ -14,16 +14,16 @@ export default async function DashBoard() {
 
   return (
     <>
-      <div className="mb-6">
+      <div className="mb-6 max-md:mb-4">
         <SectionField sectionTitle="マイステータス">
           <MyStatus userId={authUser.id}/>
         </SectionField>
       </div>
       <div className="flex flex-col w-full h-full mt-6">
-        <div className="mb-6">
+        <div className="mb-6 max-md:mb-4">
           <h2>DashBoard</h2>
         </div>
-        <div className="w-full h-full p-6">
+        <div className="w-full h-full p-6 max-md:p-4">
           <UserList userId={authUser.id}/>
         </div>
       </div>

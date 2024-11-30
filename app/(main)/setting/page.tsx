@@ -17,7 +17,7 @@ export default async function Setting() {
 
   return (
     <>
-      <div className="flex flex-col">
+      <div className="flex flex-col h-full">
         <SectionField sectionTitle="設定">
           <SettingList user={user}/>
         </SectionField>

@@ -33,7 +33,7 @@ const User = async({ searchParams }: { searchParams: Query }) => {
 
 	return (
 		<>
-			<div className="mb-6">
+			<div className="mb-6 max-md:mb-4">
 				<SectionField sectionTitle="新規ユーザー登録">
 					<RegisterUser />
 				</SectionField>

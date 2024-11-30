@@ -47,7 +47,7 @@ const Navigation = ({ isAdmin, id }: Props) => {
 
   const DesktopNav = () => {
     return (
-      <nav className="block max-sm:hidden">
+      <nav className="block max-lg:hidden">
         <ul className="flex flex-col gap-3">
           {lists.map((list) => (
             list.showFlag && (
@@ -69,14 +69,14 @@ const Navigation = ({ isAdmin, id }: Props) => {
 
   const MobileNav = () => {
     return (
-      <nav className="hidden max-sm:block">
-        <ul className="flex flex-col gap-3">
+      <nav className="hidden max-lg:block">
+        <ul className="flex flex-col gap-1.5">
           {lists.map((list) => (
             list.showFlag && (
               <li key={list.href}>
                 <Link 
                   href={list.href}
-                  className={`${list.pathname === pathname && "bg-blue-500 font-semibold"} flex items-center justify-center rounded-sm px-2 py-2 transition duration-200 ease-in-out cursor-pointer hover:bg-blue-500`}
+                  className={`${list.pathname === pathname && "bg-blue-500 font-semibold"} flex items-center justify-center rounded-full px-2 py-2 transition duration-200 ease-in-out cursor-pointer hover:bg-blue-500`}
                 >
                   <Icon icon={list.icon} color="#fff" size={20} />
                 </Link>

@@ -7,7 +7,6 @@ import ConfirmModal from '../components/layouts/ConfirmModal';
 import { BASE_URL } from '../constants/paths';
 
 
-
 const SignOutButton = () => {
 
   const router = useRouter();
@@ -64,12 +63,12 @@ const SignOutButton = () => {
         attrs={
           { type: "button" }
         }
-        className="max-sm:p-2"
+        className="max-lg:p-2 max-lg:rounded-full"
       >
-        <div className="max-sm:hidden">
+        <div className="max-lg:hidden">
           サインアウト
         </div>
-        <div className="hidden max-sm:block">
+        <div className="hidden max-lg:block">
           <Icon icon="close" size={20} className="text-white" />
         </div>
       </Button>
