@@ -69,7 +69,7 @@ const SignOutButton = () => {
           サインアウト
         </div>
         <div className="hidden max-lg:block">
-          <Icon icon="close" size={20} className="text-white" />
+          <Icon icon="signout" size={20} className="text-white" />
         </div>
       </Button>
       {isOpen && (
