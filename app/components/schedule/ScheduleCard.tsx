@@ -44,7 +44,7 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
     <>
       <div 
         className="
-        flex items-center justify-center gap-10 absolute z-30 w-[80%] left-0 right-0 mx-auto bg-green-300 border border-green-500 shadow-md rounded-lg cursor-pointer transition duration-200 ease-in-out hover:bg-green-500
+        flex items-center justify-center gap-10 absolute z-30 w-[70%] left-0 right-0 mx-auto bg-green-300 border border-green-500 shadow-md rounded-lg cursor-pointer transition duration-200 ease-in-out hover:bg-green-500
         max-sm:gap-2
         "
         style={{height:`${height}px`, top:`${startMinutes}px`}}
@@ -52,7 +52,7 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
       >
         <div className="flex items-center gap-10 max-md:flex-col max-md:gap-0">
           <div className="text-xl z-30 select-none">{schedule.title}</div>
-          <div className="flex items-center text-xl z-30 select-none">
+          <div className="flex items-center text-xl z-30 select-none max-sm:hidden">
             <div className="mr-2">{formatStartTime}</div>
             <div>～</div>
             <div className="ml-2">{formatEndTime}</div>
