@@ -41,8 +41,15 @@ const Button = ({ onClick, variant, size, form, className, attrs, children }: Pr
 
   const optionStyle = className ? className : "";
 
-  const buttonStyle = `${baseStyle} ${variantStyle[variant]} ${sizeStyle[size]} ${formStyle[form]} ${attrs.disabled !== undefined && disabledStyle} ${optionStyle}`;
-
+  const buttonStyle = [
+    baseStyle,
+    variantStyle[variant],
+    sizeStyle[size],
+    formStyle[form],
+    attrs.disabled ? disabledStyle : '',
+    optionStyle
+  ].filter(Boolean).join(' ');
+  
   return (
     <>
       <button 
