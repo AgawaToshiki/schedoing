@@ -47,23 +47,26 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
 
   return (
     <>
-      <div className="w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white max-md:p-4">
-        <div className="relative h-full overflow-y-scroll scrollbar">
+      <div className="flex items-center w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white overflow-y-scroll scrollbar max-md:p-4">
+        <div className="relative w-[30px] h-full">
+          {timeArray.map((index) => (
+            <div key={index}>
+              <div className="absolute translate-y-[-50%] z-50 pr-2 bg-white" style={{ top: `${index * 60}px`}}>
+                <div className="select-none">{index}:00</div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="relative w-full h-full">
           <div className="absolute w-full h-full">
             <CurrentTimeBorder />
             {filterSchedules?.map((schedule) => (
               <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} userId={userId} />
             ))}
-
-            {timeArray.map((index) => (
-              <div key={index}>
-                <div className="absolute" style={{ top: `${index * 60}px`}}>
-                  <div className="select-none">{index}:00</div>
-                </div>
-                <div className="absolute w-full h-[1px] bg-gray-300" style={{ top: `${index * 60}px`}}></div>
-              </div>
-            ))}
           </div>
+          {timeArray.map((index) => (
+            <div key={index} className="absolute z-10 w-full h-[1px] bg-gray-300" style={{ top: `${index * 60}px`}}></div>
+          ))}
         </div>
       </div>
     </>
