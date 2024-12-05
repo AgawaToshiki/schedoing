@@ -47,11 +47,11 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
 
   return (
     <>
-      <div className="flex items-center w-full h-full p-6 border border-gray-200 rounded-md shadow-md bg-white overflow-y-scroll scrollbar max-md:p-4">
-        <div className="relative w-[30px] h-full">
+      <div className="flex items-center w-full h-full px-2 py-6 border border-gray-200 rounded-md shadow-md bg-white overflow-y-scroll scrollbar">
+        <div className="relative w-[50px] h-full">
           {timeArray.map((index) => (
             <div key={index}>
-              <div className="absolute translate-y-[-50%] z-50 pr-2 bg-white" style={{ top: `${index * 60}px`}}>
+              <div className="absolute translate-x-[-50%] translate-y-[-50%] left-[50%] z-50 bg-white" style={{ top: `${index * 60}px`}}>
                 <div className="select-none">{index}:00</div>
               </div>
             </div>
