@@ -36,11 +36,11 @@ const SearchUser = ({ query = "" }: Props) => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="flex items-center gap-2">
-          <div className="relative w-[300px]">
+          <div className="relative max-w-[300px]">
             <input
               type="text"
               placeholder="ユーザー名で検索"
-              className="w-[300px] border border-gray-200 shadow-md text-base block px-2 h-12"
+              className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
               value={search}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />

@@ -10,12 +10,12 @@ const SearchUser = ({ onChange, is_set }: Props) => {
 
   return (
     <>
-      <div className="relative w-[300px]">
+      <div className="relative max-w-[300px]">
         <input
           type="text"
           onChange={onChange}
           placeholder="ユーザー名で検索"
-          className="w-[300px] border border-gray-200 shadow-md text-base block px-2 h-12"
+          className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
         />
         {!is_set && (
           <div className="absolute top-4 right-4 pointer-events-none">
