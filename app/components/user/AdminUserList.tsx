@@ -3,6 +3,7 @@ import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
 import SearchUser from '../../components/user/SearchUser';
 import FilterUser from '../../components/user/FilterUser';
+import MobileEditUser from '../../components/user/MobileEditUser';
 import { getAllUser } from '@/app/utils/supabase/supabaseFunctions';
 import { Query } from '@/app/types';
 
@@ -73,9 +74,12 @@ const AdminUserList = async({ query }: Props) => {
                       after:absolute after:z-10 after:top-[-1px] after:left-[-1px] after:border-l after:w-full after:h-full
                       max-md:px-2 max-md:py-1
                     ">
-                      <div className="relative z-50 flex justify-center items-center gap-2">
+                      <div className="relative z-50 flex justify-center items-center gap-2 max-md:hidden">
                         <EditUserElement user={user} />
                         <DeleteUserElement id={user.id} />
+                      </div>
+                      <div className="hidden max-md:block">
+                        <MobileEditUser user={user}/>
                       </div>
                     </td>
                   </tr>
