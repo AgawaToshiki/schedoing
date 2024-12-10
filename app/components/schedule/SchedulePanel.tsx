@@ -58,8 +58,8 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
           ))}
         </div>
         <div className="relative w-full h-full">
+          <CurrentTimeBorder />
           <div className="absolute w-full h-full">
-            <CurrentTimeBorder />
             {filterSchedules?.map((schedule) => (
               <ScheduleCard key={schedule.id} schedule={schedule} isOwn={isOwn} userId={userId} />
             ))}
