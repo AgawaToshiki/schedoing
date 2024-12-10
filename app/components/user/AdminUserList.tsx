@@ -33,7 +33,7 @@ const AdminUserList = async({ query }: Props) => {
                     sticky top-0 z-20 min-w-[150px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
                     before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
                     after:absolute after:z-10 after:left-0 after:bottom-[-1px] after:border-b after:w-full after:h-full
-                    max-md:px-2 max-md:py-1
+                    max-md:px-2 max-md:py-1 max-md:min-w-[50px]
                   ">
                     権限
                   </th>
@@ -41,7 +41,7 @@ const AdminUserList = async({ query }: Props) => {
                     sticky top-0 z-20 min-w-[250px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
                     before:absolute before:top-[-1px] before:left-[-1px] before:w-full before:h-full before:border-t
                     after:absolute after:z-1 after:left-0 after:bottom-[-1px] after:border-b after:w-full after:h-full
-                    max-md:px-2 max-md:py-1
+                    max-md:px-2 max-md:py-1 max-md:min-w-[100px]
                   ">
                     ユーザー名
                   </th>
@@ -57,7 +57,7 @@ const AdminUserList = async({ query }: Props) => {
                     sticky top-0 right-0 z-20 min-w-[150px] px-4 py-2 bg-gray-100 border text-center whitespace-nowrap
                     before:absolute before:top-[-1px] before:right-[-1px] before:w-full before:h-full before:border-t before:border-r
                     after:absolute after:z-10 after:left-[-1px] after:bottom-[-1px] after:border-l after:border-b after:w-full after:h-full
-                    max-md:px-2 max-md:py-1
+                    max-md:px-2 max-md:py-1 max-md:min-w-[10px]
                   ">
                   </th>
                 </tr>
@@ -78,8 +78,8 @@ const AdminUserList = async({ query }: Props) => {
                         <EditUserElement user={user} />
                         <DeleteUserElement id={user.id} />
                       </div>
-                      <div className="hidden max-md:block">
-                        <MobileEditUser user={user}/>
+                      <div className="hidden max-md:flex max-md:items-center">
+                        <MobileEditUser user={user} />
                       </div>
                     </td>
                   </tr>
