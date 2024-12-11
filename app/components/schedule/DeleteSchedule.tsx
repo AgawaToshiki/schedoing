@@ -64,9 +64,9 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
         attrs={
           { type: "button" }
         }
-        className="w-[30px] h-[30px]"
+        className="w-[30px] min-w-[30px] h-[30px] max-sm:w-[24px] max-sm:min-w-[24px] max-sm:h-[24px]"
       >
-        <Icon icon="delete" color="#fff" size={20}/>
+        <Icon icon="delete" color="#fff" size={16}/>
       </Button>
       {isOpen && (
         <ConfirmModal 

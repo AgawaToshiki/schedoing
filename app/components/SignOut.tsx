@@ -2,9 +2,9 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../components/elements/Button';
+import Icon from '../components/elements/Icon';
 import ConfirmModal from '../components/layouts/ConfirmModal';
 import { BASE_URL } from '../constants/paths';
-
 
 
 const SignOutButton = () => {
@@ -63,8 +63,14 @@ const SignOutButton = () => {
         attrs={
           { type: "button" }
         }
+        className="max-lg:p-2 max-lg:rounded-full"
       >
-        サインアウト
+        <div className="max-lg:hidden">
+          サインアウト
+        </div>
+        <div className="hidden max-lg:block">
+          <Icon icon="signout" size={20} className="text-white" />
+        </div>
       </Button>
       {isOpen && (
         <ConfirmModal

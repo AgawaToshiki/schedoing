@@ -197,7 +197,7 @@ const ScheduleForm = (props: Props) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="flex flex-col mb-6">
+        <div className="flex flex-col mb-6 max-md:mb-4">
           <div className="mb-2">
             <label htmlFor={`${props.name}title`}>タイトル</label>
             <input 
@@ -208,7 +208,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${titleErrorMessage && ("border-red-400")}`}
+              className={`w-full border shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
@@ -248,7 +248,7 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
+              className="w-full border border-gray-200 shadow-md block px-2 h-12"
             />
           </div>
         </div>

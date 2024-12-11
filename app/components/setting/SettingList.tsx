@@ -10,7 +10,7 @@ type Props = {
 const SettingList = ({ user }: Props) => {
   return (
     <>
-      <div className="flex flex-col gap-4 max-w-[450px]">
+      <div className="flex flex-col gap-4 max-w-[450px] h-full">
         <SwitchFlagElement
           id={user.id}
           title="日付変更時にスケジュールをリセット"

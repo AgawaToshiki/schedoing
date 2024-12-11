@@ -25,12 +25,12 @@ const Schedule = async({ params }: { params: { id: string } }) => {
   return (
     <>
       {!isOwn && (
-        <div className="mb-6">
+        <div className="mb-6 max-md:mb-4">
           {data.displayName}
         </div>
       )}
       {isOwn && (
-        <div className="mb-6">
+        <div className="mb-6 max-md:mb-4">
           <SectionField sectionTitle="新規スケジュール">
             <RegisterSchedule userId={paramId}/>
           </SectionField>

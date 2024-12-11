@@ -22,7 +22,7 @@ const EditUser = ({ user }: Props) => {
   return (
     <>
       <Button
-				onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
+				onClick={handleOpenModal}
 				variant="primary"
 				size="medium"
 				form="square"

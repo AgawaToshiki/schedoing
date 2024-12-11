@@ -77,7 +77,7 @@ export default function RegisterUser() {
   return (
     <>
     	<form onSubmit={handleRegisterSubmit}>
-				<div className="flex flex-col max-w-[300px] mb-6">
+				<div className="flex flex-col max-w-[300px] mb-6 max-md:mb-4">
 					<div className="mb-2">
 						<div>
 							<label htmlFor="email">Email</label>
@@ -86,7 +86,7 @@ export default function RegisterUser() {
 							id="email"
 							name="email"
 							type="email"
-							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
+							className={`w-full border shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
 							onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
@@ -102,7 +102,7 @@ export default function RegisterUser() {
 							id="password"
 							name="password"
 							type="password"
-							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${passwordErrorMessage && ("border-red-400")}`}
+							className={`w-full border shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
 							onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
@@ -118,7 +118,7 @@ export default function RegisterUser() {
 							id="displayName"
 							name="displayName"
 							type="text"
-							className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
+							className={`w-full border shadow-md block px-2 h-12 ${displayNameErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}

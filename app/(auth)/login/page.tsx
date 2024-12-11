@@ -73,7 +73,7 @@ export default function Login() {
 	}
 
   return (
-    <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden">
+    <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden max-md:p-4">
       <SectionField sectionTitle="ログイン">
         <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col max-w-[300px] mb-6">
@@ -85,7 +85,7 @@ export default function Login() {
                 id="email"
                 name="email"
                 type="email"
-                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
+                className={`w-full border shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
                 value={email}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
@@ -101,7 +101,7 @@ export default function Login() {
                 id="password"
                 name="password"
                 type="password"
-                className={`w-full border border-gray-200 shadow-md text-base block px-2 h-12 ${passwordErrorMessage && ("border-red-400")}`}
+                className={`w-full border shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
                 value={password}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
