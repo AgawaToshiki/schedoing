@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
-import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react'
-import Icon from '../components/elements/Icon'
-import { supabase } from '../lib/supabase'
+import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
+import { supabase } from '../lib/supabase';
 import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
 import { getUser } from '../utils/supabase/supabaseFunctions';
 import { BASE_URL } from '../constants/paths';
@@ -103,20 +102,13 @@ const ChangeStatusList = ({ id }: Props) => {
         <div className={`w-4 h-4 rounded-full ${selectedItem.style}`}></div>
       </ListboxButton>
       <ListboxOptions
-        anchor="right"
+        anchor="bottom start"
         transition
-        className="bg-red-100 w-[150px] [--anchor-gap:5px] border origin-top transition duration-200 ease-out cursor-pointer data-[closed]:scale-95 data-[closed]:opacity-0"
+        className="bg-gray-700 w-[150px] [--anchor-gap:5px] border origin-top transition duration-200 ease-out cursor-pointer data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         {statusList.map((item) => (
-          <ListboxOption key={item.id} value={item} className="group flex items-center gap-1.5 p-2 data-[focus]:bg-green-100">
-            <div className="invisible group-data-[selected]:visible">
-              <Icon
-                icon="check"
-                size={20}
-                className="text-gray-800"
-              />
-            </div>
-            <div>
+          <ListboxOption key={item.id} value={item} className="group flex items-center gap-1.5 p-2 data-[focus]:bg-white/20">
+            <div className="ml-2 text-white group-data-[selected]:text-green-200">
               {item.name}
             </div>
             <div className={`w-4 h-4 rounded-full ml-auto ${item.style}`}></div>

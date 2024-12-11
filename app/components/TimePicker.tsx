@@ -35,7 +35,7 @@ const TimePicker = (props: Props) => {
         filterTime={props.filterTime}
         timeCaption={props.title}
         dateFormat='HH:mm'
-        className="w-full border border-gray-200 shadow-md text-base block p-1 h-12"
+        className="w-full border border-gray-200 shadow-md block p-1 h-12"
       />
     </>
 

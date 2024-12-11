@@ -50,9 +50,9 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
         style={{height:`${height}px`, top:`${startMinutes}px`}}
         onClick={handleOpenModal}
       >
-        <div className="flex items-center gap-10 max-md:flex-col max-md:gap-0">
-          <div className="text-xl z-30 select-none max-md:text-base max-sm:text-xs break-all">{schedule.title}</div>
-          <div className="flex items-center text-xl z-30 select-none max-md:text-base max-sm:text-sm max-sm:hidden">
+        <div className="flex items-center gap-10 max-md:flex-col max-md:gap-4">
+          <div className="z-30 select-none break-all">{schedule.title}</div>
+          <div className="flex items-center z-30 select-none max-sm:hidden">
             <div className="mr-2">{formatStartTime}</div>
             <div>～</div>
             <div className="ml-2">{formatEndTime}</div>

@@ -28,7 +28,7 @@ const Button = ({ onClick, variant, size, form, className, attrs, children }: Pr
 
   const sizeStyle: Record<size, string> = {
     small: "",
-    medium: "px-3 py-1.5 text-sm/6",
+    medium: "px-3 py-2 text-sm",
     large: "",
   }
 

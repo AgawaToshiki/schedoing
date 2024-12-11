@@ -40,12 +40,12 @@ const SearchUser = ({ query = "" }: Props) => {
             <input
               type="text"
               placeholder="ユーザー名で検索"
-              className="w-full border border-gray-200 shadow-md text-base block px-2 h-12"
+              className="w-full border border-gray-200 shadow-md block px-2 h-12"
               value={search}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
             {!search && (
-              <div className="absolute top-4 right-4 pointer-events-none">
+              <div className="absolute top-4 right-4 pointer-events-none max-md:hidden">
                 <Icon icon="search" size={20} color="#a3a9b4" />
               </div>
             )}
@@ -58,7 +58,8 @@ const SearchUser = ({ query = "" }: Props) => {
               type: "submit"
             }}
           >
-            検索する
+            <div className="max-md:hidden">検索する</div>
+            <Icon icon="search" size={20} color="#fff" className="hidden max-md:block" />
           </Button>
         </div>
       </form>
