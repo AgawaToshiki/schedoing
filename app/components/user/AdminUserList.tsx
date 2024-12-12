@@ -19,7 +19,7 @@ const AdminUserList = async({ query }: Props) => {
 
   return (
 		<>
-      <div className="flex items-center gap-4 mb-6 max-md:mb-4">
+      <div className="flex items-center gap-4 mb-6 max-md:mb-4 max-md:gap-2">
         <SearchUser query={query.search}/>
         <FilterUser query={{ role: query.role, create_time: query.create_time }}/>
       </div>
