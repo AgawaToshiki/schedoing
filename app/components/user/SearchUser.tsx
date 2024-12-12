@@ -45,7 +45,7 @@ const SearchUser = ({ query = "" }: Props) => {
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
             {!search && (
-              <div className="absolute top-4 right-4 pointer-events-none max-md:hidden">
+              <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[90%] pointer-events-none max-md:hidden">
                 <Icon icon="search" size={20} color="#a3a9b4" />
               </div>
             )}
