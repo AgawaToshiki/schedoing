@@ -9,7 +9,7 @@ export default function HeaderLayout({
 }>) {
   return (
     <>
-    <div className="flex min-h-screen ios-min-height">
+    <div className="flex min-h-screen mobile-min-height">
       <Header />
       <div className="flex flex-col w-full p-6 bg-blue-100 overflow-x-auto max-md:p-4">
         {children}
