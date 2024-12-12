@@ -90,7 +90,7 @@ const UserList = ({ userId }: Props) => {
                   <Link 
                     href={`/schedule/${user.id}#currentTime`}
                     key={user.id}
-                    className="w-[300px]"
+                    className="w-[300px] max-sm:w-[200px]"
                   >        
                     <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
                       <div>{user.displayName}</div>
