@@ -51,7 +51,7 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
         <div className="relative w-[50px] h-full">
           {timeArray.map((index) => (
             <div key={index}>
-              <div className="absolute translate-x-[-50%] translate-y-[-50%] left-[50%] z-50 bg-white" style={{ top: `${index * 60}px`}}>
+              <div className="absolute translate-x-[-50%] translate-y-[-50%] left-[50%] bg-white" style={{ top: `${index * 60}px`}}>
                 <div className="select-none">{index}:00</div>
               </div>
             </div>
