@@ -93,7 +93,7 @@ const EditUserForm = (props: Props) => {
                 id="editRole"
                 value={role}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
-                className="w-full border border-gray-200 shadow-md block px-2 h-12 appearance-none max-md:h-10"
+                className="w-full border border-gray-200 shadow-md block px-2 h-12 bg-white appearance-none max-md:h-10"
                 required
               >
                 <option value="admin">admin</option>
