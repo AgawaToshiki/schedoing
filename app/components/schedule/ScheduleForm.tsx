@@ -208,7 +208,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")}`}
+              className={`w-full border shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
@@ -226,7 +226,7 @@ const ScheduleForm = (props: Props) => {
                 onChange={handleChangeStartTime}
               />
             </div>
-            <div className="flex items-center h-12">～</div>
+            <div className="flex items-center h-12 max-md:h-10">～</div>
             <div className="flex flex-col w-full ml-2">
               <label htmlFor={`${props.name}endTime`}>終了</label>
               <TimePicker
@@ -248,7 +248,7 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border border-gray-200 shadow-md block px-2 h-12"
+              className="w-full border border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
             />
           </div>
         </div>

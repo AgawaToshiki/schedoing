@@ -93,7 +93,7 @@ const EditUserForm = (props: Props) => {
                 id="editRole"
                 value={role}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
-                className="w-full border border-gray-200 shadow-md block px-2 h-12 appearance-none"
+                className="w-full border border-gray-200 shadow-md block px-2 h-12 bg-white appearance-none max-md:h-10"
                 required
               >
                 <option value="admin">admin</option>
@@ -113,7 +113,7 @@ const EditUserForm = (props: Props) => {
               value={displayName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")} max-md:h-10`}
               required
             />
             {displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
@@ -127,7 +127,7 @@ const EditUserForm = (props: Props) => {
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
-              className={`w-full border border-gray-200 shadow-md block px-2 h-12 ${emailErrorMessage && ("border-red-400")}`}
+              className={`w-full border border-gray-200 shadow-md block px-2 h-12 ${emailErrorMessage && ("border-red-400")} max-md:h-10`}
               required
             />
             {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
