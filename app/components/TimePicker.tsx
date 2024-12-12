@@ -34,7 +34,7 @@ const TimePicker = (props: Props) => {
         timeIntervals={15}
         filterTime={props.filterTime}
         timeCaption={props.title}
-        readOnly={true}
+        onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.target.blur()}
         dateFormat='HH:mm'
         className="w-full border border-gray-200 shadow-md block p-1 h-12"
       />
