@@ -18,7 +18,7 @@ const Header = async() => {
   const isAdmin = isAdminUser(user);
 
   return (
-    <header className="sticky top-0 h-screen bg-blue-400 max-lg:px-2">
+    <header className="sticky top-0 min-h-dvh bg-blue-400 max-lg:px-2">
       <div className="flex flex-col lg:w-[275px] h-full overflow-y-auto scrollbar">
         <div className="sticky top-0 p-6 bg-blue-400 max-lg:p-0">
           <h1 className="text-2xl select-none max-lg:hidden">Schedoing</h1>
