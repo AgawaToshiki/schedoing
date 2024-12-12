@@ -73,7 +73,7 @@ export default function Login() {
 	}
 
   return (
-    <div className="flex flex-col p-6 h-screen bg-blue-100 overflow-hidden max-md:p-4">
+    <div className="flex flex-col p-6 min-h-dvh bg-blue-100 overflow-hidden max-md:p-4">
       <SectionField sectionTitle="ログイン">
         <form onSubmit={handleLoginSubmit}>
           <div className="flex flex-col max-w-[300px] mb-6">
