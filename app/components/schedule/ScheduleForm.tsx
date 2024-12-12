@@ -207,7 +207,6 @@ const ScheduleForm = (props: Props) => {
               placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
-              onFocus={() => window.scrollTo(0, 0)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
               className={`w-full border rounded-sm shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
               required
@@ -249,7 +248,6 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              onFocus={() => window.scrollTo(0, 0)}
               className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
             />
           </div>
