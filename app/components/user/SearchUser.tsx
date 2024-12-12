@@ -43,6 +43,7 @@ const SearchUser = ({ query = "" }: Props) => {
               className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
               value={search}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
+              onFocus={() => window.scrollTo(0, 0)}
             />
             {!search && (
               <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[90%] pointer-events-none max-md:hidden">

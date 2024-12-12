@@ -14,6 +14,7 @@ const SearchUser = ({ onChange, is_set }: Props) => {
         <input
           type="text"
           onChange={onChange}
+          onFocus={() => window.scrollTo(0, 0)}
           placeholder="ユーザー名で検索"
           className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
         />
