@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  input, textarea, select {
+    @apply appearance-none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  input:focus, textarea:focus, select:focus {
+    @apply outline-none;
+    box-shadow: none;
+  }
+}
 
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
