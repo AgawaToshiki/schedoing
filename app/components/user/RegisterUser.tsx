@@ -89,6 +89,7 @@ export default function RegisterUser() {
 							className={`w-full border rounded-sm shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
+							onFocus={() => window.scrollTo(0, 0)}
 							onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
 							required
 						/>
@@ -105,6 +106,7 @@ export default function RegisterUser() {
 							className={`w-full border shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
+							onFocus={() => window.scrollTo(0, 0)}
 							onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
 							required
 						/>
@@ -121,6 +123,7 @@ export default function RegisterUser() {
 							className={`w-full border shadow-md block px-2 h-12 ${displayNameErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
+							onFocus={() => window.scrollTo(0, 0)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
 							required
 						/>

@@ -112,6 +112,7 @@ const EditUserForm = (props: Props) => {
               id="editDisplayName"
               value={displayName}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
+              onFocus={() => window.scrollTo(0, 0)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
               className={`w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")} max-md:h-10`}
               required
@@ -126,6 +127,7 @@ const EditUserForm = (props: Props) => {
               id="editEmail"
               value={email}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
+              onFocus={() => window.scrollTo(0, 0)}
               onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
               className={`w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 ${emailErrorMessage && ("border-red-400")} max-md:h-10`}
               required
