@@ -86,7 +86,7 @@ export default function RegisterUser() {
 							id="email"
 							name="email"
 							type="email"
-							className={`w-full border shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
+							className={`w-full border rounded-sm shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={email}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
 							onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
