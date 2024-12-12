@@ -99,7 +99,7 @@ const EditUserForm = (props: Props) => {
                 <option value="admin">admin</option>
                 <option value="user">user</option>
               </select>
-              <div className="absolute top-4 right-3 pointer-events-none">
+              <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[95%] pointer-events-none">
                 <Icon icon="down" size={15} />
               </div>
             </div>
