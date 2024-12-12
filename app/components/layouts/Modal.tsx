@@ -18,7 +18,7 @@ const Modal = ({ isOpen, setter, title, children }: Props) => {
         open={isOpen}
         as="div"
         onClose={() => setter(false)}
-        className="relative z-50"
+        className="relative z-50 overscroll-contain"
       >
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
         <div className="fixed inset-0 flex items-center justify-center">
