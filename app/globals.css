@@ -16,8 +16,4 @@
   .scrollbar::-webkit-scrollbar-thumb {
     background: #646464;
   }
-
-  .mobile-min-height {
-    min-height: 100dvh;
-  }
 }
