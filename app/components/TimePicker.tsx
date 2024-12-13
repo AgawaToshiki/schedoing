@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ComponentProps } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -13,12 +13,10 @@ type Props = {
   onChange?: (date: Date) => void;
 };
 
+type InputProps = ComponentProps<'input'>
 
-const CustomInput = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
-  (
-    props: React.InputHTMLAttributes<HTMLInputElement>,
-    ref: React.ForwardedRef<HTMLInputElement>
-  ) => {
+
+const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(function CustomInput(props, ref) {
   return (
     <input
       {...props}
