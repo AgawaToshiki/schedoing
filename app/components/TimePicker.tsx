@@ -1,3 +1,4 @@
+import React, { ComponentProps } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -12,6 +13,19 @@ type Props = {
   onChange?: (date: Date) => void;
 };
 
+type InputProps = ComponentProps<'input'>
+
+
+const CustomInput = React.forwardRef<HTMLInputElement, InputProps>(function CustomInput(props, ref) {
+  return (
+    <input
+      {...props}
+      ref={ref}
+      readOnly
+    />
+  )
+});
+
 const TimePicker = (props: Props) => {
   
   const handleChange = (date: Date | null) => {
@@ -20,7 +34,6 @@ const TimePicker = (props: Props) => {
       props.onChange && props.onChange(date);
     }
   }
-
 
   return (
     <>
@@ -34,9 +47,9 @@ const TimePicker = (props: Props) => {
         timeIntervals={15}
         filterTime={props.filterTime}
         timeCaption={props.title}
-        onFocus={(e: React.FocusEvent<HTMLInputElement>) => e.target.blur()}
+        customInput={<CustomInput />}
         dateFormat='HH:mm'
-        className="w-full border rounded-sm border-gray-200 shadow-md block p-1 h-12 max-md:h-10"
+        className="w-full border rounded-sm border-gray-200 shadow-md block p-1 h-12 cursor-pointer max-md:h-10"
       />
     </>
 
