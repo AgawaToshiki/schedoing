@@ -14,7 +14,11 @@ type Props = {
 };
 
 
-const CustomInput = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>((props: any, ref: React.ForwardedRef<HTMLInputElement>) => {
+const CustomInput = React.forwardRef<HTMLInputElement, React.InputHTMLAttributes<HTMLInputElement>>(
+  (
+    props: React.InputHTMLAttributes<HTMLInputElement>,
+    ref: React.ForwardedRef<HTMLInputElement>
+  ) => {
   return (
     <input
       {...props}
