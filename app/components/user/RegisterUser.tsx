@@ -102,7 +102,7 @@ export default function RegisterUser() {
 							id="password"
 							name="password"
 							type="password"
-							className={`w-full border shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
+							className={`w-full border rounded-sm shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={password}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
 							onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
@@ -118,7 +118,7 @@ export default function RegisterUser() {
 							id="displayName"
 							name="displayName"
 							type="text"
-							className={`w-full border shadow-md block px-2 h-12 ${displayNameErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
+							className={`w-full border rounded-sm shadow-md block px-2 h-12 ${displayNameErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
 							value={displayName}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
