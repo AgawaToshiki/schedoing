@@ -26,12 +26,6 @@ export async function PATCH(
       throw new APIError(400, 'BadRequest');
     }
 
-    const scheduleData = await getScheduleId(params.scheduleId);
-
-    if(!scheduleData) {
-      throw new APIError(404, 'Schedule not found');
-    }
-
     const data: { title: string, description: string, startTime: string, endTime: string, userId: string } = await req.json();
 
     if(authUser.id !== data.userId) {
@@ -52,6 +46,10 @@ export async function PATCH(
     }
 
     const schedules = userData.schedules;
+    const hasUpdatingSchedule = schedules?.find((schedule) => schedule.id === params.scheduleId);
+    if(!hasUpdatingSchedule) {
+      throw new APIError(404, 'Schedule not found');
+    }
     if(schedules){
       //スケジュール時間が既存スケジュール時間と被っているかチェック
       const isOverlappingTime = schedules.some((schedule: Schedule) => {
