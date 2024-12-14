@@ -1,6 +1,5 @@
 'use client'
 import React, { useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Button from '../components/elements/Button';
 import Icon from '../components/elements/Icon';
 import ConfirmModal from '../components/layouts/ConfirmModal';
@@ -8,8 +7,6 @@ import { BASE_URL } from '../constants/paths';
 
 
 const SignOutButton = () => {
-
-  const router = useRouter();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -43,7 +40,7 @@ const SignOutButton = () => {
         return
 			}
 
-      router.push('/login');
+      window.location.replace('/login');
       processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
@@ -63,7 +60,7 @@ const SignOutButton = () => {
         attrs={
           { type: "button" }
         }
-        className="max-lg:p-2 max-lg:rounded-full"
+        className="max-lg:w-[40px] max-lg:h-[40px] max-lg:p-2 max-lg:rounded-full"
       >
         <div className="max-lg:hidden">
           サインアウト

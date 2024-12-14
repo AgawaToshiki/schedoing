@@ -13,13 +13,13 @@ const ScheduleDetail = ({ title, description, startTime, endTime }: Props) => {
 
   return (
     <>
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1.5 mb-6">
-          <div>タイトル：</div>
+      <div className="flex flex-col max-sm:text-sm">
+        <div className="flex gap-1.5 mb-6">
+          <div className="min-w-[80px] max-w-[80px]">タイトル：</div>
           <div>{title}</div>
         </div>
-        <div className="flex items-center gap-1.5 mb-6">
-          <div>日程：</div>
+        <div className="flex gap-1.5 mb-6">
+          <div className="min-w-[80px] max-w-[80px]">日程：</div>
           <div className="flex items-center">
             <div className="mr-2">
               {formatStartTime}
@@ -30,8 +30,8 @@ const ScheduleDetail = ({ title, description, startTime, endTime }: Props) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-1.5">
-          <div>備考：</div>
+        <div className="flex gap-1.5">
+          <div className="min-w-[80px] max-w-[80px]">備考：</div>
           <div>{description ? description : "なし"}</div>
         </div>
       </div>
