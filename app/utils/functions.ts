@@ -1,5 +1,6 @@
 import React from "react"
 import { User } from '../types';
+import { toZonedTime } from "date-fns-tz";
 
 export function handleSetEmailErrorMessage(isValid: boolean, isEmpty: boolean, setter: React.Dispatch<React.SetStateAction<string>>) {
   if(isEmpty) {
@@ -37,3 +38,10 @@ export function isAdminUser(user: User | null): boolean {
   }
   return false;
 }
+
+export function getTotalMinutes (timestamp: string): number {
+  const getDate = toZonedTime(new Date(timestamp), 'Asia/Tokyo');
+  const hours = getDate.getHours();
+  const minutes = getDate.getMinutes();
+  return hours * 60 + minutes;
+};

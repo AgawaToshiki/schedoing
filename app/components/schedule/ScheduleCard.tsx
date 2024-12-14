@@ -2,7 +2,8 @@
 import React, { useState } from 'react'
 import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
-import { formatInTimeZone, toZonedTime } from 'date-fns-tz';
+import { getTotalMinutes } from '@/app/utils/functions';
+import { formatInTimeZone } from 'date-fns-tz';
 import { Schedule } from '../../types';
 
 type Props = {
@@ -16,12 +17,6 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const calculateHeight = (startTime: string, endTime: string): { startMinutes: number, result: number } => {
-    const getTotalMinutes = (timestamp: string): number => {
-      const getDate = toZonedTime(new Date(timestamp), 'Asia/Tokyo');
-      const hours = getDate.getHours();
-      const minutes = getDate.getMinutes();
-      return hours * 60 + minutes;
-    };
     const startMinutes = getTotalMinutes(startTime);
     const endMinutes = getTotalMinutes(endTime);
     const result = endMinutes - startMinutes;

@@ -1,9 +1,11 @@
 'use server'
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/app/utils/supabase/auth';
-import { deleteSchedule, getScheduleId, updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
+import { deleteSchedule, getScheduleId, getUserWithSchedules, updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
+import { getTotalMinutes } from '@/app/utils/functions';
 import { checkSchedule } from '@/app/utils/validation';
+import { Schedule } from '@/app/types';
 
 
 export async function PATCH(
@@ -42,6 +44,32 @@ export async function PATCH(
     const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {
       throw new APIError(400, 'Invalid schedule data');
+    }
+
+    const userData = await getUserWithSchedules(authUser.id);
+    if(!userData) {
+      throw new APIError(400, 'User does not exist');
+    }
+
+    const schedules = userData.schedules;
+    if(schedules){
+      //スケジュール時間が既存スケジュール時間と被っているかチェック
+      const isOverlappingTime = schedules.some((schedule: Schedule) => {
+        //変更中のスケジュールはチェックに含めない
+        if(schedule.id === params.scheduleId) {
+          return
+        }
+        const startMinutes = getTotalMinutes(schedule.start_time);
+        const endMinutes = getTotalMinutes(schedule.end_time);
+        const newStartMinutes = getTotalMinutes(data.startTime);
+        const newEndMinutes = getTotalMinutes(data.endTime);
+        return (
+          (newStartMinutes < endMinutes && newEndMinutes > startMinutes)
+        );
+      })
+      if (isOverlappingTime) {
+        throw new APIError(400, '既存スケジュールと時間が被っています');
+      }
     }
 
     await updateSchedule(params.scheduleId, data.title, data.description, startTime, endTime);
