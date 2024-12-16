@@ -27,14 +27,13 @@ const FilterUser = ({ query }: Props) => {
   return (
     <>
       <Button
+        type="button"
         onClick={handleOpenModal}
         variant="primary"
         size="medium"
         form="square"
+        position="center"
         className={`${defaultFilterFlag ? ("bg-green-500 border-green-500") : ""}`}
-        attrs={{
-          type: 'button'
-        }}
       >
         <div className="flex items-center gap-1.5">
           {defaultFilterFlag ? (

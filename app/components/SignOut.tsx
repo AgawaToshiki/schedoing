@@ -53,13 +53,12 @@ const SignOutButton = () => {
   return (
     <>
       <Button
+        type="button"
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
         variant="danger"
         size="medium"
         form="square"
-        attrs={
-          { type: "button" }
-        }
+        position="center"
         className="max-lg:w-[40px] max-lg:h-[40px] max-lg:p-2 max-lg:rounded-full"
       >
         <div className="max-lg:hidden">
@@ -78,12 +77,11 @@ const SignOutButton = () => {
         >
           <form onSubmit={handleSignOutSubmit}>
             <Button
+              type="submit"
               variant="danger"
               size="medium"
               form="square"
-              attrs={
-                { type: "submit" }
-              }
+              position="center"
             >
               サインアウト
             </Button>

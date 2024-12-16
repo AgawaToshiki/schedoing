@@ -57,13 +57,12 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
   return (
     <>
       <Button
+        type="button"
         onClick={(e: React.MouseEvent<HTMLButtonElement>) => handleOpenModal(e)}
         variant="danger"
         size="small"
         form="circle"
-        attrs={
-          { type: "button" }
-        }
+        position="center"
         className="w-[30px] min-w-[30px] h-[30px] max-sm:w-[24px] max-sm:min-w-[24px] max-sm:h-[24px]"
       >
         <Icon icon="delete" color="#fff" size={16}/>
@@ -77,12 +76,11 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
         >
           <form onSubmit={handleDeleteSubmit}>
             <Button
+              type="submit"
               variant="danger"
               size="medium"
               form="square"
-              attrs={
-                { type: "submit" }
-              }
+              position="center"
             >
               削除する
             </Button>

@@ -1,11 +1,12 @@
 'use client'
 import React, { useState } from 'react';
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
-import EditUserForm from './EditUserForm';
-import DeleteUserForm from './DeleteUserForm';
-import Icon from '../elements/Icon';
-import Modal from '../layouts/Modal';
-import ConfirmModal from '../layouts/ConfirmModal';
+import EditUserForm from '../../components/user/EditUserForm';
+import DeleteUserForm from '../../components/user/DeleteUserForm';
+import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
+import Modal from '../../components/layouts/Modal';
+import ConfirmModal from '../../components/layouts/ConfirmModal';
 import { User } from '@/app/types';
 
 type Props = {
@@ -37,25 +38,33 @@ const MobileManageUser = ({ user }: Props) => {
           <MenuItems
             transition
             anchor="bottom end"
-            className="absolute z-[200] rounded-xl border bg-gray-700 p-1 text-sm/6 text-white transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
+            className="absolute z-[200] rounded-lg border bg-gray-700 p-1 text-sm/6 text-white transition duration-100 ease-out focus:outline-none data-[closed]:scale-95 data-[closed]:opacity-0"
           >
             <MenuItem>
-              <button
+              <Button
+                variant="transparent"
+                size="medium"
+                form="square"
+                position="start"
                 onClick={handleOpenEditModal}
-                className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/20"
+                className="group w-full gap-2"
               >
                 <Icon icon="edit" />
                 Edit
-              </button>
+              </Button>
             </MenuItem>
             <MenuItem>
-              <button
+              <Button
+                variant="transparent"
+                size="medium"
+                form="square"
+                position="start"
                 onClick={handleOpenDeleteModal}
-                className="group flex w-full items-center gap-2 rounded-lg py-1.5 px-3 data-[focus]:bg-white/20"
+                className="group w-full gap-2"
               >
                 <Icon icon="delete" />
                 Delete
-              </button>
+              </Button>
             </MenuItem>
           </MenuItems>
         </Menu>

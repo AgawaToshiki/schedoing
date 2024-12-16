@@ -74,28 +74,24 @@ const FilterUserField = ({ defaultFilter, setter }: Props) => {
         />
       </div>
       <div className="flex gap-4 justify-end items-center">
-        <Button 
+        <Button
+          type="button"
           onClick={handleResetFilter}
           variant="secondary"
           size="medium"
           form="square"
-          attrs={
-            { type: "button" }
-          }
+          position="center"
         >
           リセット
         </Button>
         <Button
+          type="button"
+          disabled={disabled}
           onClick={handleFilter}
           variant="primary"
           size="medium"
           form="square"
-          attrs={
-            {
-              type: "button",
-              disabled: disabled
-            }
-          }
+          position="center"
         >
           適用する
         </Button>

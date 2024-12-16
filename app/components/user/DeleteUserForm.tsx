@@ -54,12 +54,11 @@ const DeleteUserForm = ({ id, setter }: Props) => {
 		<>
       <form onSubmit={handleDeleteSubmit}>
         <Button
+					type="submit"
           variant="danger"
           size="medium"
           form="square"
-          attrs={
-            { type: "submit" }
-          }
+					position="center"
         >
           削除する
         </Button>

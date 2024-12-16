@@ -28,13 +28,12 @@ const Modal = ({ isOpen, setter, title, children }: Props) => {
             <div className="flex items-center justify-between bg-blue-400 p-6 rounded-t-md">
               <DialogTitle className="font-bold">{title}</DialogTitle>
               <Button
+                type="button"
                 onClick={() => setter(false)}
                 variant="secondary"
                 size="small"
                 form="circle"
-                attrs={
-                  { type: "button" }
-                }
+                position="center"
               >
                 <Icon icon="close" size={20} className="text-gray-500" />
               </Button>

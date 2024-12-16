@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
+import Input from '../../components/elements/Input';
+import Select from '../../components/elements/Select';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import Ellipses from '../../components/elements/Ellipses';
@@ -88,17 +90,19 @@ const EditUserForm = (props: Props) => {
           <div className="mb-2">
             <label htmlFor="editRole">権限</label>
             <div className="relative">
-              <select
+              <Select
                 name="role"
                 id="editRole"
                 value={role}
+                options={
+                  [
+                    { value: "admin", label: "admin" },
+                    { value: "user", label: "user"}
+                  ]
+                }
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
-                className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 bg-white max-md:h-10 max-md:shadow-sm"
                 required
-              >
-                <option value="admin">admin</option>
-                <option value="user">user</option>
-              </select>
+              />
               <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[95%] pointer-events-none">
                 <Icon icon="down" size={15} />
               </div>
@@ -106,28 +110,28 @@ const EditUserForm = (props: Props) => {
           </div>
           <div className="mb-2">
             <label htmlFor="editDisplayName">ユーザー名</label>
-            <input
+            <Input
               type="text"
               name="displayName"
               id="editDisplayName"
               value={displayName}
+              errorMessage={displayNameErrorMessage}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDisplayName(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
-              className={`w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 ${displayNameErrorMessage && ("border-red-400")} max-md:h-10 max-md:shadow-sm`}
               required
             />
             {displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
           </div>
           <div>
             <label htmlFor="editEmail">メールアドレス</label>
-            <input
+            <Input
               type="text"
               name="email"
               id="editEmail"
               value={email}
+              errorMessage={emailErrorMessage}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
               onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
-              className={`w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 ${emailErrorMessage && ("border-red-400")} max-md:h-10 max-md:shadow-sm`}
               required
             />
             {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
@@ -135,15 +139,12 @@ const EditUserForm = (props: Props) => {
         </div>
         <div className="flex justify-end">
           <Button
+            type="submit"
+            disabled={disabled}
             variant="primary"
             size="medium"
             form="square"
-            attrs={
-              {
-                type: "submit",
-                disabled: disabled
-              }
-            }
+            position="center"
           >
             {isProcessing ? (
               <Ellipses>更新中</Ellipses>
