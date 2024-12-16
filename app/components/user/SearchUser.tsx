@@ -40,7 +40,7 @@ const SearchUser = ({ query = "" }: Props) => {
             <input
               type="text"
               placeholder="ユーザー名で検索"
-              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
+              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10 max-md:shadow-sm"
               value={search}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />

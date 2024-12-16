@@ -49,7 +49,7 @@ const TimePicker = (props: Props) => {
         timeCaption={props.title}
         customInput={<CustomInput />}
         dateFormat='HH:mm'
-        className="w-full border rounded-sm border-gray-200 shadow-md block p-1 h-12 cursor-pointer max-md:h-10"
+        className="w-full border rounded-sm border-gray-200 shadow-md block p-1 h-12 cursor-pointer max-md:h-10 max-md:shadow-sm"
       />
     </>
 

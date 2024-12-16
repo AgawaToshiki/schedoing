@@ -208,7 +208,7 @@ const ScheduleForm = (props: Props) => {
               value={title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border rounded-sm shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
+              className={`w-full border rounded-sm shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10 max-md:shadow-sm`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
@@ -248,7 +248,7 @@ const ScheduleForm = (props: Props) => {
               id={`${props.name}description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
+              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10 max-md:shadow-sm"
             />
           </div>
         </div>
