@@ -21,13 +21,12 @@ const DeleteUser = ({ id }: Props) => {
   return (
 		<>
 			<Button
+				type="button"
 				onClick={handleOpenModal}
 				variant="danger"
 				size="medium"
 				form="square"
-				attrs={
-					{ type: "button" }
-				}
+				position="center"
 			>
 				削除
 			</Button>

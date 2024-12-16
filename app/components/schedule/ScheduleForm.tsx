@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import TimePicker from '../../components/TimePicker';
+import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import Ellipses from '../../components/elements/Ellipses';
@@ -93,15 +94,12 @@ const ScheduleForm = (props: Props) => {
     if(props.name === 'register') {
       return (
         <Button
+          type="submit"
+          disabled={disabled}
           variant="primary"
           size="medium"
           form="circle"
-          attrs={
-            {
-              type: "submit",
-              disabled: disabled
-            }
-          }
+          position="center"
           className="w-[50px] h-[50px]"
         >
           <Icon icon="plus" color="#fff" size={20} />
@@ -112,15 +110,12 @@ const ScheduleForm = (props: Props) => {
       return (
         <div className="flex justify-end">
           <Button
+            type="submit"
+            disabled={disabled}
             variant="primary"
             size="medium"
             form="square"
-            attrs={
-              {
-                type: "submit",
-                disabled: disabled
-              }
-            }
+            position="center"
           >
             {isProcessing ? (
               <Ellipses>更新中</Ellipses>
@@ -199,25 +194,25 @@ const ScheduleForm = (props: Props) => {
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col mb-6 max-md:mb-4">
           <div className="mb-2">
-            <label htmlFor={`${props.name}title`}>タイトル</label>
-            <input 
+            <label htmlFor={`${props.name}Title`}>タイトル</label>
+            <Input
               type="text"
               name="title"
-              id={`${props.name}title`}
+              id={`${props.name}Title`}
               placeholder={`${props.name === "register" ? ("例）会議") : ("")}`}
               value={title}
+              errorMessage={titleErrorMessage}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value)}
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
-              className={`w-full border rounded-sm shadow-md block px-2 h-12 ${titleErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
               required
             />
             {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
           </div>
           <div className="flex items-end w-full mb-2">
             <div className="flex flex-col w-full mr-2">
-              <label htmlFor={`${props.name}startTime`}>開始</label>
+              <label htmlFor={`${props.name}StartTime`}>開始</label>
               <TimePicker
-                id={`${props.name}startTime`}
+                id={`${props.name}StartTime`}
                 name='startTime'
                 title='開始'
                 value={startTime}
@@ -228,9 +223,9 @@ const ScheduleForm = (props: Props) => {
             </div>
             <div className="flex items-center h-12 max-md:h-10">～</div>
             <div className="flex flex-col w-full ml-2">
-              <label htmlFor={`${props.name}endTime`}>終了</label>
+              <label htmlFor={`${props.name}EndTime`}>終了</label>
               <TimePicker
-                id={`${props.name}endTime`}
+                id={`${props.name}EndTime`}
                 name='endTime'
                 title='終了'
                 value={endTime}
@@ -241,14 +236,13 @@ const ScheduleForm = (props: Props) => {
             </div>
           </div>
           <div>
-            <label htmlFor={`${props.name}description`}>備考</label>
-            <input
+            <label htmlFor={`${props.name}Description`}>備考</label>
+            <Input
               type="text"
               name="description"
-              id={`${props.name}description`}
+              id={`${props.name}Description`}
               value={description ? description : ""}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value)}
-              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
             />
           </div>
         </div>

@@ -22,13 +22,12 @@ const EditUser = ({ user }: Props) => {
   return (
     <>
       <Button
+        type="button"
 				onClick={handleOpenModal}
 				variant="primary"
 				size="medium"
 				form="square"
-				attrs={
-					{ type: "button" }
-				}
+        position="center"
 			>
 				編集
 			</Button>

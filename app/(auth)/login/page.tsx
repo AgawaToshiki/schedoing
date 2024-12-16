@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SectionField from '../../components/layouts/SectionField';
+import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
 import Ellipses from '../../components/elements/Ellipses';
 import { loginValidation } from '../../utils/validation';
@@ -81,12 +82,12 @@ export default function Login() {
               <div>
                 <label htmlFor="email">Email</label>
               </div>
-              <input 
+              <Input
                 id="email"
                 name="email"
                 type="email"
-                className={`w-full border rounded-sm shadow-md block px-2 h-12 ${emailErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
                 value={email}
+                errorMessage={emailErrorMessage}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setEmail(e.target.value)}
                 onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
                 required
@@ -97,12 +98,12 @@ export default function Login() {
               <div>
                 <label htmlFor="password">Password</label>
               </div>
-              <input
+              <Input
                 id="password"
                 name="password"
                 type="password"
-                className={`w-full border rounded-sm shadow-md block px-2 h-12 ${passwordErrorMessage ? ("border-red-400") : ("border-gray-200")} max-md:h-10`}
                 value={password}
+                errorMessage={passwordErrorMessage}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setPassword(e.target.value)}
                 onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
                 required
@@ -112,15 +113,12 @@ export default function Login() {
             {loginErrorMessage && (<p className='pt-2 text-sm text-red-400'>{loginErrorMessage}</p>)}
           </div>
           <Button
+            type="submit"
+            disabled={disabled}
             variant="primary"
             size="medium"
             form="square"
-            attrs={
-              {
-                type: "submit",
-                disabled: disabled,
-              }
-            }
+            position="center"
           >
             {isProcessing ? (
               <Ellipses>ログイン中</Ellipses>

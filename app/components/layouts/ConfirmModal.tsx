@@ -18,14 +18,13 @@ const DeleteConfirmModal = ({ isOpen, title, message, setter, children }: Props)
       <Modal isOpen={isOpen} setter={setter} title={title}>
         <div className="mb-6">{message}</div>
         <div className="flex gap-4 justify-end items-center">
-          <Button 
+          <Button
+            type="button"
             onClick={() => setter(false)}
             variant="secondary"
             size="medium"
             form="square"
-            attrs={
-              { type: "button" }
-            }
+            position="center"
           >
             キャンセル
           </Button>

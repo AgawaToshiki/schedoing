@@ -1,5 +1,6 @@
 'use client'
 import React from 'react';
+import Input from '../../components/elements/Input';
 
 type Props = {
   title: string;
@@ -8,7 +9,7 @@ type Props = {
   valueList: {
     label: string;
     value: string;
-  }[]
+  }[];
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,7 +22,7 @@ const SelectRadioElement = ({ title, name, selected, valueList, onChange }: Prop
         <div className="flex items-center gap-2">
           {valueList.map((item) => (
             <div key={item.value} className="flex items-center">
-              <input
+              <Input
                 type="radio"
                 id={item.value}
                 name={name}

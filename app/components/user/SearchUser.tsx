@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import Icon from '../../components/elements/Icon';
+import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
+import Icon from '../../components/elements/Icon';
 
 type Props = {
   query: string;
@@ -37,10 +38,9 @@ const SearchUser = ({ query = "" }: Props) => {
       <form onSubmit={handleSubmit}>
         <div className="flex items-center gap-2">
           <div className="relative max-w-[300px]">
-            <input
+            <Input
               type="text"
               placeholder="ユーザー名で検索"
-              className="w-full border rounded-sm border-gray-200 shadow-md block px-2 h-12 max-md:h-10"
               value={search}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearch(e.target.value)}
             />
@@ -51,12 +51,11 @@ const SearchUser = ({ query = "" }: Props) => {
             )}
           </div>
           <Button
+            type="submit"
             variant="primary"
             size="medium"
             form="square"
-            attrs={{
-              type: "submit"
-            }}
+            position="center"
           >
             <div className="max-md:hidden">検索する</div>
             <Icon icon="search" size={20} color="#fff" className="hidden max-md:block" />
