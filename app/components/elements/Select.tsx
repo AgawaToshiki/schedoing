@@ -27,10 +27,20 @@ const Select = ({ errorMessage, options, ...props }: SelectProps) => {
         className={selectStyle}
       >
         {props.value === "" && (
-          <option value="" selected disabled hidden>選択してください</option>
+          <option
+            value=""
+            selected
+            disabled
+            hidden
+          >
+            選択してください
+          </option>
         )}
         {options.map((option) => (
-          <option key={option.value} value={option.value}>
+          <option
+            key={option.value}
+            value={option.value}
+          >
             {option.label}
           </option>
         ))}

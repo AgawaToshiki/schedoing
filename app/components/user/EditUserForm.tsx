@@ -27,6 +27,7 @@ const EditUserForm = (props: Props) => {
   const [role, setRole] = useState<string>(props.user.role);
   const [email, setEmail] = useState<string>(props.user.email);
   const [disabled, setDisabled] = useState<boolean>(true);
+  const [open, setOpen] = useState<boolean>(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState<string>("");
   const [displayNameErrorMessage, setDisplayNameErrorMessage] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
@@ -101,10 +102,12 @@ const EditUserForm = (props: Props) => {
                     { value: "user", label: "user"}
                   ]
                 }
+                onClick={() => setOpen(!open)}
+                onBlur={() => setOpen(false)}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)}
                 required
               />
-              <div className="absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[95%] pointer-events-none">
+              <div className={`absolute translate-x-[-50%] translate-y-[-50%] top-[50%] left-[95%] pointer-events-none ${open ? ('rotate-180 transition ease-in-out duration-100') : ('transition ease-in-out duration-100')}`}>
                 <Icon icon="down" size={15} />
               </div>
             </div>
