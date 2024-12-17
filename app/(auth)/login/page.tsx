@@ -5,6 +5,7 @@ import SectionField from '../../components/layouts/SectionField';
 import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
 import Ellipses from '../../components/elements/Ellipses';
+import ErrorMessage from '../../components/ErrorMessage';
 import { loginValidation } from '../../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 import { BASE_URL } from '../../constants/paths';
@@ -92,7 +93,7 @@ export default function Login() {
                 onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
                 required
               />
-              {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
+              <ErrorMessage errorMessage={emailErrorMessage} />
             </div>
             <div className="mb-2">
               <div>
@@ -108,9 +109,9 @@ export default function Login() {
                 onBlur={() => handleSetPasswordErrorMessage(isValidPassword, isEmptyPassword, isCheckPasswordLength, setPasswordErrorMessage)}
                 required
               />
-              {passwordErrorMessage && (<p className="pt-2 text-sm text-red-400">{passwordErrorMessage}</p>)}
+              <ErrorMessage errorMessage={passwordErrorMessage} />
             </div>
-            {loginErrorMessage && (<p className='pt-2 text-sm text-red-400'>{loginErrorMessage}</p>)}
+            <ErrorMessage errorMessage={loginErrorMessage} />
           </div>
           <Button
             type="submit"
