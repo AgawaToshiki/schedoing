@@ -32,7 +32,7 @@ const MobileManageUser = ({ user }: Props) => {
     <>
       <div className="relative z-[100] flex justify-center items-center">
         <Menu>
-          <MenuButton>
+          <MenuButton className="p-1 rounded-md data-[hover]:bg-gray-200">
             <Icon icon="ellipsis" />
           </MenuButton>
           <MenuItems
