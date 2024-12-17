@@ -6,6 +6,7 @@ import Select from '../../components/elements/Select';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import Ellipses from '../../components/elements/Ellipses';
+import ErrorMessage from '../../components/ErrorMessage';
 import { updateValidation } from '../../utils/validation'
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../../utils/functions';
 import { User } from '../../types';
@@ -120,7 +121,7 @@ const EditUserForm = (props: Props) => {
 							onBlur={() => handleSetEmptyErrorMessage(isEmptyDisplayName, setDisplayNameErrorMessage)}
               required
             />
-            {displayNameErrorMessage && (<p className="pt-2 text-sm text-red-400">{displayNameErrorMessage}</p>)}
+            <ErrorMessage errorMessage={displayNameErrorMessage} />
           </div>
           <div>
             <label htmlFor="editEmail">メールアドレス</label>
@@ -134,7 +135,7 @@ const EditUserForm = (props: Props) => {
               onBlur={() => handleSetEmailErrorMessage(isValidEmail, isEmptyEmail, setEmailErrorMessage)}
               required
             />
-            {emailErrorMessage && (<p className="pt-2 text-sm text-red-400">{emailErrorMessage}</p>)}
+            <ErrorMessage errorMessage={emailErrorMessage} />
           </div>
         </div>
         <div className="flex justify-end">

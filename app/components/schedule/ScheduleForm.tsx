@@ -5,6 +5,7 @@ import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
 import Ellipses from '../../components/elements/Ellipses';
+import ErrorMessage from '../../components/ErrorMessage';
 import { handleSetEmptyErrorMessage } from '@/app/utils/functions';
 import { toZonedTime } from 'date-fns-tz';
 import { BASE_URL } from '../../constants/paths';
@@ -206,7 +207,7 @@ const ScheduleForm = (props: Props) => {
 							onBlur={() => handleSetEmptyErrorMessage(title === "", setTitleErrorMessage)}
               required
             />
-            {titleErrorMessage && (<p className="pt-2 text-sm text-red-400">{titleErrorMessage}</p>)}
+            <ErrorMessage errorMessage={titleErrorMessage} />
           </div>
           <div className="flex items-end w-full mb-2">
             <div className="flex flex-col w-full mr-2">
