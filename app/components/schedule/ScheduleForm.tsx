@@ -24,7 +24,7 @@ type Props = {
 
 const ScheduleForm = (props: Props) => {
 
-  const { showToast, closeToast } = useToast();
+  const { showToast } = useToast();
 
   const defaultStartDate = toZonedTime(new Date(props.startTime), 'Asia/Tokyo');
   const defaultEndDate = toZonedTime(new Date(props.endTime), 'Asia/Tokyo');

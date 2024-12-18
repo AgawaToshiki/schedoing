@@ -1,5 +1,6 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { useToast } from '../../context/ToastContext';
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
@@ -12,6 +13,8 @@ type Props = {
 
 
 const DeleteSchedule = ({ scheduleId, userId }: Props) => {
+
+  const { showToast } = useToast();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -42,15 +45,19 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
       if(!response.ok){
         console.error(response.status, data.error);
-        alert(`${response.status}:${data.error}`);
+
+        // alert(`${response.status}:${data.error}`);
+        showToast(`${data.error}`, 'error');
         processing.current = false;
         return
       }
       setIsOpen(false);
+      showToast('スケジュールを削除しました', 'success');
       processing.current = false;
     }catch(error){
       console.error("fetch Error:", error);
-      alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
+      // alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
+      showToast('スケジュール削除に失敗しました、ネットワーク接続を確認してください', 'error');
       processing.current = false;
     }
   }
