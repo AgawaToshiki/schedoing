@@ -83,7 +83,7 @@ const UserList = ({ userId }: Props) => {
               </div>
             )
           )}
-          <div className="relative w-full h-full overflow-y-auto scrollbar">
+          <div className="relative w-full h-full overflow-y-auto overscroll-y-none scrollbar">
             <div className="absolute w-full h-full">
               <div className="flex flex-wrap gap-2 mx-auto">
                 {resultUsers?.map((user) => (
