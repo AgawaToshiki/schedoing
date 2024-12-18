@@ -73,6 +73,7 @@ const EditUserForm = (props: Props) => {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
         setIsProcessing(false);
+        return
 			}
 
       props.setter(false);

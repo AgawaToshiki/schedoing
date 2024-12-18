@@ -44,6 +44,7 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
         console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
         processing.current = false;
+        return
       }
       setIsOpen(false);
       processing.current = false;

@@ -38,6 +38,7 @@ const DeleteUserForm = ({ id, setter }: Props) => {
 				console.error(response.status, data.error);
 				alert(`${response.status}:${data.error}`);
 				processing.current = false;
+				return
 			}
 
 			setter(false);

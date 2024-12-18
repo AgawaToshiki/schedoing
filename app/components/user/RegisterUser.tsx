@@ -61,6 +61,7 @@ export default function RegisterUser() {
 				console.error(response.status, data.error);
         alert(`${response.status}:${data.error}`);
 				setIsProcessing(false);
+				return
 			}
 
 			setEmail("");
