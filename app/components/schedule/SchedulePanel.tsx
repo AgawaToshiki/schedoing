@@ -47,7 +47,7 @@ const SchedulePanel = ({ userId, isOwn }: Props) => {
 
   return (
     <>
-      <div className="flex items-center w-full h-full px-2 py-6 border border-gray-200 rounded-md shadow-md bg-white overflow-y-scroll scrollbar">
+      <div className="flex items-center w-full h-full px-2 py-6 border border-gray-200 rounded-md shadow-md bg-white overflow-y-scroll overscroll-y-none scrollbar">
         <div className="relative w-[50px] h-full">
           {timeArray.map((index) => (
             <div key={index}>
