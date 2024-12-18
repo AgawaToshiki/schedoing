@@ -14,7 +14,8 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
       animation: {
-        "rotate-center": "rotate-center 1s linear infinite both"
+        "rotate-center": "rotate-center 1s linear infinite both",
+        'fade-out': 'fade-out 5s ease both'
       },
       keyframes: {
         "rotate-center": {
@@ -23,6 +24,14 @@ const config: Config = {
           },
           to: {
             transform: "rotate(360deg)"
+          }
+        },
+        'fade-out': {
+          from: {
+            opacity: '1'
+          },
+          to: {
+            opacity: '0'
           }
         }
       }
