@@ -24,8 +24,8 @@ const AdminUserList = async({ query }: Props) => {
         <FilterUser query={{ role: query.role, create_time: query.create_time }}/>
       </div>
       {!!data?.length && (
-        <div className="w-full h-full overflow-x-auto overscroll-x-none scrollbar flex bg-white">
-          <div className="relative flex-grow h-full overflow-y-auto overscroll-y-none scrollbar">
+        <div className="flex w-full h-full overflow-x-auto overscroll-none scrollbar bg-white">
+          <div className="relative flex-grow h-full overflow-y-auto overscroll-none scrollbar">
             <table className="absolute w-full h-full border border-collapse">
               <thead>
                 <tr>
