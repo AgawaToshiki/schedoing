@@ -1,3 +1,4 @@
+import React from 'react';
 import { getUser } from '../../utils/supabase/supabaseFunctions';
 import { getCurrentUser } from '../../utils/supabase/auth';
 import { redirect } from 'next/navigation'

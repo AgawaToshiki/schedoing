@@ -1,5 +1,5 @@
 import { supabase } from '../../lib/supabase';
-import { Query, User, UserWithSchedule } from '../../types'
+import { Query, User, UserWithSchedule } from '../../types';
 
 
 const initialQuery: Query = {

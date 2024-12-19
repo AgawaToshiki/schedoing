@@ -1,5 +1,5 @@
-import React, { useEffect } from "react"
-import { supabase } from '../lib/supabase'
+import React, { useEffect } from "react";
+import { supabase } from '../lib/supabase';
 import { RealtimePostgresChangesPayload } from "@supabase/supabase-js";
 
 type RealTimeListenerOptions<T extends { [key: string]: any }> = {

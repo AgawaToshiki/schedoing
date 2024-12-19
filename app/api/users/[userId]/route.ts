@@ -12,24 +12,24 @@ import { User } from '../../../types';
 const checkData = async(userId: string): Promise<User> => {
   const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
     const user = await getUser(authUser.id);
     if(!user){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
     const isAdmin = isAdminUser(user);
     if(!isAdmin) {
-      throw new APIError(403, 'Permission denied');
+      throw new APIError(403, '権限がありません');
     }
 
     if(!userId) {
-      throw new APIError(400, 'Bad Request');
+      throw new APIError(404, '指定されたユーザーが見つかりません');
     }
 
     const getUserData = await getUser(userId);
     if(!getUserData) {
-      throw new APIError(404, 'User not found');
+      throw new APIError(404, '指定されたユーザーが見つかりません');
     }
     return getUserData
 }
@@ -42,7 +42,7 @@ export async function PATCH(
   try {
 
     if(req.method !== "PATCH"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
 
     const userData = await checkData(params.userId);
@@ -51,7 +51,7 @@ export async function PATCH(
 
     const { isValid, isSetRole } = updateValidation(data.email, data.displayName, data.role);
     if(!isValid || !isSetRole) {
-      throw new APIError(400, 'Invalid user data');
+      throw new APIError(400, 'ユーザーデータが不正です');
     }
     
     if(userData.email !== data.email) {
@@ -72,7 +72,7 @@ export async function PATCH(
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }
@@ -87,7 +87,7 @@ export async function DELETE(
   try {
 
     if(req.method !== "DELETE"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
     
     await checkData(params.userId);
@@ -105,7 +105,7 @@ export async function DELETE(
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }

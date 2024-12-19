@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useInterval } from '../hooks/useInterval';
 import { toZonedTime } from 'date-fns-tz';
 

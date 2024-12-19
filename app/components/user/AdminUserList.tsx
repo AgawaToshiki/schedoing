@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import EditUserElement from '../../components/user/EditUser';
 import DeleteUserElement from '../../components/user/DeleteUser';
 import SearchUser from '../../components/user/SearchUser';

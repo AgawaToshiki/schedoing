@@ -1,9 +1,10 @@
 'use client'
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useToast } from '../../context/ToastContext';
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import Ellipses from '../../components/elements/Ellipses';
 import { BASE_URL } from '../../constants/paths';
 
 type Props = {
@@ -17,8 +18,7 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
   const { showToast } = useToast();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const processing = useRef<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -27,10 +27,10 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(processing.current) {
+    if(isProcessing) {
       return
     }
-    processing.current = true;
+    setIsProcessing(true);
     try{
       const response = await fetch(`${BASE_URL}/api/schedules/${scheduleId}`, {
         cache: 'no-store',
@@ -46,16 +46,16 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
       if(!response.ok){
         console.error(response.status, data.error);
         showToast(`${data.error}`, 'error');
-        processing.current = false;
+        setIsProcessing(false);
         return
       }
       setIsOpen(false);
       showToast('スケジュールを削除しました', 'success');
-      processing.current = false;
+      setIsProcessing(false);
     }catch(error){
       console.error("fetch Error:", error);
       showToast('スケジュール削除に失敗しました、ネットワーク接続を確認してください', 'error');
-      processing.current = false;
+      setIsProcessing(false);
     }
   }
 
@@ -87,7 +87,11 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
               form="square"
               position="center"
             >
-              削除する
+              {isProcessing ? (
+						    <Ellipses>削除中</Ellipses>
+              ) : (
+                "削除する"
+              )}
             </Button>
           </form>
         </ConfirmModal>

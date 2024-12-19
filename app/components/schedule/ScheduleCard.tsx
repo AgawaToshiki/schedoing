@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
 import { getTotalMinutes } from '@/app/utils/functions';

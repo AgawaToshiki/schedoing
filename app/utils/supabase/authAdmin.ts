@@ -1,6 +1,6 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
+import { createClient } from '@supabase/supabase-js';
 import { User } from "@supabase/supabase-js";
 import { APIError } from '@/app/utils/exceptions';
 

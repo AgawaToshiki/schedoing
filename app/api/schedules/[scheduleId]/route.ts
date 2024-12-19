@@ -1,5 +1,5 @@
 'use server'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { deleteSchedule, getScheduleId, getUserWithSchedules, updateSchedule } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
@@ -14,22 +14,18 @@ export async function PATCH(
 ) {
   try {
     if(req.method !== "PATCH"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
     
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
-    }
-
-    if(!params.scheduleId) {
-      throw new APIError(400, 'BadRequest');
+      throw new APIError(401, '認証されていないユーザーです');
     }
 
     const data: { title: string, description: string, startTime: string, endTime: string, userId: string } = await req.json();
 
     if(authUser.id !== data.userId) {
-      throw new APIError(403, 'Permission denied');
+      throw new APIError(403, '権限がありません');
     }
 
     const startTime: Date = new Date(data.startTime);
@@ -37,18 +33,18 @@ export async function PATCH(
 
     const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {
-      throw new APIError(400, 'Invalid schedule data');
+      throw new APIError(400, 'スケジュールデータが不正です');
     }
 
     const userData = await getUserWithSchedules(authUser.id);
     if(!userData) {
-      throw new APIError(400, 'User does not exist');
+      throw new APIError(404, 'ユーザー登録されていません');
     }
 
     const schedules = userData.schedules;
     const hasUpdatingSchedule = schedules?.find((schedule) => schedule.id === params.scheduleId);
     if(!hasUpdatingSchedule) {
-      throw new APIError(404, 'Schedule not found');
+      throw new APIError(404, '更新するスケジュールが見つかりません');
     }
     if(schedules){
       //スケジュール時間が既存スケジュール時間と被っているかチェック
@@ -66,7 +62,7 @@ export async function PATCH(
         );
       })
       if (isOverlappingTime) {
-        throw new APIError(400, '既存スケジュールと時間が被っています');
+        throw new APIError(400, '既存のスケジュールと時間が被っています');
       }
     }
 
@@ -81,7 +77,7 @@ export async function PATCH(
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }
@@ -93,28 +89,28 @@ export async function DELETE(
 ) {
   try {
     if(req.method !== "DELETE"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
     
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
 
     if(!params.scheduleId) {
-      throw new APIError(404, 'Schedule not found');
+      throw new APIError(404, '削除するスケジュールが見つかりません');
     }
 
     const data: { userId: string } = await req.json();
 
     if(authUser.id !== data.userId) {
-      throw new APIError(403, 'Permission denied');
+      throw new APIError(403, '権限がありません');
     }
 
     const scheduleId = await getScheduleId(params.scheduleId);
 
     if(!scheduleId) {
-      throw new APIError(404, 'Schedule data not found');
+      throw new APIError(404, '削除するスケジュールが見つかりません');
     }
 
     await deleteSchedule(params.scheduleId);
@@ -128,7 +124,7 @@ export async function DELETE(
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }

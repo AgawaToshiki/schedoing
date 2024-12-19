@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React from 'react';
 import Modal from '../../components/layouts/Modal';
 import Button from '../../components/elements/Button';
 

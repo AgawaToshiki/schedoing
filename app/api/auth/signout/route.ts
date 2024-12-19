@@ -9,17 +9,17 @@ export async function POST(req: NextRequest) {
   try {
 
     if(req.method !== "POST"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
 
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
 
     const user = await getUser(authUser.id);
     if(!user){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
     
     await signOut();
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }

@@ -10,24 +10,24 @@ export async function POST(req: NextRequest) {
   try {
 
     if(req.method !== "POST"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
 
     const data: { email: string, password: string } = await req.json();
 
     if(!data) {
-      throw new APIError(400, 'BadRequest');
+      throw new APIError(400, 'リクエストに必要なデータが含まれていません');
     }
 
     const { isValid } = loginValidation(data.email, data.password);
 
     if(!isValid) {
-      throw new APIError(400, 'Invalid user data');
+      throw new APIError(400, 'ユーザーデータが不正です');
     }
 
     const user = await signIn(data.email, data.password);
     if(!user || !user.id){
-      throw new APIError(401, 'Invalid login credentials');
+      throw new APIError(401, 'ログイン情報が正しくありません');
     }
     await updateStatus(user.id, 'online');
   
@@ -41,7 +41,7 @@ export async function POST(req: NextRequest) {
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }

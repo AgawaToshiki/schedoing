@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import DeleteUserForm from '../../components/user/DeleteUserForm';
 import Button from '../../components/elements/Button';
 import ConfirmModal from '../../components/layouts/ConfirmModal';

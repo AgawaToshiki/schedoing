@@ -12,20 +12,20 @@ export async function PATCH(
   try {
 
     if(req.method !== "PATCH"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
 
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
 
     if(!params.userId) {
-      throw new APIError(400, 'Bad Request');
+      throw new APIError(404, '更新するユーザーデータが見つかりません');
     }
 
     if(authUser.id !== params.userId) {
-      throw new APIError(403, 'Permission denied');
+      throw new APIError(403, '権限がありません');
     }
     
     const data: { flag: boolean } = await req.json();
@@ -42,7 +42,7 @@ export async function PATCH(
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }
