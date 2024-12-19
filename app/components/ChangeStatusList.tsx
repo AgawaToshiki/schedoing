@@ -1,18 +1,19 @@
 'use client'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
-import { supabase } from '../lib/supabase';
-import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
-import { getUser } from '../utils/supabase/supabaseFunctions';
 import { BASE_URL } from '../constants/paths';
 import { useToast } from '../context/ToastContext';
 
 
 type Props = {
   id: string;
+  status: string;
 }
 
-const ChangeStatusList = ({ id }: Props) => {
+const ChangeStatusList = ({ id, status }: Props) => {
+
+  const router = useRouter();
 
   const { showToast } = useToast();
 
@@ -21,44 +22,10 @@ const ChangeStatusList = ({ id }: Props) => {
     { id: 2, status: 'leave', name: '退席中', style: 'bg-yellow-400' },
     { id: 3, status: 'busy', name: '取り込み中', style: 'bg-red-400' },
   ]
-
-  const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(statusList[0]);
+  const defaultStatus = statusList.find(item => item.status === status) || statusList[0];
+  const [selectedItem, setSelectedItem] = useState<{ id: number, name: string, style: string }>(defaultStatus);
 
   const processing = useRef<boolean>(false);
-
-  useEffect(() => {
-    (async () => {
-      const data = await getUser(id);
-      if(data){
-        const item = statusList.find(item => item.status === data.status) || statusList[0];
-        setSelectedItem(item);
-      }
-    })()
-
-    const channel = supabase
-    .channel('users')
-    .on('postgres_changes', {
-      event: 'UPDATE',
-      schema: 'public',
-      table: 'users',
-      filter: `id=eq.${id}`
-    },
-    (payload: RealtimePostgresUpdatePayload<{ [key: string]: string }>) => {
-      const updatedStatus = payload.new.status;
-      const updatedItem = statusList.find(item => item.status === updatedStatus);
-      if (updatedItem) {
-        setSelectedItem(updatedItem);
-      }
-    }
-    )
-    .subscribe();
-
-    return () => {
-      channel.unsubscribe();
-    }
-  }, [])
-
-
 
   const handleChangeStatus = async(item: { id: number, name: string, style: string, status: string }) => {
     if(processing.current) {
@@ -87,12 +54,14 @@ const ChangeStatusList = ({ id }: Props) => {
         processing.current = false;
         return
 			}
+      
+      router.refresh();
       processing.current = false;
     } catch(error) {
       console.error("fetch Error:", error);
-      showToast('ステータス更新に失敗しました、ネットワーク接続を確認してください', 'error');
       setSelectedItem(oldSelectedItem);
-      processing.current = true;
+      showToast('ステータス更新に失敗しました、ネットワーク接続を確認してください', 'error');
+      processing.current = false;
     }
   }
 

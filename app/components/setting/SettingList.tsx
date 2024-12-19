@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import SwitchFlagElement from '../../components/setting/SwitchFlagElement';
 import { User } from '../../types';
 

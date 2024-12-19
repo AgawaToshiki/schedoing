@@ -17,10 +17,10 @@ const MyStatus = async({ userId }: Props) => {
   return (
     <>
       <div>ユーザー名：{user.displayName}</div>
-        <div className="flex items-center gap-1.5">
-          <div>状態：</div>
-          <ChangeStatusList id={user.id}/>
-        </div>
+      <div className="flex items-center gap-1.5">
+        <div>状態：</div>
+        <ChangeStatusList id={user.id} status={user.status} />
+      </div>
     </>
   )
 }
