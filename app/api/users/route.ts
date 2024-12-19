@@ -27,8 +27,6 @@ export async function GET(req: NextRequest) {
     if(!isAdmin) {
       throw new APIError(403, 'Permission denied');
     }
-    const params = req.nextUrl.searchParams;
-    const query = params.get("query");
 
     const data: { email: string, password: string, displayName: string } = await req.json();
 
