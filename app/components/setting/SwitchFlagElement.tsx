@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Switch from '../../components/elements/Switch';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 type Props = {
@@ -16,6 +17,8 @@ type Props = {
 const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
 
   const router = useRouter();
+
+  const { showToast } = useToast();
 
   const [enabled, setEnabled] = useState<boolean>(defaultFlag);
 
@@ -39,7 +42,7 @@ const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
 
       if(!response.ok) {
 				console.error(response.status, data.error);
-				alert(`${response.status}:${data.error}`);
+        showToast(`${data.error}`, 'error');
         setEnabled(!newFlag);
         return
 			}
@@ -48,7 +51,7 @@ const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
 
     } catch(error) {
       console.error("fetch Error:", error);
-      alert("変更に失敗しました。ネットワーク接続を確認してください。");
+      showToast('変更に失敗しました、ネットワーク接続を確認してください', 'error');
       setEnabled(!newFlag);
     }
   }

@@ -3,6 +3,7 @@ import React, { useRef } from 'react'
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 type Props = {
@@ -14,6 +15,8 @@ type Props = {
 const DeleteUserForm = ({ id, setter }: Props) => {
 
 	const router = useRouter();
+
+	const { showToast } = useToast();
 
 	const processing = useRef<boolean>(false);
 
@@ -36,17 +39,18 @@ const DeleteUserForm = ({ id, setter }: Props) => {
 
 			if(!response.ok) {
 				console.error(response.status, data.error);
-				alert(`${response.status}:${data.error}`);
+				showToast(`${data.error}`, 'error');
 				processing.current = false;
 				return
 			}
 
 			setter(false);
+			showToast('ユーザーデータを削除しました', 'success');
       router.refresh();
 			processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
-      alert("ユーザー削除に失敗しました。ネットワーク接続を確認してください。");
+			showToast('ユーザーデータの削除に失敗しました、ネットワーク接続を確認してください', 'error');
 			processing.current = false;
 		}
 	}

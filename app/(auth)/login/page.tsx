@@ -9,11 +9,14 @@ import ErrorMessage from '../../components/ErrorMessage';
 import { loginValidation } from '../../utils/validation';
 import { handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 export default function Login() {
 
   const router = useRouter();
+
+  const { showToast } = useToast();
 
   const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
@@ -60,7 +63,7 @@ export default function Login() {
           setIsProcessing(false);
           return
         }
-        alert(`ログインに失敗しました。エラー：${data.error}`);
+        showToast(`${data.error}`, 'error');
         setIsProcessing(false);
         return
 			}
@@ -68,7 +71,7 @@ export default function Login() {
       setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
-      alert("ログインに失敗しました。ネットワーク接続を確認してください。");
+      showToast('ログインに失敗しました、ネットワーク接続を確認してください', 'error');
       setIsProcessing(false);
 		}
 

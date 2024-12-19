@@ -45,8 +45,6 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
       if(!response.ok){
         console.error(response.status, data.error);
-
-        // alert(`${response.status}:${data.error}`);
         showToast(`${data.error}`, 'error');
         processing.current = false;
         return
@@ -56,7 +54,6 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
       processing.current = false;
     }catch(error){
       console.error("fetch Error:", error);
-      // alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
       showToast('スケジュール削除に失敗しました、ネットワーク接続を確認してください', 'error');
       processing.current = false;
     }

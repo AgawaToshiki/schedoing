@@ -153,7 +153,6 @@ const ScheduleForm = (props: Props) => {
 
         if(!response.ok){
           console.error(response.status, data.error);
-          // alert(`${response.status}:${data.error}`);
           showToast(`${data.error}`, 'error');
           setIsProcessing(false);
           return
@@ -175,7 +174,6 @@ const ScheduleForm = (props: Props) => {
   
         if(!response.ok){
           console.error(response.status, data.error);
-          // alert(`${response.status}:${data.error}`);
           showToast(`${data.error}`, 'error');
           setIsProcessing(false);
           return
@@ -193,7 +191,6 @@ const ScheduleForm = (props: Props) => {
       setIsProcessing(false);
     }catch(error){
 			console.error("fetch Error:", error);
-      // alert("スケジュール作成に失敗しました、ネットワーク接続を確認してください");
       showToast('スケジュール作成に失敗しました、ネットワーク接続を確認してください', 'error');
       setIsProcessing(false);
     }

@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import { RealtimePostgresUpdatePayload } from "@supabase/supabase-js";
 import { getUser } from '../utils/supabase/supabaseFunctions';
 import { BASE_URL } from '../constants/paths';
+import { useToast } from '../context/ToastContext';
 
 
 type Props = {
@@ -12,6 +13,8 @@ type Props = {
 }
 
 const ChangeStatusList = ({ id }: Props) => {
+
+  const { showToast } = useToast();
 
   const statusList = [
     { id: 1, status: 'online', name: 'オンライン', style: 'bg-green-400' },
@@ -79,7 +82,7 @@ const ChangeStatusList = ({ id }: Props) => {
 
       if(!response.ok) {
 				console.error(response.status, data.error);
-				alert(`${response.status}:${data.error}`);
+        showToast(`${data.error}`, 'error');
         setSelectedItem(oldSelectedItem);
         processing.current = false;
         return
@@ -87,7 +90,7 @@ const ChangeStatusList = ({ id }: Props) => {
       processing.current = false;
     } catch(error) {
       console.error("fetch Error:", error);
-      alert("ステータス更新に失敗しました。ネットワーク接続を確認してください。");
+      showToast('ステータス更新に失敗しました、ネットワーク接続を確認してください', 'error');
       setSelectedItem(oldSelectedItem);
       processing.current = true;
     }

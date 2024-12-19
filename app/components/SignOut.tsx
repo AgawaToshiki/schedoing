@@ -4,9 +4,12 @@ import Button from '../components/elements/Button';
 import Icon from '../components/elements/Icon';
 import ConfirmModal from '../components/layouts/ConfirmModal';
 import { BASE_URL } from '../constants/paths';
+import { useToast } from '../context/ToastContext';
 
 
 const SignOutButton = () => {
+
+  const { showToast } = useToast();
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -35,16 +38,16 @@ const SignOutButton = () => {
 			const data = await response.json();
 
 			if(!response.ok) {
-        alert(`サインアウト処理に失敗しました。エラー：${data.error}`);
+        showToast(`${data.error}`, 'error');
         processing.current = false;
         return
 			}
-
+      
       window.location.replace('/login');
       processing.current = false;
 		}catch (error) {
 			console.error("fetch Error:", error);
-      alert("サインアウト処理に失敗しました。ネットワーク接続を確認してください。");
+      showToast('サインアウト処理に失敗しました、ネットワーク接続を確認してください', 'error');
       processing.current = false;
 		}
 

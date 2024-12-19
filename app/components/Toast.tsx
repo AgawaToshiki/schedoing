@@ -15,7 +15,7 @@ const SuccessToast = ({
   return (
     <div
       className='
-        absolute z-[9999] top-0 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
+        absolute z-[9999] top-5 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
         text-green-700 bg-green-200 border-green-700
       '
     >
@@ -66,7 +66,7 @@ const WarningToast = ({
   return (
     <div
       className='
-        absolute z-[9999] top-0 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
+        absolute z-[9999] top-5 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
         text-yellow-700 bg-yellow-200 border-yellow-700
       '
     >
@@ -117,7 +117,7 @@ const ErrorToast = ({
   return (
     <div
       className='
-        absolute z-[9999] top-0 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
+        absolute z-[9999] top-5 left-1/2 -translate-x-2/4 w-72 px-2 py-4 rounded-xl flex
         text-red-700 bg-red-200 border-red-700'
     >
       <div>
