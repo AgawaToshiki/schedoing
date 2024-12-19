@@ -8,11 +8,14 @@ import ErrorMessage from '../../components/ErrorMessage';
 import { registerValidation } from '../../utils/validation';
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage, handleSetPasswordErrorMessage } from '../../utils/functions';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 export default function RegisterUser() {
 
 	const router = useRouter();
+
+		const { showToast } = useToast();
 	
 	const [email, setEmail] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
@@ -59,19 +62,20 @@ export default function RegisterUser() {
 
 			if(!response.ok) {
 				console.error(response.status, data.error);
-        alert(`${response.status}:${data.error}`);
+				showToast(`${data.error}`, 'error');
 				setIsProcessing(false);
+				return
 			}
 
 			setEmail("");
 			setPassword("");
 			setDisplayName("");
-
+			showToast('新規ユーザー登録しました', 'success');
       router.refresh();
 			setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
-      alert("ユーザー登録に失敗しました。ネットワーク接続を確認してください。");
+			showToast('ユーザー登録に失敗しました、ネットワーク接続を確認してください', 'error');
 			setIsProcessing(false);
 		}
 	}

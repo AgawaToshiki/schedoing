@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import Modal from '../layouts/Modal';
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 import ScheduleDetail from '../../components/schedule/ScheduleDetail';

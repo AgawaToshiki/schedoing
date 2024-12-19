@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Input from '../../components/elements/Input';
 import Select from '../../components/elements/Select';
@@ -11,6 +11,7 @@ import { updateValidation } from '../../utils/validation'
 import { handleSetEmptyErrorMessage, handleSetEmailErrorMessage } from '../../utils/functions';
 import { User } from '../../types';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 type Props = {
@@ -22,6 +23,8 @@ type Props = {
 const EditUserForm = (props: Props) => {
 
   const router = useRouter();
+
+  const { showToast } = useToast();
 
   const [displayName, setDisplayName] = useState<string>(props.user.displayName);
   const [role, setRole] = useState<string>(props.user.role);
@@ -71,16 +74,18 @@ const EditUserForm = (props: Props) => {
 
 			if(!response.ok) {
 				console.error(response.status, data.error);
-        alert(`${response.status}:${data.error}`);
+        showToast(`${data.error}`, 'error');
         setIsProcessing(false);
+        return
 			}
 
       props.setter(false);
+      showToast('ユーザーデータを更新しました', 'success');
       router.refresh();
       setIsProcessing(false);
 		}catch (error) {
       console.error("fetch Error:", error);
-      alert("ユーザー更新に失敗しました。ネットワーク接続を確認してください。");
+      showToast('ユーザーデータの更新に失敗しました、ネットワーク接続を確認してください', 'error');
       setIsProcessing(false);
 		}
   }

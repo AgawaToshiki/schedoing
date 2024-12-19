@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { redirect } from 'next/navigation';
 import { getUserWithSchedules } from '../../../utils/supabase/supabaseFunctions';
 import { getCurrentUser } from '../../../utils/supabase/auth';

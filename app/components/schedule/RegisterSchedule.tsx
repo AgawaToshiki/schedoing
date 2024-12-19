@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import ScheduleForm from '../../components/schedule/ScheduleForm';
 
 type Props = {

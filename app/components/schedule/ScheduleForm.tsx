@@ -1,5 +1,6 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
+import { useToast } from '../../context/ToastContext';
 import TimePicker from '../../components/TimePicker';
 import Input from '../../components/elements/Input';
 import Button from '../../components/elements/Button';
@@ -22,6 +23,8 @@ type Props = {
 }
 
 const ScheduleForm = (props: Props) => {
+
+  const { showToast } = useToast();
 
   const defaultStartDate = toZonedTime(new Date(props.startTime), 'Asia/Tokyo');
   const defaultEndDate = toZonedTime(new Date(props.endTime), 'Asia/Tokyo');
@@ -150,9 +153,11 @@ const ScheduleForm = (props: Props) => {
 
         if(!response.ok){
           console.error(response.status, data.error);
-          alert(`${response.status}:${data.error}`);
+          showToast(`${data.error}`, 'error');
           setIsProcessing(false);
+          return
         }
+        showToast('新規スケジュールを作成しました', 'success');
       }
 
       if(props.name === "update") {
@@ -169,9 +174,11 @@ const ScheduleForm = (props: Props) => {
   
         if(!response.ok){
           console.error(response.status, data.error);
-          alert(`${response.status}:${data.error}`);
+          showToast(`${data.error}`, 'error');
           setIsProcessing(false);
+          return
         }
+        showToast('スケジュールを更新しました', 'success');
       }
 
       if(props.setter){
@@ -184,7 +191,7 @@ const ScheduleForm = (props: Props) => {
       setIsProcessing(false);
     }catch(error){
 			console.error("fetch Error:", error);
-      alert("スケジュール作成に失敗しました。ネットワーク接続を確認してください。");
+      showToast('スケジュール作成に失敗しました、ネットワーク接続を確認してください', 'error');
       setIsProcessing(false);
     }
   }

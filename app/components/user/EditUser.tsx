@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import Button from '../../components/elements/Button';
 import Modal from '../../components/layouts/Modal';
 import EditUserForm from '../../components/user/EditUserForm';

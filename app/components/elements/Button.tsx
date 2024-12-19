@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 type variant = "primary" | "secondary" | "danger" | "transparent";
 type size = "small" | "medium" | "large";
@@ -16,7 +16,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ onClick, variant, size, form, position, children, ...props }, ref) {
 
-  const baseStyle = `flex items-center font-semibold border transition duration-200 ease-in-out select-none`;
+  const baseStyle = "flex items-center font-semibold border transition duration-200 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white hover:brightness-90",

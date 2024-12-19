@@ -1,8 +1,10 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react';
+import { useToast } from '../../context/ToastContext';
 import ConfirmModal from '../../components/layouts/ConfirmModal';
 import Button from '../../components/elements/Button';
 import Icon from '../../components/elements/Icon';
+import Ellipses from '../../components/elements/Ellipses';
 import { BASE_URL } from '../../constants/paths';
 
 type Props = {
@@ -13,9 +15,10 @@ type Props = {
 
 const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { showToast } = useToast();
 
-  const processing = useRef<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
   const handleOpenModal = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -24,10 +27,10 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
   const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(processing.current) {
+    if(isProcessing) {
       return
     }
-    processing.current = true;
+    setIsProcessing(true);
     try{
       const response = await fetch(`${BASE_URL}/api/schedules/${scheduleId}`, {
         cache: 'no-store',
@@ -42,15 +45,17 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
 
       if(!response.ok){
         console.error(response.status, data.error);
-        alert(`${response.status}:${data.error}`);
-        processing.current = false;
+        showToast(`${data.error}`, 'error');
+        setIsProcessing(false);
+        return
       }
       setIsOpen(false);
-      processing.current = false;
+      showToast('スケジュールを削除しました', 'success');
+      setIsProcessing(false);
     }catch(error){
       console.error("fetch Error:", error);
-      alert("スケジュール削除に失敗しました。ネットワーク接続を確認してください。");
-      processing.current = false;
+      showToast('スケジュール削除に失敗しました、ネットワーク接続を確認してください', 'error');
+      setIsProcessing(false);
     }
   }
 
@@ -82,7 +87,11 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
               form="square"
               position="center"
             >
-              削除する
+              {isProcessing ? (
+						    <Ellipses>削除中</Ellipses>
+              ) : (
+                "削除する"
+              )}
             </Button>
           </form>
         </ConfirmModal>

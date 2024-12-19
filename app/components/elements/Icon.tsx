@@ -1,4 +1,4 @@
-import { iconList } from '@/app/utils/iconList'
+import { iconList } from '@/app/utils/iconList';
 
 type Props = {
   icon: string;

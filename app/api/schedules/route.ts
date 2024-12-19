@@ -1,5 +1,5 @@
 'use server'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
 import { getCurrentUser } from '@/app/utils/supabase/auth';
 import { getUserWithSchedules, registerSchedule } from '@/app/utils/supabase/supabaseFunctions';
 import { APIError } from '@/app/utils/exceptions';
@@ -12,18 +12,18 @@ export async function POST(req: NextRequest) {
   try {
 
     if(req.method !== "POST"){
-      throw new APIError(405, 'Method Not Allowed');
+      throw new APIError(405, 'この操作は許可されていないHTTPメソッドです');
     }
     
     const authUser = await getCurrentUser();
     if(!authUser || !authUser.id){
-      throw new APIError(401, 'Unauthorized user');
+      throw new APIError(401, '認証されていないユーザーです');
     }
 
     const data: { title: string, description: string, startTime: string, endTime: string, userId: string } = await req.json();
 
     if(authUser.id !== data.userId) {
-      throw new APIError(403, 'Permission denied');
+      throw new APIError(403, '権限がありません');
     }
 
     const startTime: Date = new Date(data.startTime);
@@ -31,12 +31,12 @@ export async function POST(req: NextRequest) {
 
     const isValidData = checkSchedule(data.title, startTime, endTime);
     if(!isValidData) {
-      throw new APIError(400, 'Invalid schedule data');
+      throw new APIError(400, 'スケジュールデータが不正です');
     }
 
     const userData = await getUserWithSchedules(authUser.id);
     if(!userData) {
-      throw new APIError(400, 'User does not exist');
+      throw new APIError(404, 'ユーザー登録されていません');
     }
 
     const schedules = userData.schedules;
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
         );
       })
       if (isOverlappingTime) {
-        throw new APIError(400, '既存スケジュールと時間が被っています');
+        throw new APIError(400, '既存のスケジュールと時間が被っています');
       }
     }
 
@@ -68,7 +68,7 @@ export async function POST(req: NextRequest) {
       );
     }
     return NextResponse.json(
-      { error: 'Internal Server Error' },
+      { error: 'サーバーエラーが発生しました' },
       { status: 500 }
     );
   }

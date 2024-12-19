@@ -1,8 +1,10 @@
 'use client'
-import React, { useRef } from 'react'
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Button from '../../components/elements/Button';
+import Ellipses from '../../components/elements/Ellipses';
 import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 type Props = {
@@ -15,14 +17,16 @@ const DeleteUserForm = ({ id, setter }: Props) => {
 
 	const router = useRouter();
 
-	const processing = useRef<boolean>(false);
+	const { showToast } = useToast();
+
+	const [isProcessing, setIsProcessing] = useState<boolean>(false);
 
 	const handleDeleteSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		if(processing.current) {
+		if(isProcessing) {
 			return
 		}
-		processing.current = true;
+		setIsProcessing(true);
 		try {
 			const response = await fetch(`${BASE_URL}/api/users/${id}`, {
 				cache: 'no-store',
@@ -36,17 +40,19 @@ const DeleteUserForm = ({ id, setter }: Props) => {
 
 			if(!response.ok) {
 				console.error(response.status, data.error);
-				alert(`${response.status}:${data.error}`);
-				processing.current = false;
+				showToast(`${data.error}`, 'error');
+				setIsProcessing(false);
+				return
 			}
 
 			setter(false);
+			showToast('ユーザーデータを削除しました', 'success');
       router.refresh();
-			processing.current = false;
+			setIsProcessing(false);
 		}catch (error) {
 			console.error("fetch Error:", error);
-      alert("ユーザー削除に失敗しました。ネットワーク接続を確認してください。");
-			processing.current = false;
+			showToast('ユーザーデータの削除に失敗しました、ネットワーク接続を確認してください', 'error');
+			setIsProcessing(false);
 		}
 	}
 
@@ -60,7 +66,11 @@ const DeleteUserForm = ({ id, setter }: Props) => {
           form="square"
 					position="center"
         >
-          削除する
+					{isProcessing ? (
+						<Ellipses>削除中</Ellipses>
+					) : (
+						"削除する"
+					)}
         </Button>
       </form>
 		</>
