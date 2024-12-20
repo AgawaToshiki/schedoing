@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
   content: [
@@ -37,6 +38,13 @@ const config: Config = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function({ addVariant }) {
+      addVariant(
+        "hover",
+        "@media(hover:hover){ &:where(:any-link, :enabled, div, summary):hover }"
+      )
+    })
+  ],
 };
 export default config;

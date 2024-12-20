@@ -2,8 +2,8 @@
 import React, { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Listbox, ListboxButton, ListboxOption, ListboxOptions } from '@headlessui/react';
-import { BASE_URL } from '../constants/paths';
-import { useToast } from '../context/ToastContext';
+import { BASE_URL } from '../../constants/paths';
+import { useToast } from '../../context/ToastContext';
 
 
 type Props = {
@@ -68,7 +68,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
   return (
     <Listbox value={selectedItem} onChange={handleChangeStatus}>
       <ListboxButton className="flex items-center justify-center gap-1.5 w-[120px] p-1 border rounded-md">
-        <div>
+        <div className="select-none">
           {selectedItem.name}
         </div>
         <div className={`w-4 h-4 rounded-full ${selectedItem.style}`}></div>

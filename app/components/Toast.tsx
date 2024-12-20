@@ -92,7 +92,7 @@ const Toast = ({ message, toastType }: ToastProps) => {
   return (
     <>
       <div className="relative">
-        <div className={`flex items-center gap-2 w-[350px] p-4 absolute z-[9999] top-3 left-1/2 -translate-x-2/4 rounded-lg max-md:w-[300px] max-md:text-sm ${toastStyle()}`}>
+        <div className={`flex items-center gap-2 w-[350px] p-4 absolute z-[9999] top-3 left-1/2 -translate-x-2/4 rounded-lg shadow-md max-md:w-[300px] max-md:text-sm ${toastStyle()}`}>
           <div><ToastIcon /></div>
           <p>{message}</p>
         </div>
