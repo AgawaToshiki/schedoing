@@ -90,14 +90,14 @@ const UserList = ({ userId }: Props) => {
                   <Link 
                     href={`/schedule/${user.id}#currentTime`}
                     key={user.id}
-                    className="w-[300px] max-sm:w-[200px]"
+                    className="w-[calc(25%-0.375rem)] max-xl:w-[calc(50%-0.25rem)] max-sm:w-full"
                   >        
                     <div className="flex items-center justify-between p-6 border border-gray-200 rounded-md shadow-md bg-white">
                       <div>{user.displayName}</div>
                       <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
                     </div>
-                    </Link>
-                  ))}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
-import ChangeStatusList from '../../components/ChangeStatusList';
+import ChangeStatusList from '../../components/dashboard/ChangeStatusList';
 import { getUser } from '@/app/utils/supabase/supabaseFunctions';
 
 

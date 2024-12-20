@@ -59,7 +59,7 @@ const SwitchFlagElement = ({ id, title, name, defaultFlag }: Props) => {
   return (
     <>
       <div className="flex items-center justify-between">
-        <div className="select-none">{title}</div>
+        <div>{title}</div>
         <Switch checked={enabled} onChange={handleChangeToggle} />
       </div>
     </>

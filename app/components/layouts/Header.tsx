@@ -21,7 +21,7 @@ const Header = async() => {
     <header className="sticky top-0 min-h-dvh bg-blue-400 max-lg:px-2">
       <div className="flex flex-col lg:w-[275px] h-full overflow-y-auto scrollbar">
         <div className="sticky top-0 p-6 bg-blue-400 max-lg:p-0">
-          <h1 className="text-2xl select-none max-lg:hidden">Schedoing</h1>
+          <h1 className="text-2xl max-lg:hidden">Schedoing</h1>
         </div>
         <div className="px-6 max-lg:px-0 max-lg:mt-6">
           <Navigation isAdmin={isAdmin} id={user.id} />
