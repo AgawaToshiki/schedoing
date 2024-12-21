@@ -3,6 +3,7 @@ import { FaUser, FaPlus, FaChevronDown, FaRegTrashAlt } from 'react-icons/fa';
 import { IoClose, IoSearch } from "react-icons/io5";
 import { MdSpaceDashboard, MdEditCalendar, MdEdit, MdSettings, MdFilterListAlt, MdOutlineLogout } from "react-icons/md";
 import { FaEllipsis } from "react-icons/fa6";
+import { TbMessage } from "react-icons/tb";
 
 export const iconList: Record<string, IconType> = {
   'dashboard': MdSpaceDashboard,
@@ -17,5 +18,6 @@ export const iconList: Record<string, IconType> = {
   'search': IoSearch,
   'filter': MdFilterListAlt,
   'signout' : MdOutlineLogout,
-  'ellipsis': FaEllipsis
+  'ellipsis': FaEllipsis,
+  'message': TbMessage
 }
