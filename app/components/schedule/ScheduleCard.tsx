@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import ScheduleModal from '../../components/schedule/ScheduleModal';
 import DeleteSchedule from '../../components/schedule/DeleteSchedule';
+import Icon from '../../components/elements/Icon';
 import { getTotalMinutes } from '@/app/utils/functions';
 import { formatInTimeZone } from 'date-fns-tz';
 import { Schedule } from '../../types';
@@ -53,8 +54,12 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
             <div className="ml-2">{formatEndTime}</div>
           </div>
         </div>
-        {isOwn && (
+        {isOwn ? (
           <DeleteSchedule scheduleId={schedule.id} userId={userId} />
+        ) : (
+          schedule.description && (
+            <Icon icon="message" color="#1f2937" size={20}/>
+          )
         )}
       </div>
 
