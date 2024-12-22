@@ -16,7 +16,6 @@ const config: Config = {
       },
       animation: {
         "rotate-center": "rotate-center 1s linear infinite both",
-        'fade-out': 'fade-out 5s ease both'
       },
       keyframes: {
         "rotate-center": {
@@ -27,14 +26,6 @@ const config: Config = {
             transform: "rotate(360deg)"
           }
         },
-        'fade-out': {
-          from: {
-            opacity: '1'
-          },
-          to: {
-            opacity: '0'
-          }
-        }
       }
     },
   },
