@@ -6,7 +6,6 @@ type form = "square" | "circle";
 type position = "start" | "center" | "end";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   variant: variant;
   size: size;
   form: form;
@@ -14,7 +13,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: Readonly<React.ReactNode>;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ onClick, variant, size, form, position, children, ...props }, ref) {
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ variant, size, form, position, children, ...props }, ref) {
 
   const baseStyle = "flex items-center font-semibold border transition duration-200 ease-in-out select-none";
 
@@ -59,7 +58,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
   return (
     <>
       <button
-        onClick={onClick}
         {...props}
         ref={ref}
         className={buttonStyle}
