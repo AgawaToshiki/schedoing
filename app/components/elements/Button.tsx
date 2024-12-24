@@ -19,7 +19,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
   const baseStyle = "flex items-center font-semibold border transition duration-200 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
-    primary: "bg-blue-500 border-blue-500 text-white hover:brightness-90",
+    primary: "bg-blue-500 border-blue-500 text-white hover:where:bg-blue-600 active:bg-blue-700",
     secondary: "bg-white border-gray-500 text-black hover:brightness-90",
     danger: "bg-red-500 border-red-500 text-white hover:brightness-90",
     transparent: "bg-transparent border-transparent text-white hover:bg-white/20"
@@ -43,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
   }
 
   const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50";
-  const animationStyle = animation ? "border-red-200" : "";
+  const animationStyle = animation ? "animate-rotate-center" : "";
   const optionStyle = props.className ? props.className : "";
 
   const buttonStyle = [
@@ -51,20 +51,16 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
     variantStyle[variant],
     sizeStyle[size],
     formStyle[form],
-    position ? positionStyle[position] : '',
+    positionStyle[position],
     props.disabled ? disabledStyle : '',
     animationStyle,
     optionStyle
   ].filter(Boolean).join(' ');
 
-  const handleMouseDown = () => {
-    setAnimation(true);
-    console.log(animation);
-  }
 
   const handleMouseUp = () => {
-    setAnimation(false);
-    console.log(animation);
+    setAnimation(true);
+    setTimeout(() => setAnimation(false), 300);
   }
   
   return (
@@ -73,7 +69,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
         {...props}
         ref={ref}
         className={buttonStyle}
-        onMouseDown={handleMouseDown}
         onMouseUp={handleMouseUp}
       >
         {children}
