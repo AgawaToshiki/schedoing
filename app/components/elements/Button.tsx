@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 type variant = "primary" | "secondary" | "danger" | "transparent";
 type size = "small" | "medium" | "large";
@@ -15,6 +15,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ variant, size, form, position, children, ...props }, ref) {
 
+  const [animation, setAnimation] = useState<boolean>(false);
   const baseStyle = "flex items-center font-semibold border transition duration-200 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
@@ -42,7 +43,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
   }
 
   const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50";
-
+  const animationStyle = animation ? "border-red-200" : "";
   const optionStyle = props.className ? props.className : "";
 
   const buttonStyle = [
@@ -52,8 +53,19 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
     formStyle[form],
     position ? positionStyle[position] : '',
     props.disabled ? disabledStyle : '',
+    animationStyle,
     optionStyle
   ].filter(Boolean).join(' ');
+
+  const handleMouseDown = () => {
+    setAnimation(true);
+    console.log(animation);
+  }
+
+  const handleMouseUp = () => {
+    setAnimation(false);
+    console.log(animation);
+  }
   
   return (
     <>
@@ -61,6 +73,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
         {...props}
         ref={ref}
         className={buttonStyle}
+        onMouseDown={handleMouseDown}
+        onMouseUp={handleMouseUp}
       >
         {children}
       </button>
