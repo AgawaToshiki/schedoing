@@ -73,7 +73,7 @@ const Navigation = ({ isAdmin, id }: Props) => {
         <ul className="flex flex-col gap-1.5">
           {lists.map((list) => (
             list.showFlag && (
-              <li key={list.href}>
+              <li key={list.href} className="rounded-full">
                 <Link 
                   href={list.href}
                   className={`${list.pathname === pathname && "bg-blue-500 font-semibold"} flex items-center justify-center rounded-full w-[40px] h-[40px] px-2 py-2 transition duration-200 ease-in-out cursor-pointer hover:where:bg-blue-500 active:bg-blue-600`}
