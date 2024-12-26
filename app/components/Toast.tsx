@@ -1,5 +1,7 @@
+import { Transition } from '@headlessui/react';
 
 type ToastProps = {
+  open: boolean;
   message: string;
   toastType: 'success' | 'warning' | 'error';
 }
@@ -59,7 +61,7 @@ const ErrorIcon = () => {
   )
 }
 
-const Toast = ({ message, toastType }: ToastProps) => {
+const Toast = ({ open, message, toastType }: ToastProps) => {
 
   const toastStyle = () => {
     switch (toastType) {
@@ -91,12 +93,14 @@ const Toast = ({ message, toastType }: ToastProps) => {
 
   return (
     <>
-      <div className="relative">
-        <div className={`flex items-center gap-2 w-[350px] p-4 absolute z-[9999] top-3 left-1/2 -translate-x-2/4 rounded-lg shadow-md max-md:w-[300px] max-md:text-sm ${toastStyle()}`}>
-          <div><ToastIcon /></div>
-          <p>{message}</p>
+      <Transition show={open}>
+        <div className="relative z-[9999] transition duration-200 ease-in-out data-[closed]:opacity-0">
+          <div className={`flex items-center gap-2 w-[350px] p-4 absolute top-3 left-1/2 -translate-x-2/4 rounded-lg shadow-md max-md:w-[300px] max-md:text-sm ${toastStyle()}`}>
+            <div><ToastIcon /></div>
+            <p>{message}</p>
+          </div>
         </div>
-      </div>
+      </Transition>
     </>
   )
 }

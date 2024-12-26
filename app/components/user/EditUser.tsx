@@ -31,11 +31,10 @@ const EditUser = ({ user }: Props) => {
 			>
 				編集
 			</Button>
-			{isOpen && (
-        <Modal isOpen={isOpen} setter={setIsOpen} title="ユーザー編集">
-          <EditUserForm user={user} setter={setIsOpen}/>
-        </Modal>
-      )}
+      
+      <Modal isOpen={isOpen} setter={setIsOpen} title="ユーザー編集">
+        <EditUserForm user={user} setter={setIsOpen}/>
+      </Modal>
     </>
     
   )

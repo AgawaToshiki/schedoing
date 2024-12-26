@@ -30,16 +30,15 @@ const DeleteUser = ({ id }: Props) => {
 			>
 				削除
 			</Button>
-			{isOpen && (
-        <ConfirmModal 
-          isOpen={isOpen}
-          title="ユーザー削除"
-					message="本当に削除しますか？"
-          setter={setIsOpen}
-        >
-					<DeleteUserForm id={id} setter={setIsOpen} />
-        </ConfirmModal>
-      )}
+			
+			<ConfirmModal 
+				isOpen={isOpen}
+				title="ユーザー削除"
+				message="本当に削除しますか？"
+				setter={setIsOpen}
+			>
+				<DeleteUserForm id={id} setter={setIsOpen} />
+			</ConfirmModal>
 		</>
   )
 }
