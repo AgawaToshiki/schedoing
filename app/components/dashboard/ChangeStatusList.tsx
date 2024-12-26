@@ -67,7 +67,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
 
   return (
     <Listbox value={selectedItem} onChange={handleChangeStatus}>
-      <ListboxButton className="flex items-center justify-center gap-1.5 w-[120px] p-1 border rounded-md">
+      <ListboxButton className="flex items-center justify-center gap-1.5 w-[120px] p-1 border rounded-md shadow-sm active:shadow-none">
         <div className="select-none">
           {selectedItem.name}
         </div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRipple } from '../../hooks/useRipple';
 
 type variant = "primary" | "secondary" | "danger" | "transparent";
 type size = "small" | "medium" | "large";
@@ -16,15 +15,13 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ variant, size, form, position, children, ...props }, ref) {
 
-  const { ripples, addRipple, removeRipple } = useRipple();
-
   const baseStyle = "flex items-center relative overflow-hidden font-semibold border transition duration-200 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white hover:where:bg-blue-600 active:bg-blue-700",
-    secondary: "bg-white border-gray-500 text-black hover:brightness-90",
-    danger: "bg-red-500 border-red-500 text-white hover:brightness-90",
-    transparent: "bg-transparent border-transparent text-white hover:bg-white/20"
+    secondary: "bg-white border-gray-500 text-black hover:where:bg-gray-200 active:bg-gray-300",
+    danger: "bg-red-500 border-red-500 text-white hover:where:bg-red-600 active:bg-red-700",
+    transparent: "bg-transparent border-transparent text-white hover:where:bg-white/20 active:bg-white/30"
   }
 
   const sizeStyle: Record<size, string> = {
@@ -63,24 +60,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
         {...props}
         ref={ref}
         className={buttonStyle}
-        onMouseUp={addRipple}
       >
         {children}
-
-        {ripples.map((ripple) => (
-          <span
-            key={ripple.id}
-            onAnimationEnd={() => removeRipple(ripple.id)}
-            style={{
-              width: ripple.size,
-              height: ripple.size,
-              left: ripple.left,
-              top: ripple.top,
-            }}
-            className="ripple"
-          >
-          </span>
-        ))}
       </button>
     </>
   )
