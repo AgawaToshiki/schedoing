@@ -16,20 +16,6 @@
   }
 }
 
-@layer components {
-  .ripple {
-    @apply absolute rounded-full bg-white bg-opacity-70;
-    transform: scale(0);
-    animation: ripple 800ms linear;
-  }
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-}
-
 @layer utilities {
   .scrollbar::-webkit-scrollbar {
     width: 8px;
