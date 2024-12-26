@@ -18,7 +18,8 @@ const Modal = ({ isOpen, setter, title, children }: Props) => {
         open={isOpen}
         as="div"
         onClose={() => setter(false)}
-        className="relative z-50"
+        transition
+        className="relative z-50 transition duration-200 data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
       >
         <DialogBackdrop className="fixed inset-0 bg-black/30" />
         <div className="fixed inset-0 flex items-center justify-center">

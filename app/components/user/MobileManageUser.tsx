@@ -69,21 +69,19 @@ const MobileManageUser = ({ user }: Props) => {
           </MenuItems>
         </Menu>
       </div>
-      {isEditModalOpen && (
-        <Modal isOpen={isEditModalOpen} setter={setIsEditModalOpen} title="ユーザー編集">
-          <EditUserForm user={user} setter={setIsEditModalOpen}/>
-        </Modal>
-      )}
-      {isDeleteModalOpen && (
-        <ConfirmModal 
-          isOpen={isDeleteModalOpen}
-          title="ユーザー削除"
-					message="本当に削除しますか？"
-          setter={setIsDeleteModalOpen}
-        >
-					<DeleteUserForm id={user.id} setter={setIsDeleteModalOpen} />
-        </ConfirmModal>
-      )}
+      
+      <Modal isOpen={isEditModalOpen} setter={setIsEditModalOpen} title="ユーザー編集">
+        <EditUserForm user={user} setter={setIsEditModalOpen}/>
+      </Modal>
+
+      <ConfirmModal 
+        isOpen={isDeleteModalOpen}
+        title="ユーザー削除"
+        message="本当に削除しますか？"
+        setter={setIsDeleteModalOpen}
+      >
+        <DeleteUserForm id={user.id} setter={setIsDeleteModalOpen} />
+      </ConfirmModal>
     </>
   )
 }

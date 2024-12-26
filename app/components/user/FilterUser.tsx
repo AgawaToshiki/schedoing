@@ -33,7 +33,7 @@ const FilterUser = ({ query }: Props) => {
         size="medium"
         form="square"
         position="center"
-        className={`${defaultFilterFlag ? ("bg-green-500 border-green-500") : ""}`}
+        className={`${defaultFilterFlag ? ("bg-green-500 border-green-500 hover:where:bg-green-600 active:bg-green-700") : ""}`}
       >
         <div className="flex items-center gap-1.5">
           {defaultFilterFlag ? (

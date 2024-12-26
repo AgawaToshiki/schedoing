@@ -71,27 +71,25 @@ const SignOutButton = () => {
           <Icon icon="signout" size={20} className="text-white" />
         </div>
       </Button>
-      {isOpen && (
-        <ConfirmModal
-          isOpen={isOpen}
-          title="サインアウト"
-          message="サインアウトしますか？"
-          setter={setIsOpen}
-        >
-          <form onSubmit={handleSignOutSubmit}>
-            <Button
-              type="submit"
-              variant="danger"
-              size="medium"
-              form="square"
-              position="center"
-            >
-              サインアウト
-            </Button>
-          </form>
-        </ConfirmModal>
-      )}
 
+      <ConfirmModal
+        isOpen={isOpen}
+        title="サインアウト"
+        message="サインアウトしますか？"
+        setter={setIsOpen}
+      >
+        <form onSubmit={handleSignOutSubmit}>
+          <Button
+            type="submit"
+            variant="danger"
+            size="medium"
+            form="square"
+            position="center"
+          >
+            サインアウト
+          </Button>
+        </form>
+      </ConfirmModal>
     </>
   );
 }

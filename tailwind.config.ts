@@ -25,7 +25,7 @@ const config: Config = {
           to: {
             transform: "rotate(360deg)"
           }
-        },
+        }
       }
     },
   },
@@ -35,6 +35,7 @@ const config: Config = {
         "hover",
         "@media(hover:hover){ &:where(:any-link, :enabled, div, summary):hover }"
       )
+      addVariant('where', ':where(&)')
     })
   ],
 };

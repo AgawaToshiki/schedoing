@@ -72,30 +72,29 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
       >
         <Icon icon="delete" color="#fff" size={16}/>
       </Button>
-      {isOpen && (
-        <ConfirmModal 
-          isOpen={isOpen}
-          title="スケジュール削除"
-          message="本当に削除しますか？"
-          setter={setIsOpen}
-        >
-          <form onSubmit={handleDeleteSubmit}>
-            <Button
-              type="submit"
-              variant="danger"
-              size="medium"
-              form="square"
-              position="center"
-            >
-              {isProcessing ? (
-						    <Ellipses>削除中</Ellipses>
-              ) : (
-                "削除する"
-              )}
-            </Button>
-          </form>
-        </ConfirmModal>
-      )}
+      
+      <ConfirmModal 
+        isOpen={isOpen}
+        title="スケジュール削除"
+        message="本当に削除しますか？"
+        setter={setIsOpen}
+      >
+        <form onSubmit={handleDeleteSubmit}>
+          <Button
+            type="submit"
+            variant="danger"
+            size="medium"
+            form="square"
+            position="center"
+          >
+            {isProcessing ? (
+              <Ellipses>削除中</Ellipses>
+            ) : (
+              "削除する"
+            )}
+          </Button>
+        </form>
+      </ConfirmModal>
     </>
   )
 }
