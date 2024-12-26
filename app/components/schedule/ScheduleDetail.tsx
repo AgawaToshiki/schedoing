@@ -19,7 +19,7 @@ const ScheduleDetail = ({ title, description, startTime, endTime }: Props) => {
           <div>{title}</div>
         </div>
         <div className="flex gap-1.5 mb-6">
-          <div className="min-w-[80px] max-w-[80px] text-right">日程：</div>
+          <div className="min-w-[80px] max-w-[80px] text-right">時間：</div>
           <div className="flex items-center">
             <div className="mr-2">
               {formatStartTime}
