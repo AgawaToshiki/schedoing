@@ -16,7 +16,6 @@ const config: Config = {
       },
       animation: {
         "rotate-center": "rotate-center 1s linear infinite both",
-        "ripple": "ripple 750ms ease-out"
       },
       keyframes: {
         "rotate-center": {
@@ -25,16 +24,6 @@ const config: Config = {
           },
           to: {
             transform: "rotate(360deg)"
-          }
-        },
-        "ripple": {
-          '0%': { 
-            transform: 'scale(0)',
-            opacity: '1'
-          },
-          '100%': {
-            transform: 'scale(2)',
-            opacity: '0'
           }
         }
       }

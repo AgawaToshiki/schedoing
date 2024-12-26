@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useRipple } from '../../hooks/useRipple';
 
 type variant = "primary" | "secondary" | "danger" | "transparent";
 type size = "small" | "medium" | "large";
@@ -15,8 +16,9 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ variant, size, form, position, children, ...props }, ref) {
 
-  const [animation, setAnimation] = useState<boolean>(false);
-  const baseStyle = "flex items-center font-semibold border transition duration-200 ease-in-out select-none";
+  const { ripples, addRipple, removeRipple } = useRipple();
+
+  const baseStyle = "flex items-center relative overflow-hidden font-semibold border transition duration-200 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white hover:where:bg-blue-600 active:bg-blue-700",
@@ -43,7 +45,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
   }
 
   const disabledStyle = "disabled:bg-gray-500 disabled:border-gray-500 disabled:brightness-100 disabled:cursor-default disabled:opacity-50";
-  const animationStyle = animation ? "animate-rotate-center" : "";
   const optionStyle = props.className ? props.className : "";
 
   const buttonStyle = [
@@ -53,15 +54,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
     formStyle[form],
     positionStyle[position],
     props.disabled ? disabledStyle : '',
-    animationStyle,
     optionStyle
   ].filter(Boolean).join(' ');
-
-
-  const handleMouseUp = () => {
-    setAnimation(true);
-    setTimeout(() => setAnimation(false), 300);
-  }
   
   return (
     <>
@@ -69,9 +63,24 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonC
         {...props}
         ref={ref}
         className={buttonStyle}
-        onMouseUp={handleMouseUp}
+        onMouseUp={addRipple}
       >
         {children}
+
+        {ripples.map((ripple) => (
+          <span
+            key={ripple.id}
+            onAnimationEnd={() => removeRipple(ripple.id)}
+            style={{
+              width: ripple.size,
+              height: ripple.size,
+              left: ripple.left,
+              top: ripple.top,
+            }}
+            className="ripple"
+          >
+          </span>
+        ))}
       </button>
     </>
   )
