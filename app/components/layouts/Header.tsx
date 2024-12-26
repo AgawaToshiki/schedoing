@@ -26,7 +26,7 @@ const Header = async() => {
         <div className="px-6 max-lg:px-0 max-lg:mt-6">
           <Navigation isAdmin={isAdmin} id={user.id} />
         </div>
-        <div className="sticky bottom-0 p-6 mt-auto bg-blue-400 max-lg:p-0 max-lg:mb-6">
+        <div className="sticky bottom-0 p-6 mt-auto bg-blue-400 max-lg:p-0 max-lg:mb-6 max-lg:rounded-full">
           <SignOutButton />
         </div>
       </div>
