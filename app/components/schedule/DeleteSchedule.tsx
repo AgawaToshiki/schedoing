@@ -68,9 +68,9 @@ const DeleteSchedule = ({ scheduleId, userId }: Props) => {
         size="small"
         form="circle"
         position="center"
-        className="w-[30px] min-w-[30px] h-[30px] max-sm:w-[24px] max-sm:min-w-[24px] max-sm:h-[24px]"
+        className="w-[40px] min-w-[40px] h-[40px] max-md:w-[30px] max-md:min-w-[30px] max-md:h-[30px]"
       >
-        <Icon icon="delete" color="#fff" size={16}/>
+        <Icon icon="delete" color="#fff" size={18}/>
       </Button>
       
       <ConfirmModal 
