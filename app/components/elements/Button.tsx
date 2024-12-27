@@ -15,7 +15,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function ButtonComponent({ variant, size, form, position, children, ...props }, ref) {
 
-  const baseStyle = "flex items-center relative overflow-hidden font-semibold border transition duration-200 ease-in-out select-none";
+  const baseStyle = "flex items-center relative overflow-hidden font-semibold border transition duration-100 ease-in-out select-none";
 
   const variantStyle: Record<variant, string> = {
     primary: "bg-blue-500 border-blue-500 text-white hover:where:bg-blue-600 active:bg-blue-700",

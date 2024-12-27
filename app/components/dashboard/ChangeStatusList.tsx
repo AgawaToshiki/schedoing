@@ -76,7 +76,7 @@ const ChangeStatusList = ({ id, status }: Props) => {
       <ListboxOptions
         anchor="bottom start"
         transition
-        className="bg-gray-700 w-[150px] [--anchor-gap:5px] border origin-top transition duration-200 ease-out cursor-pointer data-[closed]:scale-95 data-[closed]:opacity-0"
+        className="bg-gray-700 w-[150px] [--anchor-gap:5px] border origin-top transition duration-100 ease-out cursor-pointer data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         {statusList.map((item) => (
           <ListboxOption key={item.id} value={item} className="group flex items-center gap-1.5 p-2 data-[focus]:bg-white/20">

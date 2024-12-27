@@ -33,7 +33,7 @@ const SelectRadioElement = ({ title, name, selected, valueList, onChange }: Prop
               />
               <label
                 htmlFor={item.value}
-                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-200 ease-in-out hover:bg-white"
+                className="p-1 border-2 rounded-md border-gray-600 peer-checked:bg-green-300 cursor-pointer select-none transition duration-100 ease-in-out hover:bg-white"
               >
                 {item.label}
               </label>

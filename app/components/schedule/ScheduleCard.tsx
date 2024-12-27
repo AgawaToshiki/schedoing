@@ -40,7 +40,7 @@ const ScheduleCard = ({ userId, isOwn, schedule }: Props) => {
     <>
       <div 
         className="
-        flex items-center justify-center gap-10 absolute z-30 w-[70%] px-6 left-0 right-0 mx-auto where:bg-green-300 border border-green-500 shadow-md rounded-lg cursor-pointer transition duration-200 ease-in-out
+        flex items-center justify-center gap-10 absolute z-30 w-[70%] px-6 left-0 right-0 mx-auto where:bg-green-300 border border-green-500 shadow-md rounded-lg cursor-pointer transition duration-100 ease-in-out
         hover:where:bg-green-400 active:bg-green-500
         max-md:px-4 max-sm:w-[85%] max-sm:gap-2 max-sm:px-2
         "
