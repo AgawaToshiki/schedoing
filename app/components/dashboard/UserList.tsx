@@ -92,7 +92,7 @@ const UserList = ({ userId }: Props) => {
                     key={user.id}
                     className="w-[calc(25%-0.375rem)] max-xl:w-[calc(50%-0.25rem)] max-sm:w-full"
                   >        
-                    <div className="flex items-center justify-between p-6 rounded-md shadow-md bg-white hover:bg-gray-50 active:shadow-none active:scale-[.97]">
+                    <div className="flex items-center justify-between p-6 rounded-md shadow-md transition duration-100 ease-in-out bg-white hover:bg-gray-50 active:shadow-none active:scale-[.97]">
                       <div>{user.displayName}</div>
                       <div className={`w-4 h-4 rounded-full ${user.status === 'online' ? 'bg-green-400' : user.status === 'leave' ? 'bg-yellow-400' : user.status === 'busy' ? 'bg-red-400' : 'bg-gray-400'}`}></div>
                     </div>
