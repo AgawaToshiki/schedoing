@@ -37,7 +37,7 @@ const SearchUser = ({ query = "" }: Props) => {
     <>
       <form onSubmit={handleSubmit}>
         <div className="flex items-center gap-2">
-          <div className="relative max-w-[300px]">
+          <div className="relative w-[300px] max-sm:w-auto">
             <Input
               type="text"
               placeholder="ユーザー名で検索"
@@ -50,16 +50,18 @@ const SearchUser = ({ query = "" }: Props) => {
               </div>
             )}
           </div>
-          <Button
-            type="submit"
-            variant="primary"
-            size="medium"
-            form="square"
-            position="center"
-          >
-            <div className="max-md:hidden">検索する</div>
-            <Icon icon="search" size={20} color="#fff" className="hidden max-md:block" />
-          </Button>
+          <div>
+            <Button
+              type="submit"
+              variant="primary"
+              size="medium"
+              form="square"
+              position="center"
+            >
+              <div className="max-md:hidden">検索する</div>
+              <Icon icon="search" size={20} color="#fff" className="hidden max-md:block" />
+            </Button>
+          </div>
         </div>
       </form>
     </>
