@@ -91,7 +91,7 @@ const AdminUserList = async({ query }: Props) => {
       )}
       {data?.length === 0 && (
         <div>
-          <div>ユーザーが見つかりません。</div>
+          <div>該当するユーザーが見つかりません。</div>
           <div>検索ワードやフィルターの条件を確認してください。</div>
         </div>
       )}
