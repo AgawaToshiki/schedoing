@@ -26,24 +26,26 @@ const FilterUser = ({ query }: Props) => {
 
   return (
     <>
-      <Button
-        type="button"
-        onClick={handleOpenModal}
-        variant="primary"
-        size="medium"
-        form="square"
-        position="center"
-        className={`${defaultFilterFlag ? ("bg-green-500 border-green-500 hover:where:bg-green-600 active:bg-green-700") : ""}`}
-      >
-        <div className="flex items-center gap-1.5">
-          {defaultFilterFlag ? (
-            <p className="max-md:hidden">フィルター中</p>
-          ) : (
-            <p className="max-md:hidden">フィルター</p>
-          )}
-          <Icon icon="filter" size={20} />
-        </div>
-      </Button>
+      <div>
+        <Button
+          type="button"
+          onClick={handleOpenModal}
+          variant="primary"
+          size="medium"
+          form="square"
+          position="center"
+          className={`${defaultFilterFlag ? ("bg-green-500 border-green-500 hover:where:bg-green-600 active:bg-green-700") : ""}`}
+        >
+          <div className="flex items-center gap-1.5">
+            {defaultFilterFlag ? (
+              <p className="max-md:hidden">フィルター中</p>
+            ) : (
+              <p className="max-md:hidden">フィルター</p>
+            )}
+            <Icon icon="filter" size={20} />
+          </div>
+        </Button>
+      </div>
 
       <Modal isOpen={isOpen} setter={setIsOpen} title="絞り込み・並び替え">
         <FilterUserField
